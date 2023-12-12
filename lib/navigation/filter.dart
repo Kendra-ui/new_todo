@@ -12,13 +12,13 @@ class Filter extends StatefulWidget {
 
 class _FilterState extends State<Filter> {
   
-   @override
-  void initState() {
-    super.initState();
-    Timer(
-      const Duration(seconds:  2), ()=>
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=>  const Project())));
-  }
+  //  @override
+  // void initState() {
+  //   super.initState();
+  //   Timer(
+  //     const Duration(seconds:  2), ()=>
+  //     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=>  const Project())));
+  // }
   
   @override
   Widget build(BuildContext context) {

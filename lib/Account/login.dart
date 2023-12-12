@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:new_todo/Account/sign_up.dart';
 import 'package:new_todo/Widget/todo_list.dart';
+import 'package:new_todo/navigation/navigationbar.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -18,7 +19,7 @@ class _LoginState extends State<Login> {
     super.initState();
     Timer(
       const Duration(seconds:  2), ()=>
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=>  const Todo())));
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=>  const CustomNavigationBar())));
   }
 
   TextEditingController email = TextEditingController();

@@ -18,7 +18,7 @@ class _InstructionState extends State<Instruction> {
     Timer(
       const Duration(seconds:  2), ()=>
       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=>  const Boards())));
-  }
+   }
   
   @override
   Widget build(BuildContext context) {

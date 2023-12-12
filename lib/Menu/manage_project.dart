@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:new_todo/Menu/productivity.dart';
 
 class ManageProject extends StatefulWidget {
   const ManageProject({super.key});
@@ -8,6 +11,14 @@ class ManageProject extends StatefulWidget {
 }
 
 class _ManageProjectState extends State<ManageProject> {
+
+     @override
+  void initState() {
+    super.initState();
+    Timer(
+      const Duration(seconds:  2), ()=>
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=>  const Productivity())));
+  }
 
   bool light = true;
  final TextEditingController _project = TextEditingController();

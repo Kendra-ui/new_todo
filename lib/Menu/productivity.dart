@@ -77,9 +77,10 @@ class _ProductivityState extends State<Productivity> {
 
             SizedBox(
               width: MediaQuery.of(context).size.width/1.1,
-              child: const Row(
+              child:  Row(
+              
                 children: [
-                  Column(
+                  const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('Set a goal', style: TextStyle(color:Colors.black),),
@@ -93,19 +94,38 @@ class _ProductivityState extends State<Productivity> {
                     ),
                       Text('Finish your task now !', style: TextStyle(color: Color(0xFF767E8C)),)
                     ],
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width/2.3,
+                  ),
+
+                  const SizedBox(
+                    width: 50,
+                    height: 50,
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Icon(Icons.star, color: Color(0xFF93D8D5)),
+
+                         CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF24A19C)),
+                          strokeWidth: 3,
+                        )
+                      ],
+                    ),
                   )
                 ],
               ),
             ),
 
-              SizedBox(height: MediaQuery.of(context).size.height/80,),
+              SizedBox(height: MediaQuery.of(context).size.height/300,),
 
                const ListTile(
               leading: Text('Static Goals', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),),
               trailing: Icon(Icons.arrow_forward_ios, color:Color(0xFF767E8C), size: 17,),
             ),
 
-            SizedBox(height: MediaQuery.of(context).size.height/5,),
+            SizedBox(height: MediaQuery.of(context).size.height/4.5,),
 
 
             Container(
