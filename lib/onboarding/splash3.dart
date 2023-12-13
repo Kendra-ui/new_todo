@@ -12,13 +12,13 @@ class Splash3 extends StatefulWidget {
 
 class _Splash3State extends State<Splash3> {
 
-  @override
-  void initState() {
-    super.initState();
-    Timer(
-      const Duration(seconds:  2), ()=>
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=>  const SignUp())));
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   Timer(
+  //     const Duration(seconds:  2), ()=>
+  //     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=>  const SignUp())));
+  // }
 
   @override
   Widget build(BuildContext context) {

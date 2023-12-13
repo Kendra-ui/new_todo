@@ -14,13 +14,13 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
 
-   @override
-  void initState() {
-    super.initState();
-    Timer(
-      const Duration(seconds:  2), ()=>
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=>  const CustomNavigationBar())));
-  }
+  //  @override
+  // void initState() {
+  //   super.initState();
+  //   Timer(
+  //     const Duration(seconds:  2), ()=>
+  //     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=>  const CustomNavigationBar())));
+  // }
 
   TextEditingController email = TextEditingController();
 

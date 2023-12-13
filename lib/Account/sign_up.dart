@@ -14,13 +14,13 @@ class _SignUpState extends State<SignUp> {
   final TextEditingController _username = TextEditingController();
   final TextEditingController _password = TextEditingController();
 
-  @override
-  void initState() {
-    super.initState();
-    Timer(
-      const Duration(seconds:  2), ()=>
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=>  const Login())));
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   Timer(
+  //     const Duration(seconds:  2), ()=>
+  //     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=>  const Login())));
+  // }
   
   @override
   Widget build(BuildContext context) {

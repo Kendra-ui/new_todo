@@ -49,8 +49,14 @@ int _currentIndex = 0;
   Container buildMyNavBar(BuildContext context) { 
     return Container( 
       height: 60, 
-      decoration: const BoxDecoration(
-        color: Colors.white
+      decoration:  BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.shade300,
+            blurRadius: 4
+          )
+        ]
       ),
       child: Row( 
         mainAxisAlignment: MainAxisAlignment.spaceAround, 

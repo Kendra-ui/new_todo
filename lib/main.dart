@@ -47,7 +47,7 @@ class MyApp extends StatefulWidget{
             useMaterial3: true,
           ),
        
-          home: const CustomNavigationBar()
+          home: const Splashscreen()
         );
       
   

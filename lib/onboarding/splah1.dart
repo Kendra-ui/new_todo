@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:new_todo/onboarding/splash2.dart';
+import 'package:new_todo/onboarding/splash3.dart';
 
 class Splash1 extends StatefulWidget {
   const Splash1({super.key});
@@ -44,7 +45,7 @@ class _Splash1State extends State<Splash1> {
                 alignment: Alignment.centerRight,
                 child: TextButton(
                   onPressed: () {
-                    pageController.nextPage(duration: const Duration(milliseconds: 500), curve: Curves.linear);
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const Splash3()));
                   },
                   child: const Text('Skip', textAlign: TextAlign.right, style: TextStyle(color: Color(0xFF24A19C), fontWeight: FontWeight.bold, fontSize: 16),)),
                ),
