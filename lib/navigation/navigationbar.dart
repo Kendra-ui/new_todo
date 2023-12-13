@@ -41,46 +41,117 @@ int _currentIndex = 0;
     return   Scaffold(
        backgroundColor: Colors.black,
        body:screen[_currentIndex],
+       bottomNavigationBar: buildMyNavBar(context),
 
-         bottomNavigationBar:  Theme(
-          data: Theme.of(context).copyWith(
-            canvasColor:  Colors.white,
-          ),
-           child: BottomNavigationBar(
-            onTap: onTappedBar,
-            currentIndex: _currentIndex,
-            showSelectedLabels: false,
-            selectedItemColor: const Color(0xFF24A19C),
-            items:  const [
-               BottomNavigationBarItem(
-                icon: Icon(Icons.home, color: Colors.grey,),
-                label: (''),
-                ),
-         
-                BottomNavigationBarItem(
-                icon: Icon(Icons.inbox, color: Colors.grey),
-                label: (''),
-                ),
-         
-                BottomNavigationBarItem(
-                icon: Icon(Icons.calendar_month, color:Colors.grey),
-                label: (''),
-                ),
-         
-                BottomNavigationBarItem(
-                icon: Icon(Icons.category, color: Colors.grey),
-                label: (''),
-                ),
-         
-                BottomNavigationBarItem(
-                icon: Icon(Icons.add_box_sharp, color: Colors.grey),
-                label: (''),
-                ),
-                
-            ],
-            
-                 ),
-         )
+);
+
+  }
+  Container buildMyNavBar(BuildContext context) { 
+    return Container( 
+      height: 60, 
+      decoration: const BoxDecoration(
+        color: Colors.white
+      ),
+      child: Row( 
+        mainAxisAlignment: MainAxisAlignment.spaceAround, 
+        children: [ 
+          IconButton( 
+            enableFeedback: false, 
+            onPressed: () { 
+              setState(() { 
+                _currentIndex = 0; 
+              }); 
+            }, 
+            icon: _currentIndex == 0 
+                ? const Icon( 
+                    Icons.home_filled, 
+                    color: Color(0xFF24A19C), 
+                    size: 20, 
+                  ) 
+                : const Icon( 
+                    Icons.home_outlined, 
+                    color: Colors.grey, 
+                    size: 20, 
+                  ), 
+          ), 
+          IconButton( 
+            enableFeedback: false, 
+            onPressed: () { 
+              setState(() { 
+                _currentIndex = 1; 
+              }); 
+            }, 
+            icon: _currentIndex == 1 
+                ? const Icon( 
+                    Icons.inbox, 
+                    color: Color(0xFF24A19C), 
+                    size: 20, 
+                  )
+                : const Icon( 
+                    Icons.inbox, 
+                    color: Colors.grey, 
+                    size: 20, 
+                  ), 
+          ), 
+          IconButton( 
+            enableFeedback: false, 
+            onPressed: () { 
+              setState(() { 
+                _currentIndex = 2; 
+              }); 
+            }, 
+            icon: _currentIndex == 2 
+                ? const Icon( 
+                    Icons.calendar_month, 
+                    color: Color(0xFF24A19C), 
+                    size: 20, 
+                  ) 
+                : const Icon( 
+                    Icons.calendar_month, 
+                    color: Colors.grey, 
+                    size: 20, 
+                  ), 
+          ), 
+          IconButton( 
+            enableFeedback: false, 
+            onPressed: () { 
+              setState(() { 
+                _currentIndex = 3; 
+              }); 
+            }, 
+            icon: _currentIndex == 3 
+                ? const Icon( 
+                    Icons.category, 
+                    color: Color(0xFF24A19C), 
+                    size: 20, 
+                  ) 
+                : const Icon( 
+                    Icons.category_outlined, 
+                    color: Colors.grey, 
+                    size: 20, 
+                  ), 
+          ), 
+
+          IconButton( 
+            enableFeedback: false, 
+            onPressed: () { 
+              setState(() { 
+                _currentIndex = 4; 
+              }); 
+            }, 
+            icon: _currentIndex == 4 
+                ? const Icon( 
+                    Icons.add_box, 
+                    color: Color(0xFF24A19C), 
+                    size: 20, 
+                  ) 
+                : const Icon( 
+                    Icons.add_box, 
+                    color: Colors.grey, 
+                    size: 20, 
+                  ), 
+          ), 
+        ], 
+      )
     );
-
   }}

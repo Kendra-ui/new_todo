@@ -34,7 +34,8 @@ dependencies:
 
   charts_flutter: ^0.11.0
   google_nav_bar: ^5.0.6
-  introduction_screen: ^3.1.12
+  horizontal_calendar: ^1.1.1
+  
 
 
   # The following adds the Cupertino Icons font to your application.

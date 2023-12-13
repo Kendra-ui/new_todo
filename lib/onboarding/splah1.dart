@@ -206,6 +206,7 @@ SizedBox(height: MediaQuery.of(context).size.height/7,),
                   ),
                   onPressed: (){
                     pageController.nextPage(duration: const Duration(milliseconds: 500), curve: Curves.linear);
+                    
                   }, 
                   child: const Text('Continue',textAlign: TextAlign.center, style: TextStyle(color: Colors.white),)),
               ),
