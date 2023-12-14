@@ -55,9 +55,9 @@ class _LoginState extends State<Login> {
               controller: email,
               decoration:  const InputDecoration(
                 labelText: "name@example.com",
-                labelStyle: TextStyle(fontSize: 14),
+                labelStyle: TextStyle(fontSize: 14, color: Color(0xFFA9B0C5)),
                 filled: true,
-                fillColor:  Color.fromARGB(255, 231, 237, 250),
+                fillColor:  Color(0xFFF6F7F9),
                 
                 enabledBorder:  OutlineInputBorder(
                   borderSide: BorderSide.none
@@ -84,7 +84,7 @@ class _LoginState extends State<Login> {
               ))
             ),
             onPressed: (){
-              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=> const SignUp()));
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=> const CustomNavigationBar()));
             }, 
             child: const Text('Next',textAlign: TextAlign.center, style: TextStyle(color: Colors.white),)),
         )

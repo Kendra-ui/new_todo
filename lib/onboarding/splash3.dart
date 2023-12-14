@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:new_todo/Account/sign_up.dart';
+import 'package:new_todo/navigation/navigationbar.dart';
 
 class Splash3 extends StatefulWidget {
   const Splash3({super.key});
@@ -101,7 +102,10 @@ class _Splash3State extends State<Splash3> {
                 borderRadius: BorderRadius.circular(10)
               ))
             ),
-            onPressed: (){}, 
+            onPressed: (){
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=> const CustomNavigationBar()));
+
+            }, 
             child:const  Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -110,6 +114,7 @@ class _Splash3State extends State<Splash3> {
               ],
             )),
         ),
+
         SizedBox(height: MediaQuery.of(context).size.height/40,),
           const Row(
             children: <Widget>[
@@ -139,7 +144,8 @@ class _Splash3State extends State<Splash3> {
                             )
                           ),
                           onPressed: (){
-                                                  }, 
+
+                          }, 
                           child: Row(
                             children: [
                               Image.asset('assets/images/Facebook.png', height: 20,),
@@ -167,7 +173,7 @@ class _Splash3State extends State<Splash3> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Image.asset('assets/images/Google.png', height: 20,),
-                             const Text('Google', style: TextStyle(color: Colors.black,fontFamily: 'Poppins', fontSize: 15),),
+                             const Text(' Google', style: TextStyle(color: Colors.black,fontFamily: 'Poppins', fontSize: 15),),
                           ],
                         ),),
                         ),

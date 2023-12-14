@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_todo/Account/password.dart';
 
 class Settings extends StatefulWidget {
   const Settings({super.key});
@@ -55,10 +56,15 @@ class _SettingsState extends State<Settings> {
 
             SizedBox(height: MediaQuery.of(context).size.height/70,),
 
-            const ListTile(
-              leading: Icon(Icons.person_2_outlined, color: Color(0xFF767E8C),),
-              title: Text('Account', style: TextStyle(color: Color(0xFF767E8C)),),
-              trailing: Icon(Icons.arrow_forward_ios, color: Color(0xFF767E8C), size: 17,),
+             ListTile(
+              leading: const Icon(Icons.person_2_outlined, color: Color(0xFF767E8C),),
+              title: const Text('Account', style: TextStyle(color: Color(0xFF767E8C)),),
+              trailing: GestureDetector(
+                onTap: (){
+                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=> const Password()));
+
+                },
+                child: const Icon(Icons.arrow_forward_ios, color: Color(0xFF767E8C), size: 17,)),
             ),
 
 

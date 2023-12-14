@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:new_todo/Account/login.dart';
+import 'package:new_todo/navigation/navigationbar.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -60,7 +61,7 @@ class _SignUpState extends State<SignUp> {
               controller: _username,
               decoration:  const InputDecoration(
                 labelText: "Enter your username",
-                labelStyle: TextStyle(fontSize: 14),
+                labelStyle: TextStyle(fontSize: 14, color: Color(0xFFA9B0C5)),
                 filled: true,
                 fillColor:  Color(0xFFF6F7F9),
                 
@@ -87,7 +88,7 @@ class _SignUpState extends State<SignUp> {
               controller: _password,
               decoration:  const InputDecoration(
                 labelText: "Enter your Password",
-                labelStyle: TextStyle(fontSize: 14),
+                labelStyle: TextStyle(fontSize: 14, color: Color(0xFFA9B0C5)),
                 filled: true,
                 fillColor:  Color(0xFFF6F7F9),
                 
@@ -118,7 +119,10 @@ class _SignUpState extends State<SignUp> {
                 borderRadius: BorderRadius.circular(10)
               ))
             ),
-            onPressed: (){}, 
+            onPressed: (){
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=> const CustomNavigationBar()));
+
+            }, 
             child: const Text('Sign Up',textAlign: TextAlign.center, style: TextStyle(color: Colors.white),)),
         )
       
