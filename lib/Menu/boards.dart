@@ -1,7 +1,5 @@
-import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:new_todo/Menu/manage_project.dart';
 import 'package:new_todo/navigation/project.dart';
 
 class Boards extends StatefulWidget {

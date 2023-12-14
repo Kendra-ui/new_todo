@@ -1,7 +1,5 @@
-import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:new_todo/Menu/productivity.dart';
 import 'package:new_todo/navigation/project.dart';
 
 class ManageProject extends StatefulWidget {

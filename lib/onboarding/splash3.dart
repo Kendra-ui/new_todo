@@ -1,7 +1,5 @@
-import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:new_todo/Account/sign_up.dart';
 import 'package:new_todo/navigation/navigationbar.dart';
 
 class Splash3 extends StatefulWidget {

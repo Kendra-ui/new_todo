@@ -1,7 +1,5 @@
-import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:new_todo/onboarding/splash2.dart';
 import 'package:new_todo/onboarding/splash3.dart';
 
 class Splash1 extends StatefulWidget {
@@ -178,6 +176,7 @@ class _Splash1State extends State<Splash1> {
                   ],
                 );
               }
+              return null;
               
             },
 

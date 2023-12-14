@@ -1,7 +1,5 @@
-import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:new_todo/Widget/more_task.dart';
 
 class Todo extends StatefulWidget {
   const Todo({super.key});
@@ -12,13 +10,6 @@ class Todo extends StatefulWidget {
 
 class _TodoState extends State<Todo>{
 
-  //  @override
-  // void initState() {
-  //   super.initState();
-  //   Timer(
-  //     const Duration(seconds:  2), ()=>
-  //     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=>  const MoreTask())));
-  // }
 
   @override
   Widget build(BuildContext context) {
