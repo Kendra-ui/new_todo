@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:new_todo/Menu/boards.dart';
+import 'package:new_todo/navigation/project.dart';
 
 class Instruction extends StatefulWidget {
   const Instruction({super.key});
@@ -11,14 +12,6 @@ class Instruction extends StatefulWidget {
 }
 
 class _InstructionState extends State<Instruction> {
-  
-   @override
-  void initState() {
-    super.initState();
-    Timer(
-      const Duration(seconds:  2), ()=>
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=>  const Boards())));
-   }
   
   @override
   Widget build(BuildContext context) {
@@ -33,7 +26,11 @@ class _InstructionState extends State<Instruction> {
               children: [
                 SizedBox(
                   width: MediaQuery.of(context).size.width/6,
-                  child: const Icon(Icons.arrow_back_ios_new,)),
+                  child: GestureDetector(onTap: (){
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const Project()));
+
+                  },
+                  child: const Icon(Icons.arrow_back_ios_new,))),
                 const Spacer(),
                 const Text('Instructions', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
                 const Spacer(),

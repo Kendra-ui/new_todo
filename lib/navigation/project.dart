@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:new_todo/Menu/boards.dart';
 import 'package:new_todo/Menu/instructions.dart';
+import 'package:new_todo/Menu/manage_project.dart';
 
 class Project extends StatefulWidget {
   const Project({super.key});
@@ -12,13 +14,7 @@ class Project extends StatefulWidget {
 
 class _ProjectState extends State<Project> {
 
-   @override
-  void initState() {
-    super.initState();
-    Timer(
-      const Duration(seconds:  2), ()=>
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=>  const Instruction())));
-  }
+
   
   @override
   Widget build(BuildContext context) {
@@ -64,7 +60,11 @@ class _ProjectState extends State<Project> {
                    Row(
                     children: [
                     Image.asset('assets/images/message-question.png'),
-                    const Text('  Instructions For Use', style: TextStyle(color: Colors.grey),),
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const Instruction()));
+                      },
+                      child: const Text('  Instructions For Use', style: TextStyle(color: Colors.grey),)),
 
 
                   ],),
@@ -73,7 +73,11 @@ class _ProjectState extends State<Project> {
                    Row(
                     children: [
                     Image.asset('assets/images/Document.png'),
-                    const Text('  Try Boards', style: TextStyle(color: Colors.grey),),
+                    GestureDetector( onTap: (){
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const Boards()));
+
+                    },
+                    child: const Text('  Try Boards', style: TextStyle(color: Colors.grey),)),
                     const Spacer(),
                     Image.asset('assets/images/Heart.png'),
 
@@ -85,7 +89,11 @@ class _ProjectState extends State<Project> {
                    Row(
                     children: [
                     const Icon(Icons.settings_outlined, color: Colors.grey,),
-                    const Text('  Manage Projects ', style: TextStyle(color: Colors.grey),),
+                    GestureDetector(onTap:(){
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const ManageProject()));
+
+                    },
+                    child: const Text('  Manage Projects ', style: TextStyle(color: Colors.grey),)),
                     const Spacer(),
                     Image.asset('assets/images/Heart.png'),
 

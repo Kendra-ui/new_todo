@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_todo/Menu/settings.dart';
 
 class Password extends StatefulWidget {
   const Password({super.key});
@@ -27,8 +28,13 @@ class _PasswordState extends State<Password> {
                   width: MediaQuery.of(context).size.width/25,
 
                 ),
-                const Icon(Icons.arrow_back_ios_new,),
-                SizedBox(
+                    GestureDetector(
+                    onTap: (){
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=> const Settings()));
+
+                    },
+                    child: const Icon(Icons.arrow_back_ios_new,)),
+                                SizedBox(
                   width: MediaQuery.of(context).size.width/3.3,
 
                 ),

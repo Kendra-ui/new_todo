@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:new_todo/Menu/productivity.dart';
+import 'package:new_todo/navigation/project.dart';
 
 class ManageProject extends StatefulWidget {
   const ManageProject({super.key});
@@ -12,13 +13,6 @@ class ManageProject extends StatefulWidget {
 
 class _ManageProjectState extends State<ManageProject> {
 
-     @override
-  void initState() {
-    super.initState();
-    Timer(
-      const Duration(seconds:  2), ()=>
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=>  const Productivity())));
-  }
 
   bool light = true;
  final TextEditingController _project = TextEditingController();
@@ -36,8 +30,12 @@ class _ManageProjectState extends State<ManageProject> {
               children: [
                 SizedBox(
                   width: MediaQuery.of(context).size.width/6,
-                  child: const Icon(Icons.arrow_back_ios_new,)),
-                  SizedBox(
+                  child: GestureDetector(onTap: (){
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const Project()));
+
+                  },
+                  child: const Icon(Icons.arrow_back_ios_new,))),
+                SizedBox(
                   width: MediaQuery.of(context).size.width/6,
 
                   ),

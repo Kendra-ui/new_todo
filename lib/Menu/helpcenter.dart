@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_todo/Menu/settings.dart';
 
 class HelpCenter extends StatefulWidget {
   const HelpCenter({super.key});
@@ -23,7 +24,12 @@ class _HelpCenterState extends State<HelpCenter> {
               children: [
                 SizedBox(
                   width: MediaQuery.of(context).size.width/10,
-                  child: const Icon(Icons.arrow_back_ios_new,)),
+                  child: GestureDetector(
+                    onTap: (){
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=> const Settings()));
+
+                    },
+                    child: const Icon(Icons.arrow_back_ios_new,))),
                 const Spacer(),
                 const Text('Help Center', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
                 const Spacer(),

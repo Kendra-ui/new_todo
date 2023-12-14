@@ -51,7 +51,7 @@ class MyApp extends StatefulWidget{
             useMaterial3: true,
           ),
        
-          home: const Splashscreen()
+          home: const Project()
         );
       
   

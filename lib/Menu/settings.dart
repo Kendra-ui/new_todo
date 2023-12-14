@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:new_todo/Account/login.dart';
 import 'package:new_todo/Account/password.dart';
+import 'package:new_todo/Menu/appicon.dart';
+import 'package:new_todo/Menu/helpcenter.dart';
+import 'package:new_todo/Menu/productivity.dart';
 
 class Settings extends StatefulWidget {
   const Settings({super.key});
@@ -71,21 +75,36 @@ class _SettingsState extends State<Settings> {
              ListTile(
               leading: Image.asset('assets/images/magicpen.png', color: const Color(0xFF767E8C),),
               title: const Text('Theme', style: TextStyle(color: Color(0xFF767E8C)),),
-              trailing: const Icon(Icons.arrow_forward_ios, color: Color(0xFF767E8C), size: 17,),
+              trailing: GestureDetector(
+                onTap: (){
+                //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=> const Theme()));
+
+                },
+                child: const Icon(Icons.arrow_forward_ios, color: Color(0xFF767E8C), size: 17,)),
             ),
 
 
              ListTile(
               leading: Image.asset('assets/images/medalstar.png', color: const Color(0xFF767E8C),),
               title: const Text('App Icon', style: TextStyle(color: Color(0xFF767E8C)),),
-              trailing: const Icon(Icons.arrow_forward_ios, color: Color(0xFF767E8C), size: 17,),
+              trailing: GestureDetector(
+                onTap: () {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=> const AppIcon()));
+
+                },
+                child: const Icon(Icons.arrow_forward_ios, color: Color(0xFF767E8C), size: 17,)),
             ),
 
 
              ListTile(
               leading: Image.asset('assets/images/weight.png', color: const Color(0xFF767E8C),),
               title: const Text('Productivity', style: TextStyle(color: Color(0xFF767E8C)),),
-              trailing: const Icon(Icons.arrow_forward_ios, color: Color(0xFF767E8C), size: 17,),
+              trailing: GestureDetector(
+                onTap:(){
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=> const Productivity()));
+
+                },
+                child: const Icon(Icons.arrow_forward_ios, color: Color(0xFF767E8C), size: 17,)),
             ),
 
 
@@ -112,17 +131,27 @@ class _SettingsState extends State<Settings> {
               trailing: Icon(Icons.arrow_forward_ios, color: Color(0xFF767E8C), size: 17,),
             ),
 
-            const ListTile(
-              leading: Icon(Icons.messenger_outline_outlined, color: Color(0xFF767E8C),),
-              title: Text('Help Center', style: TextStyle(color: Color(0xFF767E8C)),),
-              trailing: Icon(Icons.arrow_forward_ios, color: Color(0xFF767E8C), size: 17,),
+             ListTile(
+              leading: const Icon(Icons.messenger_outline_outlined, color: Color(0xFF767E8C),),
+              title: const Text('Help Center', style: TextStyle(color: Color(0xFF767E8C)),),
+              trailing: GestureDetector(
+                onTap: (){
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=> const HelpCenter()));
+
+                },
+                child: const Icon(Icons.arrow_forward_ios, color: Color(0xFF767E8C), size: 17,)),
             ),
 
-              const ListTile(
-              leading: Icon(Icons.logout_outlined, color: Color(0xFF767E8C),),
-              title: Text('Log Out', style: TextStyle(color: Color(0xFF767E8C)),),
-              trailing: Icon(Icons.arrow_forward_ios, color: Color(0xFF767E8C), size: 17,),
-            ),
+               ListTile(
+              leading: const Icon(Icons.logout_outlined, color: Color(0xFF767E8C),),
+              title: const Text('Log Out', style: TextStyle(color: Color(0xFF767E8C)),),
+              trailing: GestureDetector(
+                    onTap: (){
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=> const Login()));
+
+                    },
+                    child: const Icon(Icons.arrow_forward_ios,color: Color(0xFF767E8C), size: 17,)),
+                ),
           ],
         ),
       ),

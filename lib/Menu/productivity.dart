@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_todo/Menu/settings.dart';
 
 class Productivity extends StatefulWidget {
   const Productivity({super.key});
@@ -21,8 +22,13 @@ class _ProductivityState extends State<Productivity> {
               children: [
                 SizedBox(
                   width: MediaQuery.of(context).size.width/10,
-                  child: const Icon(Icons.arrow_back_ios_new,)),
-                const Spacer(),
+                  child: GestureDetector(
+                    onTap: (){
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=> const Settings()));
+
+                    },
+                    child: const Icon(Icons.arrow_back_ios_new,))),
+                 const Spacer(),
                 const Text('Productivity', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
                 const Spacer(),
                 SizedBox(
