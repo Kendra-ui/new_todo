@@ -1,4 +1,5 @@
 
+import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:new_todo/onboarding/splash3.dart';
 
@@ -17,13 +18,22 @@ class _Splash1State extends State<Splash1> {
   bool loader = false;
 
   AnimatedContainer _buildDots({int? index}){
+
+    Color dotColor = const Color(0xFF24A19C);
+    
+    
+    
+   if (index == 0) {
+    dotColor = const Color(0xFFCBF1F0); // Color for the first screen
+   }
+
     return AnimatedContainer(
       duration: const Duration(milliseconds: 200),
-      decoration:  const BoxDecoration(
-        borderRadius: BorderRadius.all(
+      decoration:   BoxDecoration(
+        color: dotColor,
+        borderRadius: const BorderRadius.all(
           Radius.circular(50),
         ),
-        color: Color(0xFF24A19C)
       ),
       margin: const EdgeInsets.only(right: 5),
       height: 10,
@@ -56,10 +66,31 @@ class _Splash1State extends State<Splash1> {
                 currentPosition = value;
               });
             },
-            itemCount: 2,
+            itemCount: 3,
             itemBuilder: (context, i) {
               if (i == 0) {
-                return Column(
+                return Container(
+                  decoration: const BoxDecoration(
+                    color: Color(0xFF24A19C)
+                  ),
+                  child: 
+                    Column(
+                      children: [
+                        SizedBox(height: MediaQuery.of(context).size.height/4,),
+                       Image.asset('assets/images/nlogo.png'),
+                       SizedBox(height: MediaQuery.of(context).size.height/50,),
+                       const Text('Todyapp', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 24),),
+                       SizedBox(height: MediaQuery.of(context).size.height/50,),
+                       const Text('The best to do list applications for you', style: TextStyle(color: Colors.white, fontSize: 14),),
+                       SizedBox(height: MediaQuery.of(context).size.height/8,),
+                        //Image.asset('assets/images/pageSlider.png'),
+
+                      ],
+                    ),
+                  
+                );
+              } else if(i == 1){
+                 return Column(
                 children: [
                 
 
@@ -112,16 +143,12 @@ class _Splash1State extends State<Splash1> {
               
           
                  ] ),
-                // SizedBox(height: MediaQuery.of(context).size.height/25,),
-                // Image.asset('assets/images/newSlider.png'),
-          
-                // SizedBox(height: MediaQuery.of(context).size.height/9,),
-          
                 
                 ],
               );
-              } else if(i == 1){
-                return Column(
+               
+              }else if(i == 2){
+                 return Column(
                   children: [
                      Stack(
           children:<Widget>[
@@ -175,7 +202,8 @@ class _Splash1State extends State<Splash1> {
          ] ),
                   ],
                 );
-              }
+               
+              } 
               return null;
               
             },
@@ -184,13 +212,20 @@ class _Splash1State extends State<Splash1> {
               ),
           ),
 
-         Row(
-           mainAxisAlignment: MainAxisAlignment.center,
-           children: List.generate(2, 
-           (index) => _buildDots(index: index))
-         ),
+         DotsIndicator(
+            dotsCount: 3, // Total number of dots (corresponding to PageView screens)
+            position: currentPosition.toInt(),
+            decorator:  DotsDecorator(
+              size:  const Size.square(9.0), // Size of the dots
+              color: const Color(0xFFCBF1F0), // Default color of the dots
+              activeSize:  const Size(18.0, 9.0), // Size of the active dot
+              activeColor: const Color(0xFF24A19C), // Color of the active dot
+              spacing:  const EdgeInsets.all(3.0), // Spacing between dots
+              activeShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5))
+            ),
+          ),
 
-SizedBox(height: MediaQuery.of(context).size.height/7,),
+        SizedBox(height: MediaQuery.of(context).size.height/7,),
          
                 Container(
                 width: MediaQuery.of(context).size.width/1.5,

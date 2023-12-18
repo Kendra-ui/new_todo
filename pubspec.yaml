@@ -35,6 +35,7 @@ dependencies:
   charts_flutter: ^0.11.0
   google_nav_bar: ^5.0.6
   horizontal_calendar: ^1.1.1
+  dots_indicator: ^3.0.0
   
 
 
