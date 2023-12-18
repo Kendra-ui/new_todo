@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:new_todo/navigation/project.dart';
 import 'package:new_todo/onboarding/splah1.dart';
-import 'package:new_todo/splash_screen.dart';
 
 
 
