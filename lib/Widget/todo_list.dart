@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:new_todo/navigation/navigationbar.dart';
 
 class Todo extends StatefulWidget {
   const Todo({super.key});
@@ -167,7 +168,10 @@ class _TodoState extends State<Todo>{
                 borderRadius: BorderRadius.circular(10)
               ))
             ),
-            onPressed: (){}, 
+            onPressed: (){
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=> const CustomNavigationBar()));
+
+            }, 
             child: const Text('Open Todyapp',textAlign: TextAlign.center, style: TextStyle(color: Colors.white),)),
         )
     ])

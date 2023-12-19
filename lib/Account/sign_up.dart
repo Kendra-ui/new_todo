@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:new_todo/Account/login.dart';
+import 'package:new_todo/Widget/todo_list.dart';
 import 'package:new_todo/navigation/navigationbar.dart';
 
 class SignUp extends StatefulWidget {
@@ -111,7 +112,7 @@ class _SignUpState extends State<SignUp> {
               ))
             ),
             onPressed: (){
-              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=> const CustomNavigationBar()));
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=> const Todo()));
 
             }, 
             child: const Text('Sign Up',textAlign: TextAlign.center, style: TextStyle(color: Colors.white),)),

@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:new_todo/Account/sign_up.dart';
 import 'package:new_todo/navigation/navigationbar.dart';
 
 class Splash3 extends StatefulWidget {
@@ -101,14 +102,14 @@ class _Splash3State extends State<Splash3> {
               ))
             ),
             onPressed: (){
-            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=> const CustomNavigationBar()));
+                   Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=> const SignUp()));
 
             }, 
-            child:const  Row(
+            child:  const Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.mail, color: Colors.white, size: 20,),
-                 Text('Continue with email',textAlign: TextAlign.center, style: TextStyle(color: Colors.white,),),
+                 Icon(Icons.mail, color: Colors.white, size: 20,),
+                  Text('Continue with email',textAlign: TextAlign.center, style: TextStyle(color: Colors.white,),),
               ],
             )),
         ),
