@@ -15,32 +15,6 @@ class _Splash1State extends State<Splash1> {
  
   PageController pageController = PageController(initialPage: 0);
   int currentPosition = 0;
-  bool loader = false;
-
-  AnimatedContainer _buildDots({int? index}){
-
-    Color dotColor = const Color(0xFF24A19C);
-    
-    
-    
-   if (index == 0) {
-    dotColor = const Color(0xFFCBF1F0); // Color for the first screen
-   }
-
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 200),
-      decoration:   BoxDecoration(
-        color: dotColor,
-        borderRadius: const BorderRadius.all(
-          Radius.circular(50),
-        ),
-      ),
-      margin: const EdgeInsets.only(right: 5),
-      height: 10,
-      curve: Curves.easeIn,
-      width: currentPosition == index ? 20 : 10,);
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -62,20 +36,21 @@ class _Splash1State extends State<Splash1> {
               if (i == 0) {
                 return Container(
                   color: const Color(0xFF24A19C),
-                  
                   child: 
-                    Column(
-                      children: [
-                        SizedBox(height: MediaQuery.of(context).size.height/4,),
-                       Image.asset('assets/images/nlogo.png'),
-                       SizedBox(height: MediaQuery.of(context).size.height/250,),
-                       const Text('Todyapp', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 24),),
-                       SizedBox(height: MediaQuery.of(context).size.height/50,),
-                       const Text('The best to do list applications for you', style: TextStyle(color: Colors.white, fontSize: 14),),
-                       SizedBox(height: MediaQuery.of(context).size.height/8,),
-                        //Image.asset('assets/images/pageSlider.png'),
-
-                      ],
+                    Center(
+                      child: Column(
+                        children: [
+                          SizedBox(height: MediaQuery.of(context).size.height/4,),
+                         Image.asset('assets/images/nlogo.png'),
+                         SizedBox(height: MediaQuery.of(context).size.height/250,),
+                         const Text('Todyapp', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 24),),
+                         SizedBox(height: MediaQuery.of(context).size.height/50,),
+                         const Text('The best to do list applications for you', style: TextStyle(color: Colors.white, fontSize: 14),),
+                         SizedBox(height: MediaQuery.of(context).size.height/8,),
+                          //Image.asset('assets/images/pageSlider.png'),
+                    
+                        ],
+                      ),
                     ),
                   
                 );
