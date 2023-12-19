@@ -20,17 +20,17 @@ class _ThemesState extends State<Themes> {
               SizedBox(height: MediaQuery.of(context).size.height/15,),
         
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 SizedBox(
-                  width: MediaQuery.of(context).size.width/10,
+                  width: MediaQuery.of(context).size.width/7,
                   child:GestureDetector(
                     onTap: (){
                       Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=> const Settings()));
 
                     },
                     child: const Icon(Icons.arrow_back_ios_new,))),
-                const Spacer(),
+                SizedBox(width: MediaQuery.of(context).size.width/3.5,),
                 const Text('Theme', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
                 const Spacer(),
                  ],
