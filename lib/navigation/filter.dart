@@ -27,7 +27,7 @@ class _FilterState extends State<Filter> {
                   child: const Icon(Icons.arrow_back_ios_new,)),
             SizedBox(width: MediaQuery.of(context).size.width/10,),
 
-                const Text('Filter & Labels', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
+                const ClipRRect(child:  Text('Filter & Labels', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),)),
             SizedBox(width: MediaQuery.of(context).size.width/10,),
 
                 SizedBox(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_todo/Menu/settings.dart';
 
 class AddTask extends StatefulWidget {
   const AddTask({super.key});
@@ -28,7 +29,11 @@ class _AddTaskState extends State<AddTask> {
                   ],
                 ),
                 SizedBox(width: MediaQuery.of(context).size.width/4,),
-                const Icon(Icons.settings,color: Colors.grey,),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> const Settings()));
+                  },
+                  child: const Icon(Icons.settings,color: Colors.grey,)),
                  ],
             ),
 

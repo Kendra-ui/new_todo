@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:new_todo/navigation/project.dart';
+import 'package:new_todo/navigation/navigationbar.dart';
 
 class Boards extends StatefulWidget {
   const Boards({super.key});
@@ -26,7 +26,7 @@ class _BoardsState extends State<Boards> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width/6,
                   child: GestureDetector(onTap: (){
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const Project()));
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const CustomNavigationBar()));
 
                   },
                   child: const Icon(Icons.arrow_back_ios_new,))),

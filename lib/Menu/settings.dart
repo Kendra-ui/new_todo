@@ -4,6 +4,8 @@ import 'package:new_todo/Account/password.dart';
 import 'package:new_todo/Menu/appicon.dart';
 import 'package:new_todo/Menu/helpcenter.dart';
 import 'package:new_todo/Menu/productivity.dart';
+import 'package:new_todo/Menu/theme.dart';
+import 'package:new_todo/navigation/navigationbar.dart';
 
 class Settings extends StatefulWidget {
   const Settings({super.key});
@@ -29,7 +31,12 @@ class _SettingsState extends State<Settings> {
               children: [
                 SizedBox(
                   width: MediaQuery.of(context).size.width/10,
-                  child: const Icon(Icons.arrow_back_ios_new,)),
+                  child: GestureDetector(
+                    onTap: () {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> const CustomNavigationBar()));
+
+                    },
+                    child: const Icon(Icons.arrow_back_ios_new,))),
                 const Spacer(),
                 const Text('Settings', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
                 const Spacer(),
@@ -77,7 +84,7 @@ class _SettingsState extends State<Settings> {
               title: const Text('Theme', style: TextStyle(color: Color(0xFF767E8C)),),
               trailing: GestureDetector(
                 onTap: (){
-                //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=> const Theme()));
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=> const Themes()));
 
                 },
                 child: const Icon(Icons.arrow_forward_ios, color: Color(0xFF767E8C), size: 17,)),

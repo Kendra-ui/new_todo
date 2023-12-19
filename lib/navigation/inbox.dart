@@ -22,7 +22,7 @@ class _InboxState extends State<Inbox> {
           children: [
             SizedBox(height: MediaQuery.of(context).size.height/10,),
 
-            Row(
+           Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 SizedBox(
@@ -30,7 +30,8 @@ class _InboxState extends State<Inbox> {
                   child: const Icon(Icons.arrow_back_ios_new,)),
             SizedBox(width: MediaQuery.of(context).size.width/10,),
 
-                const Text('Inbox', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
+                const ClipRRect(
+                  child: Text('Inbox', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),)),
             SizedBox(width: MediaQuery.of(context).size.width/10,),
 
                 SizedBox(
@@ -124,18 +125,18 @@ class _InboxState extends State<Inbox> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width/1.5,
                   height: MediaQuery.of(context).size.height/40,
-                  child: const Row(
+                  child:  Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Icon(Icons.timer, color: Colors.red, size: 17,),
-                      Text('08:30 PM', style: TextStyle(fontSize: 10, color: Colors.red,),),
-                      Icon(Icons.message, color: Colors.grey, size: 17,),
-                      Text('1', style: TextStyle(color: Colors.grey, fontSize: 10),),
-                      Icon(Icons.add_box, color: Colors.grey, size: 17,),
-                      Text('2', style: TextStyle(color: Colors.grey, fontSize: 10),),
-                      Spacer(),
-                      Text('Mon, 19 Jul 2022', style: TextStyle(color: Colors.grey),)
+                      const Icon(Icons.timer, color: Colors.red, size: 17,),
+                      const Text('08:30 PM ', style: TextStyle(fontSize: 10, color: Colors.red,),),
+                      Image.asset('assets/images/Chat.png'),
+                      const Text(' 1 ', style: TextStyle(color: Colors.grey, fontSize: 10),),
+                      Image.asset('assets/images/Chat.png'),
+                      const Text(' 2', style: TextStyle(color: Colors.grey, fontSize: 10),),
+                      const Spacer(),
+                      const Text('Mon, 19 Jul 2022', style: TextStyle(color: Colors.grey),)
                     ],
                   ),
                 ),
@@ -226,18 +227,18 @@ class _InboxState extends State<Inbox> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width/1.5,
                   height: MediaQuery.of(context).size.height/40,
-                  child: const Row(
+                  child:  Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Icon(Icons.timer, color: Colors.red, size: 17,),
-                      Text('08:30 PM', style: TextStyle(fontSize: 10, color: Colors.red,),),
-                      Icon(Icons.message, color: Colors.grey, size: 17,),
-                      Text('1', style: TextStyle(color: Colors.grey, fontSize: 10),),
-                      Icon(Icons.add_box, color: Colors.grey, size: 17,),
-                      Text('2', style: TextStyle(color: Colors.grey, fontSize: 10),),
-                      Spacer(),
-                      Text('Mon, 19 Jul 2022', style: TextStyle(color: Colors.grey),)
+                      const Icon(Icons.timer, color: Colors.red, size: 17,),
+                      const Text('08:30 PM ', style: TextStyle(fontSize: 10, color: Colors.red,),),
+                      Image.asset('assets/images/Chat.png'),
+                      const Text(' 1 ', style: TextStyle(color: Colors.grey, fontSize: 10),),
+                      Image.asset('assets/images/inbox.png'),
+                      const Text(' 2', style: TextStyle(color: Colors.grey, fontSize: 10),),
+                      const Spacer(),
+                      const Text('Mon, 19 Jul 2022', style: TextStyle(color: Colors.grey),)
                     ],
                   ),
                 ),
