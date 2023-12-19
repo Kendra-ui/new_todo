@@ -37,7 +37,7 @@ class _ThemesState extends State<Themes> {
             ),
         
               SizedBox(
-                  height: MediaQuery.of(context).size.height/20,
+                  height: MediaQuery.of(context).size.height/40,
                 ),
         
               Container(
@@ -74,7 +74,7 @@ class _ThemesState extends State<Themes> {
               ),
 
               SizedBox(
-                  height: MediaQuery.of(context).size.height/20,
+                  height: MediaQuery.of(context).size.height/35,
                 ),
         
               Container(
@@ -107,7 +107,7 @@ class _ThemesState extends State<Themes> {
               ),
 
               SizedBox(
-                  height: MediaQuery.of(context).size.height/20,
+                  height: MediaQuery.of(context).size.height/35,
                 ),
         
               Container(
@@ -144,7 +144,7 @@ class _ThemesState extends State<Themes> {
               ),
 
               SizedBox(
-                  height: MediaQuery.of(context).size.height/20,
+                  height: MediaQuery.of(context).size.height/35,
                 ),
         
               Container(
@@ -177,7 +177,7 @@ class _ThemesState extends State<Themes> {
               ),
 
                  SizedBox(
-                  height: MediaQuery.of(context).size.height/20,
+                  height: MediaQuery.of(context).size.height/35,
                 ),
         
               Container(
