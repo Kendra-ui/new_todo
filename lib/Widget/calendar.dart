@@ -26,13 +26,13 @@ class _CalendarState extends State<Calendar> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 SizedBox(
-                  width: MediaQuery.of(context).size.width/10,
+                  width: MediaQuery.of(context).size.width/8,
                   child: const Icon(Icons.arrow_back_ios_new,)),
                 const Spacer(),
                 const Text('Upcoming', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),),
                 const Spacer(),
                 SizedBox(
-                  width: MediaQuery.of(context).size.width/10,
+                  width: MediaQuery.of(context).size.width/8,
                   child: const Icon(Icons.search, size: 25,)),
               ],
             ),
@@ -63,7 +63,7 @@ class _CalendarState extends State<Calendar> {
               child: const Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Today, Wednesday', style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold),),
+                  Text('Today . Wednesday', style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold),),
                   Text('Reschedule', style: TextStyle(color: Color(0xFF24A19C), fontWeight: FontWeight.bold),)
                 ],
               ),
@@ -127,7 +127,7 @@ class _CalendarState extends State<Calendar> {
                       const Text(' 08:30 PM', style: TextStyle(fontSize: 10, color: Colors.red,),),
                       const Spacer(),
                       Image.asset('assets/images/Chat.png'),
-                      const Text(' 1', style: TextStyle(color: Colors.grey, fontSize: 10),),
+                      const Text(' 1 ', style: TextStyle(color: Colors.grey, fontSize: 10),),
                       Image.asset('assets/images/inbox.png'),
                       const Text(' 2', style: TextStyle(color: Colors.grey, fontSize: 10),),
                        ],
@@ -205,7 +205,7 @@ class _CalendarState extends State<Calendar> {
                       const Text(' 08:30 PM', style: TextStyle(fontSize: 10, color: Colors.red,),),
                       const Spacer(),
                       Image.asset('assets/images/Chat.png'),
-                      const Text(' 1', style: TextStyle(color: Colors.grey, fontSize: 10),),
+                      const Text(' 1 ', style: TextStyle(color: Colors.grey, fontSize: 10),),
                       Image.asset('assets/images/inbox.png'),
                       const Text(' 2', style: TextStyle(color: Colors.grey, fontSize: 10),),
                        ],

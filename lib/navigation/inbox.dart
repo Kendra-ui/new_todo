@@ -260,7 +260,7 @@ class _InboxState extends State<Inbox> {
                            child: ElevatedButton(
                      onPressed: () { 
                       showModalBottomSheet(
-                        isScrollControlled: true,
+                        //isScrollControlled: true,
                         context: context, 
                         builder: (context) {
                           return SizedBox(

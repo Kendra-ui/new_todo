@@ -9,6 +9,9 @@ class AddTask extends StatefulWidget {
 }
 
 class _AddTaskState extends State<AddTask> {
+  final TextEditingController _username = TextEditingController();
+  final TextEditingController _description = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return    Scaffold(
@@ -80,6 +83,52 @@ class _AddTaskState extends State<AddTask> {
                                ),
                                child: ElevatedButton(
                          onPressed: () { 
+                          showModalBottomSheet(
+                            context: context, builder: (context){
+                              return Container(
+                                width: MediaQuery.of(context).size.width,
+                                decoration: const BoxDecoration(
+                                  color: Colors.white
+                                ),
+                                child: Column(
+                                  children: [
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width/1.1,
+                                      child: TextFormField(
+                                      controller: _username,
+                                      decoration:  const InputDecoration(
+                                        labelText: "eg: Meeting with client",
+                                        labelStyle: TextStyle(fontSize: 14, color: Color(0xFFA9B0C5)),
+                                        
+                                        enabledBorder:  OutlineInputBorder(
+                                          borderSide: BorderSide.none
+                                        ),
+                                      
+                                        ) 
+                                      ),
+                                    ), 
+                              
+                                    SizedBox(height: MediaQuery.of(context).size.height/180,),
+                              
+                                 SizedBox(
+                                  width: MediaQuery.of(context).size.width/1.1,
+                                   child: TextFormField(
+                                   controller: _description,
+                                   decoration:  const InputDecoration(
+                                     labelText: "Description",
+                                     labelStyle: TextStyle(fontSize: 14, color: Color(0xFFA9B0C5)),
+                                     
+                                     enabledBorder:  OutlineInputBorder(
+                                       borderSide: BorderSide.none
+                                     ),
+                                      
+                                     ) 
+                                   ),
+                                 ),     
+                                  ],
+                                ),
+                              );
+                            });
                           },
                          style: ButtonStyle(
                           backgroundColor:const MaterialStatePropertyAll(Color(0xFF24A19C)),
