@@ -88,16 +88,8 @@ int _currentIndex = 0;
               }); 
             }, 
             icon: _currentIndex == 1 
-                ? const Icon( 
-                    Icons.inbox, 
-                    color: Color(0xFF24A19C), 
-                    size: 20, 
-                  )
-                : const Icon( 
-                    Icons.inbox, 
-                    color: Colors.grey, 
-                    size: 20, 
-                  ), 
+                ? Image.asset('assets/images/inbox.png', color: const Color(0xFF24A19C),)
+                : Image.asset('assets/images/inbox.png', color: Colors.grey,) 
           ), 
           IconButton( 
             enableFeedback: false, 

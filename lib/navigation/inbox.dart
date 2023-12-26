@@ -133,7 +133,7 @@ class _InboxState extends State<Inbox> {
                       const Text('08:30 PM ', style: TextStyle(fontSize: 10, color: Colors.red,),),
                       Image.asset('assets/images/Chat.png'),
                       const Text(' 1 ', style: TextStyle(color: Colors.grey, fontSize: 10),),
-                      Image.asset('assets/images/Chat.png'),
+                      Image.asset('assets/images/inbox.png'),
                       const Text(' 2', style: TextStyle(color: Colors.grey, fontSize: 10),),
                       const Spacer(),
                       const Text('Mon, 19 Jul 2022', style: TextStyle(color: Colors.grey),)
