@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:new_todo/onboarding/onboarding_wrapper.dart';
-import 'package:new_todo/onboarding/splah1.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
