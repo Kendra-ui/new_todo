@@ -22,7 +22,6 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
-apply plugin: 
 
 android {
     namespace "com.example.new_todo"
@@ -67,3 +66,8 @@ flutter {
 }
 
 dependencies {}
+
+apply plugin: 'com.google.gms.google-services'
+
+
+implementation 'com.google.firebase:firebase-analytics:20.0.0'
