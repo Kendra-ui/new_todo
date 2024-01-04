@@ -70,4 +70,3 @@ dependencies {}
 apply plugin: 'com.google.gms.google-services'
 
 
-implementation 'com.google.firebase:firebase-analytics:20.0.0'

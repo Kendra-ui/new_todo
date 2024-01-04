@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_todo/Widget/todo_list.dart';
-import 'package:new_todo/navigation/navigationbar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -11,6 +11,7 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   TextEditingController email = TextEditingController();
+  final _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +81,8 @@ class _LoginState extends State<Login> {
                           const MaterialStatePropertyAll(Color(0xFF24A19C)),
                       shape: MaterialStatePropertyAll(RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10)))),
-                  onPressed: () {
+                  onPressed: () async {
+                   
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
                         builder: (BuildContext context) => const Todo()));
                   },

@@ -1,8 +1,11 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:new_todo/Account/login.dart';
 import 'package:new_todo/Widget/todo_list.dart';
-//import 'package:firebase_database/firebase_database.dart';
-//import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -15,132 +18,181 @@ class _SignUpState extends State<SignUp> {
   final TextEditingController _username = TextEditingController();
   final TextEditingController _password = TextEditingController();
 
+  bool isVisible = false;
+
   //initialize the firestore object
-  // final firestore = FirebaseFirestore.instance;
-  // get data => null;
+  final firestore = FirebaseFirestore.instance;
+  get data => null;
+  final _formKey = GlobalKey<FormState>();
+  final _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        alignment: Alignment.center,
-        child: Column(
-          children: [
-            SizedBox(
-              height: MediaQuery.of(context).size.height / 7,
-            ),
-            GestureDetector(
-                onTap: () {
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (BuildContext context) => const Login()));
-                },
-                child: const Text(
-                  'Create account',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
-                )),
-            SizedBox(
-              height: MediaQuery.of(context).size.height / 70,
-            ),
-            const Text(
-              'Create an account and feel the benefits',
-              style: TextStyle(color: Colors.black, fontSize: 14),
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height / 30,
-            ),
-            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              const Text(
-                'Username',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
+      body: SingleChildScrollView(
+        child: Container(
+          alignment: Alignment.center,
+          child: Column(
+            children: [
               SizedBox(
-                height: MediaQuery.of(context).size.height / 50,
+                height: MediaQuery.of(context).size.height / 7,
               ),
-              Container(
-                height: MediaQuery.of(context).size.height / 13,
-                width: MediaQuery.of(context).size.width / 1.4,
-                decoration: BoxDecoration(
-                    border: Border.all(
-                        width: 0.5,
-                        color: const Color.fromARGB(255, 213, 220, 241)),
-                    borderRadius: BorderRadius.circular(5)),
-                child: TextFormField(
-                    controller: _username,
-                    decoration: const InputDecoration(
-                      labelText: "Enter your username",
-                      labelStyle:
-                          TextStyle(fontSize: 14, color: Color(0xFFA9B0C5)),
-                      filled: true,
-                      fillColor: Color(0xFFF6F7F9),
-                      enabledBorder:
-                          OutlineInputBorder(borderSide: BorderSide.none),
-                    )),
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height / 50,
-              ),
-              const Text(
-                'Password',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height / 60,
-              ),
-              Container(
-                height: MediaQuery.of(context).size.height / 13,
-                width: MediaQuery.of(context).size.width / 1.4,
-                decoration: BoxDecoration(
-                    border: Border.all(
-                        width: 0.5,
-                        color: const Color.fromARGB(255, 213, 220, 241)),
-                    borderRadius: BorderRadius.circular(5)),
-                child: TextFormField(
-                    controller: _password,
-                    decoration: const InputDecoration(
-                        labelText: "Enter your Password",
-                        labelStyle:
-                            TextStyle(fontSize: 14, color: Color(0xFFA9B0C5)),
-                        filled: true,
-                        fillColor: Color(0xFFF6F7F9),
-                        enabledBorder:
-                            OutlineInputBorder(borderSide: BorderSide.none),
-                        suffixIcon: Icon(
-                          Icons.visibility_off,
-                          color: Color.fromARGB(255, 213, 220, 241),
-                        ))),
-              )
-            ]),
-            SizedBox(
-              height: MediaQuery.of(context).size.height / 2.7,
-            ),
-            Container(
-              width: MediaQuery.of(context).size.width / 1.5,
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(3)),
-              child: ElevatedButton(
-                  style: ButtonStyle(
-                      backgroundColor:
-                          const MaterialStatePropertyAll(Color(0xFF24A19C)),
-                      shape: MaterialStatePropertyAll(RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10)))),
-                  onPressed: () async {
-                    // if (_username.text.isNotEmpty &&
-                    //     _password.text.isNotEmpty) {
-                    //   //attach the data to the backend
-                    //   firestore.collection('user details').add({
-                    //     'username': _username.text,
-                    //     'password': _password.text
-                    //   });
-                    // }
+              GestureDetector(
+                  onTap: () {
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (BuildContext context) => const Todo()));
+                        builder: (BuildContext context) => const Login()));
                   },
                   child: const Text(
-                    'Sign Up',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.white),
+                    'Create account',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
                   )),
-            )
-          ],
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 70,
+              ),
+              const Text(
+                'Create an account and feel the benefits',
+                style: TextStyle(color: Colors.black, fontSize: 14),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 30,
+              ),
+              Form(
+                key: _formKey,
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Username',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height / 50,
+                      ),
+                      Container(
+                        height: MediaQuery.of(context).size.height / 13,
+                        width: MediaQuery.of(context).size.width / 1.4,
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                width: 0.5,
+                                color:
+                                    const Color.fromARGB(255, 213, 220, 241)),
+                            borderRadius: BorderRadius.circular(5)),
+                        child: TextFormField(
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Please enter text';
+                              } else if (value.length < 3) {
+                                return 'Name must be more than 2 charater';
+                              }
+                              return null;
+                            },
+                            controller: _username,
+                            decoration: const InputDecoration(
+                              labelText: "Enter your username",
+                              labelStyle: TextStyle(
+                                  fontSize: 14, color: Color(0xFFA9B0C5)),
+                              filled: true,
+                              fillColor: Color(0xFFF6F7F9),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide.none),
+                            )),
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height / 50,
+                      ),
+                      const Text(
+                        'Password',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height / 50,
+                      ),
+                      Container(
+                        height: MediaQuery.of(context).size.height / 13,
+                        width: MediaQuery.of(context).size.width / 1.4,
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                width: 0.5,
+                                color:
+                                    const Color.fromARGB(255, 213, 220, 241)),
+                            borderRadius: BorderRadius.circular(5)),
+                        child: TextFormField(
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Please enter text';
+                              } else if (value!.length <= 6) {
+                                return 'Password must be of 8 digit';
+                              }
+                              return null;
+                            },
+                            controller: _password,
+                            obscureText: isVisible,
+                            decoration: InputDecoration(
+                                labelText: "Enter your password",
+                                labelStyle: const TextStyle(
+                                    fontSize: 14, color: Color(0xFFA9B0C5)),
+                                filled: true,
+                                fillColor: const Color(0xFFF6F7F9),
+                                enabledBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide.none),
+                                suffixIcon: IconButton(
+                                  icon: Icon(isVisible
+                                      ? Icons.visibility
+                                      : Icons.visibility_off),
+                                  onPressed: () {
+                                    setState(() {
+                                      isVisible = !isVisible;
+                                    });
+                                  },
+                                ))),
+                      ),
+                    ]),
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 2.7,
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width / 1.5,
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(3)),
+                child: ElevatedButton(
+                    style: ButtonStyle(
+                        backgroundColor:
+                            const MaterialStatePropertyAll(Color(0xFF24A19C)),
+                        shape: MaterialStatePropertyAll(RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)))),
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        //attach the data to the backend
+                        // firestore.collection('user details').add({
+                        //   'username': _username.text,
+                        //   'password': _password.text
+                        // });
+                        try {
+                          final newUser =
+                              await _auth.createUserWithEmailAndPassword(
+                                  email: _username.text,
+                                  password: _password.text);
+                          if (newUser.user != null) {
+                            // User created successfully, navigate to Todo or any other screen
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        const Todo()));
+                          }
+                        } catch (e) {
+                          print('Error creating user: $e');
+                        }
+                      }
+                    },
+                    child: const Text(
+                      'Sign Up',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.white),
+                    )),
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_todo/Account/sign_up.dart';
 import 'package:new_todo/onboarding/onboarding_wrapper.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -27,6 +28,6 @@ class _MyAppState extends State<MyApp> {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const OnboardingWrapper());
+        home: const SignUp());
   }
 }
