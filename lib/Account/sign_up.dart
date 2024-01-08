@@ -2,13 +2,15 @@
 
 import 'package:flutter/material.dart';
 import 'package:new_todo/Account/login.dart';
-import 'package:new_todo/Widget/todo_list.dart';
-import 'package:firebase_database/firebase_database.dart';
+// import 'package:new_todo/Widget/todo_list.dart';
+// import 'package:firebase_database/firebase_database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart'; 
 
 class SignUp extends StatefulWidget {
-  const SignUp({super.key});
+  final String email;
+
+  const SignUp({Key? key, required this.email}) : super(key: key);
 
   @override
   State<SignUp> createState() => _SignUpState();
@@ -120,7 +122,7 @@ class _SignUpState extends State<SignUp> {
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'Please enter text';
-                              } else if (value!.length <= 6) {
+                              } else if (value.length <= 6) {
                                 return 'Password must be of 8 digit';
                               }
                               return null;
@@ -164,25 +166,24 @@ class _SignUpState extends State<SignUp> {
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         //attach the data to the backend
-                        // firestore.collection('user details').add({
-                        //   'username': _username.text,
-                        //   'password': _password.text
-                        // });
-                        try {
-                          final newUser =
-                              await _auth.createUserWithEmailAndPassword(
-                                  email: _username.text,
-                                  password: _password.text);
-                          if (newUser.user != null) {
-                            // User created successfully, navigate to Todo or any other screen
-                            Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        const Todo()));
-                          }
-                        } catch (e) {
-                          print('Error creating user: $e');
-                        }
+                        firestore.collection('user details').add({
+                          'username': _username.text,
+                          'password': _password.text,
+                          'email': widget.email
+                        });
+                        print('success');
+                        // final newUser =
+                        //       await _auth.createUserWithEmailAndPassword(
+                        //           email: _username.text,
+                        //           password: _password.text);
+                        //   if (newUser.user != null) {
+                        //     print('success');
+                        //     // User created successfully, navigate to Todo or any other screen
+                        //     Navigator.of(context).pushReplacement(
+                        //         MaterialPageRoute(
+                        //             builder: (BuildContext context) =>
+                        //                 const Todo()));
+                        //   }
                       }
                     },
                     child: const Text(
