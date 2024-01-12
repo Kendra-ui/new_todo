@@ -1,7 +1,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:new_todo/navigation/navigationbar.dart';
-import 'package:new_todo/navigation/project.dart';
 
 class ManageProject extends StatefulWidget {
   const ManageProject({super.key});
