@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:new_todo/Account/login.dart';
-import 'package:new_todo/Account/sign_up.dart';
-import 'package:new_todo/onboarding/onboarding_wrapper.dart';
+//import 'package:new_todo/Account/sign_up.dart';
+//import 'package:new_todo/onboarding/onboarding_wrapper.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:new_todo/onboarding/onboarding_wrapper.dart';
+import 'package:new_todo/onboarding/splah1.dart';
+import 'package:new_todo/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,6 +32,6 @@ class _MyAppState extends State<MyApp> {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const Login());
+        home: const OnboardingWrapper());
   }
 }

@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:new_todo/onboarding/splah1.dart';
 import 'package:new_todo/onboarding/splash2.dart';
 import 'package:new_todo/onboarding/splash3.dart';
 import 'package:new_todo/splash_screen.dart';
 
+//TODO: refactor the page to match the UI
 class OnboardingWrapper extends StatefulWidget {
   const OnboardingWrapper({super.key});
 
@@ -18,12 +21,27 @@ class _OnboardingWrapperState extends State<OnboardingWrapper> {
   final List<Widget> _pages = [
     const Splashscreen(),
     const Splash1(),
-    const Splash2()
+    const Splash2(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    if (_currentPage == 0) {
+      Timer(
+        const Duration(seconds: 3),
+        () => pageController.nextPage(
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.linear,
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: _currentPage == 0 ? Color(0xFF24A19C) : null,
       body: Column(
         children: [
           SizedBox(
@@ -53,6 +71,7 @@ class _OnboardingWrapperState extends State<OnboardingWrapper> {
               setState(() {
                 _currentPage = page;
               });
+              print("$_currentPage");
             },
             children: _pages,
           )),
@@ -74,9 +93,11 @@ class _OnboardingWrapperState extends State<OnboardingWrapper> {
                           height: 6,
                           width: _currentPage == e.key ? 24 : 8,
                           decoration: BoxDecoration(
-                            color: _currentPage == e.key
-                                ? const Color(0xFF24A19C)
-                                : const Color(0xFFCBF1F0),
+                            color: _currentPage == 0
+                                ? Colors.white
+                                : _currentPage == e.key
+                                    ? const Color(0xFF24A19C)
+                                    : const Color(0xFFCBF1F0),
                             borderRadius: BorderRadius.circular(4),
                           ),
                         ));

@@ -2,15 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:new_todo/Account/login.dart';
-// import 'package:new_todo/Widget/todo_list.dart';
-// import 'package:firebase_database/firebase_database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart'; 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:new_todo/Widget/todo_list.dart';
 
 class SignUp extends StatefulWidget {
   final String email;
 
-  const SignUp({Key? key, required this.email}) : super(key: key);
+  const SignUp({super.key, required this.email});
 
   @override
   State<SignUp> createState() => _SignUpState();
@@ -19,6 +18,7 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   final TextEditingController _username = TextEditingController();
   final TextEditingController _password = TextEditingController();
+  final TextEditingController email = TextEditingController();
 
   bool isVisible = false;
 
@@ -166,24 +166,28 @@ class _SignUpState extends State<SignUp> {
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         //attach the data to the backend
-                        firestore.collection('user details').add({
-                          'username': _username.text,
-                          'password': _password.text,
-                          'email': widget.email
-                        });
-                        print('success');
-                        // final newUser =
-                        //       await _auth.createUserWithEmailAndPassword(
-                        //           email: _username.text,
-                        //           password: _password.text);
-                        //   if (newUser.user != null) {
-                        //     print('success');
-                        //     // User created successfully, navigate to Todo or any other screen
-                        //     Navigator.of(context).pushReplacement(
-                        //         MaterialPageRoute(
-                        //             builder: (BuildContext context) =>
-                        //                 const Todo()));
-                        //   }
+                        // firestore.collection('user details').add({
+                        //   'username': _username.text,
+                        //   'password': _password.text,
+                        //   'email': widget.email
+                        // });
+
+                        try {
+                          final newUser =
+                              await _auth.createUserWithEmailAndPassword(
+                                  email: widget.email.trim(),
+                                  password: _password.text.trim());
+                          if (newUser.user != null) {
+                            print('success: ${newUser.user!.uid}');
+                            // User created successfully, navigate to Todo or any other screen
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        const Todo()));
+                          }
+                        } catch (e) {
+                          print('Failed to register: $e');
+                        }
                       }
                     },
                     child: const Text(

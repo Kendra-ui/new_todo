@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:new_todo/onboarding/splah1.dart';
 
 class Splashscreen extends StatefulWidget {
   const Splashscreen({super.key});
@@ -8,6 +11,8 @@ class Splashscreen extends StatefulWidget {
 }
 
 class _SplashscreenState extends State<Splashscreen> {
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

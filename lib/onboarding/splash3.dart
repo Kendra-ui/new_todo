@@ -88,7 +88,7 @@ class _Splash3State extends State<Splash3> {
                 ))
               ),
               onPressed: (){
-                     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=> const SignUp()));
+                     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=> const SignUp(email: '',)));
       
               }, 
               child:  const Row(
