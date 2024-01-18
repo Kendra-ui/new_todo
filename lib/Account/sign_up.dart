@@ -1,11 +1,8 @@
 // ignore_for_file: avoid_print
 
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:new_todo/Account/login.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:new_todo/Widget/todo_list.dart';
 import 'package:new_todo/model/user.dart';
 import 'package:new_todo/navigation/navigationbar.dart';
 import 'package:new_todo/service/databaseservice.dart';
@@ -27,6 +24,7 @@ class _SignUpState extends State<SignUp> {
   bool isVisible = false;
   bool isUserExist = false;
   bool isEmailExist = false;
+  bool isLogin = false;
 
   //initialize the firestore object
   final firestore = FirebaseFirestore.instance;
@@ -180,6 +178,12 @@ class _SignUpState extends State<SignUp> {
                       style: TextStyle(color: Colors.red),
                     )
                   : const SizedBox(),
+              isLogin
+                  ? const Text(
+                      "Username or password incorrect!",
+                      style: TextStyle(color: Colors.red),
+                    )
+                  : const SizedBox(),
               SizedBox(
                 height: MediaQuery.of(context).size.height / 3.5,
               ),
@@ -199,6 +203,10 @@ class _SignUpState extends State<SignUp> {
                             await databaseHelper.checkUserExist(_username.text);
                         bool emailExist =
                             await databaseHelper.checkEmailExist(widget.email);
+                        bool userIsPresent = await databaseHelper.signin(User(
+                            email: widget.email,
+                            username: _username.text.trim(),
+                            password: _password.text.trim()));
 
                         if (userExist) {
                           setState(() {
@@ -226,6 +234,17 @@ class _SignUpState extends State<SignUp> {
                                   .pushReplacement(MaterialPageRoute(
                                       builder: (BuildContext context) =>
                                           const CustomNavigationBar())));
+                        }
+
+                        if (userIsPresent == true) {
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      const CustomNavigationBar()));
+                        } else {
+                          setState(() {
+                            isLogin = true;
+                          });
                         }
                       }
                     },
