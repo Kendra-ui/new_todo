@@ -3,8 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:new_todo/Account/login.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:new_todo/Widget/todo_list.dart';
+import 'package:new_todo/model/user.dart';
+import 'package:new_todo/navigation/navigationbar.dart';
+import 'package:new_todo/service/databaseservice.dart';
 
 class SignUp extends StatefulWidget {
   final String email;
@@ -26,7 +28,16 @@ class _SignUpState extends State<SignUp> {
   final firestore = FirebaseFirestore.instance;
   get data => null;
   final _formKey = GlobalKey<FormState>();
-  final _auth = FirebaseAuth.instance;
+  late DatabaseService databaseHelper;
+
+  @override
+  void initState() {
+    super.initState();
+    databaseHelper = DatabaseService();
+    // Initialize the database
+    databaseHelper.initialize();
+    DatabaseService().fetchData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -172,22 +183,32 @@ class _SignUpState extends State<SignUp> {
                         //   'email': widget.email
                         // });
 
-                        try {
-                          final newUser =
-                              await _auth.createUserWithEmailAndPassword(
-                                  email: widget.email.trim(),
-                                  password: _password.text.trim());
-                          if (newUser.user != null) {
-                            print('success: ${newUser.user!.uid}');
-                            // User created successfully, navigate to Todo or any other screen
-                            Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
+                        // try {
+                        //   final newUser =
+                        //       await _auth.createUserWithEmailAndPassword(
+                        //           email: widget.email.trim(),
+                        //           password: _password.text.trim());
+                        //   if (newUser.user != null) {
+                        //     print('success: ${newUser.user!.uid}');
+                        //     // User created successfully, navigate to Todo or any other screen
+                        //     Navigator.of(context).pushReplacement(
+                        //         MaterialPageRoute(
+                        //             builder: (BuildContext context) =>
+                        //                 const Todo()));
+                        //   }
+                        // } catch (e) {
+                        //   print('Failed to register: $e');
+                        // }
+                        final databaseHelper = DatabaseService();
+                        databaseHelper
+                            .signup(User(
+                                email: widget.email,
+                                username: _username.text,
+                                password: _password.text))
+                            .whenComplete(() => Navigator.of(context)
+                                .pushReplacement(MaterialPageRoute(
                                     builder: (BuildContext context) =>
-                                        const Todo()));
-                          }
-                        } catch (e) {
-                          print('Failed to register: $e');
-                        }
+                                        const CustomNavigationBar())));
                       }
                     },
                     child: const Text(

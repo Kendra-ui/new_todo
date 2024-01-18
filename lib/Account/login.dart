@@ -13,6 +13,7 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   TextEditingController email = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   final firestore = FirebaseFirestore.instance;
   get data => null;
@@ -42,37 +43,51 @@ class _LoginState extends State<Login> {
               SizedBox(
                 height: MediaQuery.of(context).size.height / 30,
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Email Address',
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height / 50,
-                  ),
-                  Container(
-                    height: MediaQuery.of(context).size.height / 13,
-                    width: MediaQuery.of(context).size.width / 1.4,
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                            width: 0.5,
-                            color: const Color.fromARGB(255, 213, 220, 241)),
-                        borderRadius: BorderRadius.circular(5)),
-                    child: TextFormField(
-                        controller: email,
-                        decoration: const InputDecoration(
-                          labelText: "name@example.com",
-                          labelStyle:
-                              TextStyle(fontSize: 14, color: Color(0xFFA9B0C5)),
-                          filled: true,
-                          fillColor: Color(0xFFF6F7F9),
-                          enabledBorder:
-                              OutlineInputBorder(borderSide: BorderSide.none),
-                        )),
-                  )
-                ],
+              Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Email Address',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height / 50,
+                    ),
+                    Container(
+                      height: MediaQuery.of(context).size.height / 13,
+                      width: MediaQuery.of(context).size.width / 1.4,
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                              width: 0.5,
+                              color: const Color.fromARGB(255, 213, 220, 241)),
+                          borderRadius: BorderRadius.circular(5)),
+                      child: TextFormField(
+                          validator: (value) {
+                            String pattern =
+                                r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+                            RegExp regex = RegExp(pattern);
+                            if (!regex.hasMatch(value!)) {
+                              return 'Enter Valid Email';
+                            } else if (value.isEmpty) {
+                              return 'Please enter text';
+                            }
+                            return null;
+                          },
+                          controller: email,
+                          decoration: const InputDecoration(
+                            labelText: "name@example.com",
+                            labelStyle: TextStyle(
+                                fontSize: 14, color: Color(0xFFA9B0C5)),
+                            filled: true,
+                            fillColor: Color(0xFFF6F7F9),
+                            enabledBorder:
+                                OutlineInputBorder(borderSide: BorderSide.none),
+                          )),
+                    )
+                  ],
+                ),
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height / 2,
@@ -87,12 +102,13 @@ class _LoginState extends State<Login> {
                             const MaterialStatePropertyAll(Color(0xFF24A19C)),
                         shape: MaterialStatePropertyAll(RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)))),
-                    onPressed: ()  {
-                      
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (BuildContext context) => SignUp(email: email.text,
-                                
-                              )));
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (BuildContext context) => SignUp(
+                                  email: email.text,
+                                )));
+                      }
                     },
                     child: const Text(
                       'Next',

@@ -1,136 +1,67 @@
-// ignore_for_file: avoid_print
+import 'dart:developer';
 
-import 'package:new_todo/service/database_interface.dart';
-import 'package:path/path.dart';
+import 'package:new_todo/model/user.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart';
 
-class DatabaseService implements DatabaseInterface {
-  @override
-  Future<Database> initialize() async {
-    final databasePath = await getDatabasesPath();
+class DatabaseService {
+  Database? _database;
 
-    final path = join(databasePath, 'Signup.db');
-
-    return await openDatabase(
-      path,
-      version: 1,
-      onCreate: (db, version) async {
-        await db.execute('''
-        CREATE TABLE Signup (
-          userId INTEGER PRIMARY KEY,
-          email TEXT NOT NULL,
-          username TEXT NOT NULL,
-          password TEXT NOT NULL,
-          UNIQUE(email, username)
-        )
-''');
-      },
-    );
-  }
-
-  @override
-  Future createTable(Database db, Map<String, Object?> column) async {
-    int id = await db.insert(
-      'Signup',
-      column,
-    );
-    return id;
-  }
-
-  @override
-  Future<Map<String, dynamic>?> getUser(Database database, String email) async {
-    print('kkkk ${database.isOpen}');
-    try {
-      final user = await database.query(
-        'Signup',
-        where: 'email = ?',
-        whereArgs: [email],
-      );
-
-      if (user.isNotEmpty) {
-        return user.first;
-        //print('yes');
-      } else {
-        print('false');
-      }
-    } catch (e) {
-      print('Error fetching user: $e');
+//checking if the db is initialized
+  Future<Database> get database async {
+    if (_database != null) {
+      return _database!;
     }
-
-    return null;
+    _database = await initialize();
+    return _database!;
   }
 
-  @override
-  Future<Map<String, dynamic>?> fetchData(
-      Database db, String email, String password) async {
-    print('AAAAAAA ${db.isOpen}');
-
-    try {
-      final queryResult = await db.query('Signup',
-          where: 'email = ?  AND password = ? ', whereArgs: [email, password]);
-      if (queryResult.isNotEmpty) {
-        return {
-          'password': queryResult.first['password'],
-        };
-      }
-    } catch (e) {
-      print('$e');
-    }
-    print('AAAAAAA vvvvvvv${db.isOpen}');
-
-    return null;
-
-    //check if email exist
+  Future initialize() async {
+    String path = await getDatabasesPath();
+    return await openDatabase(join(path, 'app.db'),
+        version: 1, onCreate: createDB);
   }
 
-  @override
-  Future<bool> signIn(String email, String password) async {
+  Future createDB(Database db, int version) async {
+    await db.execute("""
+    CREATE TABLE user(
+      "id" INTEGER PRIMARY KEY NOT NULL,
+      "email" TEXT NOT NULL,
+      "username" TEXT NOT NULL,
+      "password" TEXT NOT NULL
+    )""");
+  }
+
+//insert user info after sign up
+  Future<int> signup(User user) async {
     final Database db = await initialize();
-    final emailAndPassword = await fetchData(db, email, password);
+    return await db.insert('user', user.toMap());
+  }
 
-    if (emailAndPassword != null && emailAndPassword['password'] == password) {
+  Future fetchData() async {
+    final db = await database;
+    final queryResult = await db.query('user');
+    inspect(queryResult);
+  }
+
+  //Method for login
+  Future<bool> signin(User user) async {
+    final Database db = await initialize();
+
+    var result = await db.rawQuery(
+        "select * from users where fullname = '${user.username},' AND password = '${user.password},'");
+    if (result.isNotEmpty) {
       return true;
-    }
-
-    return false;
-  }
-
-  @override
-  Future addUserIfNotExists(
-      Database database, String fullname, String email, String password) async {
-    try {
-      // Check if the username or email already exists
-      final isExisting = await checkIfUserExists(database, fullname, email);
-
-      if (!isExisting) {
-        // If the username or email doesn't exist, insert the new user data
-        final userData = {
-          'fullname': fullname,
-          'email': email,
-          'password': password,
-        };
-
-        final result = await createTable(database, userData);
-
-        if (result != -1) {
-          return true;
-        } else {
-          print('Username or email already exists!');
-        }
-      }
-    } catch (e) {
-      print('$e');
+    } else {
+      return false;
     }
   }
 
-  Future<bool> checkIfUserExists(
-      Database database, String fullname, String email) async {
-    final List<Map<String, dynamic>> result = await database.rawQuery(
-      'SELECT COUNT(*) AS count FROM Signup WHERE fullname = ? OR email = ?',
-      [fullname, email],
-    );
-
-    final count = Sqflite.firstIntValue(result);
-    return count != null && count > 0;
+//Get user after login
+  Future<User?> getUser(String username) async {
+    final Database db = await initialize();
+    var res =
+        await db.query("user", where: "username = ?", whereArgs: [username]);
+        return res.isNotEmpty? User.fromMap(res.first):null;
   }
 }
