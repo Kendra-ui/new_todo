@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:new_todo/Account/sign_up.dart';
-//import 'package:firebase_database/firebase_database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
+import 'package:new_todo/service/databaseservice.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -17,6 +16,8 @@ class _LoginState extends State<Login> {
 
   final firestore = FirebaseFirestore.instance;
   get data => null;
+
+  late DatabaseService databaseHelper;
 
   @override
   Widget build(BuildContext context) {
@@ -90,6 +91,15 @@ class _LoginState extends State<Login> {
                 ),
               ),
               SizedBox(
+                height: MediaQuery.of(context).size.height / 30,
+              ),
+              // isEmailExist
+              //     ? const Text(
+              //         'Email already exist',
+              //         style: TextStyle(color: Colors.red),
+              //       )
+              //     : const SizedBox(),
+              SizedBox(
                 height: MediaQuery.of(context).size.height / 2,
               ),
               Container(
@@ -104,10 +114,13 @@ class _LoginState extends State<Login> {
                             borderRadius: BorderRadius.circular(10)))),
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (BuildContext context) => SignUp(
-                                  email: email.text,
-                                )));
+                        
+                          Navigator.of(context)
+                              .pushReplacement(MaterialPageRoute(
+                                  builder: (BuildContext context) => SignUp(
+                                        email: email.text,
+                                      )));
+                        
                       }
                     },
                     child: const Text(

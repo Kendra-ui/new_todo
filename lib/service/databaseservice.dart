@@ -62,6 +62,21 @@ class DatabaseService {
     final Database db = await initialize();
     var res =
         await db.query("user", where: "username = ?", whereArgs: [username]);
-        return res.isNotEmpty? User.fromMap(res.first):null;
+    return res.isNotEmpty ? User.fromMap(res.first) : null;
+  }
+
+  //check if user exist,if duplication catch the exeption
+  Future<bool> checkUserExist(String username) async {
+    final Database db = await initialize();
+    final List<Map<String, dynamic>> res =
+        await db.query("user", where: "username = ?", whereArgs: [username]);
+    return res.isNotEmpty;
+  }
+
+   Future<bool> checkEmailExist(String email) async {
+    final Database db = await initialize();
+    final List<Map<String, dynamic>> res =
+        await db.query("user", where: "email = ?", whereArgs: [email]);
+    return res.isNotEmpty;
   }
 }

@@ -1,5 +1,7 @@
 // ignore_for_file: avoid_print
 
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:new_todo/Account/login.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -23,6 +25,8 @@ class _SignUpState extends State<SignUp> {
   final TextEditingController email = TextEditingController();
 
   bool isVisible = false;
+  bool isUserExist = false;
+  bool isEmailExist = false;
 
   //initialize the firestore object
   final firestore = FirebaseFirestore.instance;
@@ -162,7 +166,22 @@ class _SignUpState extends State<SignUp> {
                     ]),
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height / 2.7,
+                height: MediaQuery.of(context).size.height / 30,
+              ),
+              isUserExist
+                  ? const Text(
+                      'User already exist, please change the name',
+                      style: TextStyle(color: Colors.red),
+                    )
+                  : const SizedBox(),
+              isEmailExist
+                  ? const Text(
+                      'User already exist, please change the email',
+                      style: TextStyle(color: Colors.red),
+                    )
+                  : const SizedBox(),
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 3.5,
               ),
               Container(
                 width: MediaQuery.of(context).size.width / 1.5,
@@ -176,39 +195,38 @@ class _SignUpState extends State<SignUp> {
                             borderRadius: BorderRadius.circular(10)))),
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        //attach the data to the backend
-                        // firestore.collection('user details').add({
-                        //   'username': _username.text,
-                        //   'password': _password.text,
-                        //   'email': widget.email
-                        // });
+                        bool userExist =
+                            await databaseHelper.checkUserExist(_username.text);
+                        bool emailExist =
+                            await databaseHelper.checkEmailExist(widget.email);
 
-                        // try {
-                        //   final newUser =
-                        //       await _auth.createUserWithEmailAndPassword(
-                        //           email: widget.email.trim(),
-                        //           password: _password.text.trim());
-                        //   if (newUser.user != null) {
-                        //     print('success: ${newUser.user!.uid}');
-                        //     // User created successfully, navigate to Todo or any other screen
-                        //     Navigator.of(context).pushReplacement(
-                        //         MaterialPageRoute(
-                        //             builder: (BuildContext context) =>
-                        //                 const Todo()));
-                        //   }
-                        // } catch (e) {
-                        //   print('Failed to register: $e');
-                        // }
-                        final databaseHelper = DatabaseService();
-                        databaseHelper
-                            .signup(User(
-                                email: widget.email,
-                                username: _username.text,
-                                password: _password.text))
-                            .whenComplete(() => Navigator.of(context)
-                                .pushReplacement(MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        const CustomNavigationBar())));
+                        if (userExist) {
+                          setState(() {
+                            isUserExist = true;
+                            isEmailExist = false;
+                          });
+                        } else if (emailExist) {
+                          setState(() {
+                            isEmailExist = true;
+                            isUserExist = false;
+                          });
+                        } else if (emailExist && userExist) {
+                          setState(() {
+                            isEmailExist = true;
+                            isUserExist = true;
+                          });
+                        } else {
+                          final databaseHelper = DatabaseService();
+                          databaseHelper
+                              .signup(User(
+                                  email: widget.email,
+                                  username: _username.text,
+                                  password: _password.text))
+                              .whenComplete(() => Navigator.of(context)
+                                  .pushReplacement(MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          const CustomNavigationBar())));
+                        }
                       }
                     },
                     child: const Text(
@@ -216,7 +234,7 @@ class _SignUpState extends State<SignUp> {
                       textAlign: TextAlign.center,
                       style: TextStyle(color: Colors.white),
                     )),
-              )
+              ),
             ],
           ),
         ),
