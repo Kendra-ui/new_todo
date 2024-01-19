@@ -7,6 +7,8 @@ import 'package:new_todo/model/user.dart';
 import 'package:new_todo/navigation/navigationbar.dart';
 import 'package:new_todo/service/databaseservice.dart';
 
+enum AuthMode { signUp, login }
+
 class SignUp extends StatefulWidget {
   final String email;
 
@@ -25,6 +27,12 @@ class _SignUpState extends State<SignUp> {
   bool isUserExist = false;
   bool isEmailExist = false;
   bool isLogin = false;
+  bool allfields = false;
+  bool areAllFieldsFilled() {
+    return _username.text.isNotEmpty &&
+        _password.text.isNotEmpty &&
+        email.text.isNotEmpty;
+  }
 
   //initialize the firestore object
   final firestore = FirebaseFirestore.instance;
@@ -184,6 +192,12 @@ class _SignUpState extends State<SignUp> {
                       style: TextStyle(color: Colors.red),
                     )
                   : const SizedBox(),
+              allfields
+                  ? const Text(
+                      "Please fill in all the fields",
+                      style: TextStyle(color: Colors.red),
+                    )
+                  : const SizedBox(),
               SizedBox(
                 height: MediaQuery.of(context).size.height / 3.5,
               ),
@@ -203,12 +217,14 @@ class _SignUpState extends State<SignUp> {
                             await databaseHelper.checkUserExist(_username.text);
                         bool emailExist =
                             await databaseHelper.checkEmailExist(widget.email);
-                        bool userIsPresent = await databaseHelper.signin(User(
-                            email: widget.email,
-                            username: _username.text.trim(),
-                            password: _password.text.trim()));
-
-                        if (userExist) {
+                        if (_username.text.isEmpty ||
+                            _password.text.isEmpty ||
+                            widget.email.isEmpty) {
+                          // At least one field is not filled
+                          setState(() {
+                            allfields = true;
+                          });
+                        } else if (userExist) {
                           setState(() {
                             isUserExist = true;
                             isEmailExist = false;
@@ -218,12 +234,8 @@ class _SignUpState extends State<SignUp> {
                             isEmailExist = true;
                             isUserExist = false;
                           });
-                        } else if (emailExist && userExist) {
-                          setState(() {
-                            isEmailExist = true;
-                            isUserExist = true;
-                          });
                         } else {
+                          // All fields are filled, proceed with sign-up logic
                           final databaseHelper = DatabaseService();
                           databaseHelper
                               .signup(User(
@@ -236,16 +248,22 @@ class _SignUpState extends State<SignUp> {
                                           const CustomNavigationBar())));
                         }
 
-                        if (userIsPresent == true) {
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      const CustomNavigationBar()));
-                        } else {
-                          setState(() {
-                            isLogin = true;
-                          });
-                        }
+                        //for login
+                        //   bool userIsPresent = await databaseHelper.signin(User(
+                        //       email: widget.email,
+                        //       username: _username.text.trim(),
+                        //       password: _password.text.trim()));
+                        //   if (userIsPresent == true) {
+                        //     setState(() {
+                        //       isLogin = true;
+                        //       isUserExist = false;
+                        //     });
+                        //   } else {
+                        //     Navigator.of(context).pushReplacement(
+                        //         MaterialPageRoute(
+                        //             builder: (BuildContext context) =>
+                        //                 const CustomNavigationBar()));
+                        //   }
                       }
                     },
                     child: const Text(

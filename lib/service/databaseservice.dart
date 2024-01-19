@@ -49,7 +49,7 @@ class DatabaseService {
     final Database db = await initialize();
 
     var result = await db.rawQuery(
-        "select * from users where fullname = '${user.username},' AND password = '${user.password},'");
+        "select * from user where username = '${user.username},' AND password = '${user.password}'");
     if (result.isNotEmpty) {
       return true;
     } else {
@@ -73,7 +73,7 @@ class DatabaseService {
     return res.isNotEmpty;
   }
 
-   Future<bool> checkEmailExist(String email) async {
+  Future<bool> checkEmailExist(String email) async {
     final Database db = await initialize();
     final List<Map<String, dynamic>> res =
         await db.query("user", where: "email = ?", whereArgs: [email]);
