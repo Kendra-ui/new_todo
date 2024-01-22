@@ -10,7 +10,7 @@ class AddTask extends StatefulWidget {
 }
 
 class _AddTaskState extends State<AddTask> {
-  final TextEditingController _username = TextEditingController();
+  final TextEditingController _title = TextEditingController();
   final TextEditingController _description = TextEditingController();
 
   @override
@@ -39,12 +39,12 @@ class _AddTaskState extends State<AddTask> {
                                         email: '',
                                       )));
                         },
-                        child: Text(
+                        child: const Text(
                           'Today',
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 24),
                         )),
-                    Text('Best platform for creating to-do lists')
+                    const Text('Best platform for creating to-do lists')
                   ],
                 ),
                 SizedBox(
@@ -114,7 +114,7 @@ class _AddTaskState extends State<AddTask> {
                                                     .width /
                                                 1.1,
                                             child: TextFormField(
-                                                controller: _username,
+                                                controller: _title,
                                                 decoration:
                                                     const InputDecoration(
                                                   labelText:
