@@ -1,11 +1,11 @@
-class User {
+class Users {
   final String email;
   final String username;
   final String password;
 
-  User({required this.email, required this.username, required this.password});
+  Users({required this.email, required this.username, required this.password});
 
-  factory User.fromMap(Map<String, dynamic> json) => User(
+  factory Users.fromMap(Map<String, dynamic> json) => Users(
       email: json["email"],
       username: json["username"],
       password: json["password"]);

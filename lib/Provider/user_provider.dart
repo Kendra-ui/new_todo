@@ -1,18 +1,35 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:new_todo/model/user.dart';
 import 'package:new_todo/service/databaseservice.dart';
-import 'package:sqflite/sqflite.dart';
 
 class UserProvider extends ChangeNotifier {
-  final DatabaseService databaseService = DatabaseService();
+  final DatabaseService _databaseService = DatabaseService();
 
-  Database? database;
+  Future<int> signUp(String email, String username, String password) async {
+    final user = Users(email: email, username: username, password: password);
+    return await _databaseService.signup(user);
+  }
 
-  Future<void> databaseInitialize() async {
-    database = await databaseService.initialize();
+  Future<bool> signIn(String username, String password) async {
+    final user = Users(username: username, password: password, email: '');
+    return await _databaseService.signin(user);
+  }
 
-    print('++++ initialiized');
+  Future<Users?> getUser(String username) async {
+    return await _databaseService.getUserss(username);
+  }
+
+  Future<bool> checkUserExist(String username) async {
+    return await _databaseService.checkUserssExist(username);
+  }
+
+  Future<bool> checkEmailExist(String email) async {
+    return await _databaseService.checkEmailExist(email);
+  }
+
+
+  // Example of notifying listeners when user data is updated
+  Future<void> updateUserData(String username) async {
     notifyListeners();
   }
 }

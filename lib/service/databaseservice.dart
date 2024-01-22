@@ -33,7 +33,7 @@ class DatabaseService {
   }
 
 //insert user info after sign up
-  Future<int> signup(User user) async {
+  Future<int> signup(Users user) async {
     final Database db = await initialize();
     return await db.insert('user', user.toMap());
   }
@@ -45,7 +45,7 @@ class DatabaseService {
   }
 
   //Method for login
-  Future<bool> signin(User user) async {
+  Future<bool> signin(Users user) async {
     final Database db = await initialize();
 
     var result = await db.rawQuery(
@@ -58,15 +58,15 @@ class DatabaseService {
   }
 
 //Get user after login
-  Future<User?> getUser(String username) async {
+  Future<Users?> getUserss(String username) async {
     final Database db = await initialize();
     var res =
         await db.query("user", where: "username = ?", whereArgs: [username]);
-    return res.isNotEmpty ? User.fromMap(res.first) : null;
+    return res.isNotEmpty ? Users.fromMap(res.first) : null;
   }
 
   //check if user exist,if duplication catch the exeption
-  Future<bool> checkUserExist(String username) async {
+  Future<bool> checkUserssExist(String username) async {
     final Database db = await initialize();
     final List<Map<String, dynamic>> res =
         await db.query("user", where: "username = ?", whereArgs: [username]);
