@@ -3,9 +3,12 @@
 import 'package:flutter/material.dart';
 import 'package:new_todo/Account/login.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:new_todo/model/user.dart';
+import 'package:new_todo/Provider/todo_provider.dart';
+import 'package:new_todo/model/task.dart';
 import 'package:new_todo/navigation/navigationbar.dart';
+import 'package:new_todo/provider/user_provider.dart';
 import 'package:new_todo/service/databaseservice.dart';
+import 'package:provider/provider.dart';
 
 enum AuthMode { signUp, login }
 
@@ -27,18 +30,14 @@ class _SignUpState extends State<SignUp> {
   bool isUserExist = false;
   bool isEmailExist = false;
   bool isLogin = false;
-  bool allfields = false;
-  bool areAllFieldsFilled() {
-    return _username.text.isNotEmpty &&
-        _password.text.isNotEmpty &&
-        email.text.isNotEmpty;
-  }
 
   //initialize the firestore object
   final firestore = FirebaseFirestore.instance;
   get data => null;
   final _formKey = GlobalKey<FormState>();
   late DatabaseService databaseHelper;
+  late UserProvider _userProvider;
+  late TodoProvider _todoProvider;
 
   @override
   void initState() {
@@ -51,6 +50,8 @@ class _SignUpState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
+    _userProvider = context.read<UserProvider>();
+    _todoProvider = context.read<TodoProvider>();
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -176,25 +177,19 @@ class _SignUpState extends State<SignUp> {
               ),
               isUserExist
                   ? const Text(
-                      'User already exist, please change the name',
+                      'User already exist, please change the name or email',
                       style: TextStyle(color: Colors.red),
                     )
                   : const SizedBox(),
-              isEmailExist
-                  ? const Text(
-                      'User already exist, please change the email',
-                      style: TextStyle(color: Colors.red),
-                    )
-                  : const SizedBox(),
+              // isEmailExist
+              //     ? const Text(
+              //         'User already exist, please change the email',
+              //         style: TextStyle(color: Colors.red),
+              //       )
+              //     : const SizedBox(),
               isLogin
                   ? const Text(
                       "Username or password incorrect!",
-                      style: TextStyle(color: Colors.red),
-                    )
-                  : const SizedBox(),
-              allfields
-                  ? const Text(
-                      "Please fill in all the fields",
                       style: TextStyle(color: Colors.red),
                     )
                   : const SizedBox(),
@@ -212,58 +207,35 @@ class _SignUpState extends State<SignUp> {
                         shape: MaterialStatePropertyAll(RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)))),
                     onPressed: () async {
+                      FocusManager.instance.primaryFocus?.unfocus();
                       if (_formKey.currentState!.validate()) {
-                        bool userExist =
-                            await databaseHelper.checkUserExist(_username.text);
-                        bool emailExist =
-                            await databaseHelper.checkEmailExist(widget.email);
-                        if (_username.text.isEmpty ||
-                            _password.text.isEmpty ||
-                            widget.email.isEmpty) {
-                          // At least one field is not filled
-                          setState(() {
-                            allfields = true;
-                          });
-                        } else if (userExist) {
+                        bool userExist = await _userProvider.checkUserExist(
+                            widget.email, _username.text);
+                        // bool emailExist =
+                        //     await _userProvider.checkEmailExist(widget.email);
+                        if (userExist) {
                           setState(() {
                             isUserExist = true;
                             isEmailExist = false;
                           });
-                        } else if (emailExist) {
-                          setState(() {
-                            isEmailExist = true;
-                            isUserExist = false;
-                          });
+                          // }
+                          // else if (emailExist) {
+                          //   setState(() {
+                          //     isEmailExist = true;
+                          //     isUserExist = false;
+                          //   });
                         } else {
                           // All fields are filled, proceed with sign-up logic
-                          final databaseHelper = DatabaseService();
-                          databaseHelper
-                              .signup(User(
-                                  email: widget.email,
-                                  username: _username.text,
-                                  password: _password.text))
-                              .whenComplete(() => Navigator.of(context)
+                          _userProvider
+                              .signUp(widget.email, _username.text.trim(),
+                                  _password.text.trim())
+                              .whenComplete(()  async { 
+                                String userTask = await _todoProvider.getTask(_username.text.trim());
+                                Navigator.of(context)
                                   .pushReplacement(MaterialPageRoute(
                                       builder: (BuildContext context) =>
-                                          const CustomNavigationBar())));
+                                          const CustomNavigationBar()));});
                         }
-
-                        //for login
-                        //   bool userIsPresent = await databaseHelper.signin(User(
-                        //       email: widget.email,
-                        //       username: _username.text.trim(),
-                        //       password: _password.text.trim()));
-                        //   if (userIsPresent == true) {
-                        //     setState(() {
-                        //       isLogin = true;
-                        //       isUserExist = false;
-                        //     });
-                        //   } else {
-                        //     Navigator.of(context).pushReplacement(
-                        //         MaterialPageRoute(
-                        //             builder: (BuildContext context) =>
-                        //                 const CustomNavigationBar()));
-                        //   }
                       }
                     },
                     child: const Text(
