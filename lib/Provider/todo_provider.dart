@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_todo/model/task.dart';
 import 'package:new_todo/service/databaseservice.dart';
-import 'package:sqflite/sqflite.dart';
 
 class TodoProvider extends ChangeNotifier {
   List<Task> _task = [];
@@ -13,6 +12,7 @@ class TodoProvider extends ChangeNotifier {
   ) async {
     try {
       _task = await databaseService.getTask(username);
+      print('good');
       notifyListeners();
     } catch (e) {
       return e.toString();

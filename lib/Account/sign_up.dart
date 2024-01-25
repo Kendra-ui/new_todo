@@ -229,12 +229,21 @@ class _SignUpState extends State<SignUp> {
                           _userProvider
                               .signUp(widget.email, _username.text.trim(),
                                   _password.text.trim())
-                              .whenComplete(()  async { 
-                                String userTask = await _todoProvider.getTask(_username.text.trim());
-                                Navigator.of(context)
-                                  .pushReplacement(MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                          const CustomNavigationBar()));});
+                              .then((_) {
+                            TodoProvider todoProvider =
+                                Provider.of<TodoProvider>(context,
+                                    listen: false);
+                            todoProvider
+                                .getTask(_username.text.trim())
+                                .whenComplete(() async {
+                              Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      const CustomNavigationBar(),
+                                ),
+                              );
+                            });
+                          });
                         }
                       }
                     },
