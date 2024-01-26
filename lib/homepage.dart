@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:new_todo/onboarding/onboarding_wrapper.dart';
+import 'package:new_todo/provider/user_provider.dart';
+import 'package:provider/provider.dart';
 
 
 
@@ -11,11 +14,24 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
+
 class _HomeState extends State<Home> {
+
+  @override
+  void initState() {
+    super.initState();
+WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+
+   Provider.of<UserProvider>(context, listen: false).dataBaseInitialize();
+  
+  
+});
+
+  }
  @override
   Widget build(BuildContext context) {
     
-    return const Scaffold();
+    return const OnboardingWrapper();
    
  
   }

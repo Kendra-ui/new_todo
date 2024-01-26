@@ -128,14 +128,12 @@ class _AddTaskState extends State<AddTask> {
                                                               BorderSide.none),
                                                 )),
                                           ),
-
                                           SizedBox(
                                             height: MediaQuery.of(context)
                                                     .size
                                                     .height /
                                                 180,
                                           ),
-
                                           SizedBox(
                                             width: MediaQuery.of(context)
                                                     .size
@@ -155,33 +153,12 @@ class _AddTaskState extends State<AddTask> {
                                                               BorderSide.none),
                                                 )),
                                           ),
-
                                           SizedBox(
                                             height: MediaQuery.of(context)
                                                     .size
                                                     .height /
                                                 50,
                                           ),
-
-                                          //  SizedBox(
-                                          //   width: MediaQuery.of(context).size.width/1.15,
-
-                                          //    child: Row(
-                                          //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                          //     children: [
-                                          //       Image.asset('assets/images/inbox.png'),
-                                          //       const Icon(Icons.calendar_month, color: Colors.grey,),
-                                          //       const Icon(Icons.timer, color: Colors.grey,),
-                                          //       const Icon(Icons.flag_outlined, color: Colors.grey,),
-                                          //       const Spacer(),
-                                          //       Image.asset('assets/images/send.png')
-
-                                          //     ],
-                                          //    ),
-                                          //  ),
-                                          // SizedBox(height: MediaQuery.of(context).size.height/90,),
-
-                                          //  const Divider(endIndent: 25, indent: 25, color: Colors.grey,)
                                         ],
                                       ),
                                     );

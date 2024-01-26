@@ -1,11 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:new_todo/model/task.dart';
 import 'package:new_todo/service/databaseservice.dart';
+import 'package:sqflite/sqflite.dart';
 
 class TodoProvider extends ChangeNotifier {
   List<Task> _task = [];
   List<Task> get task => _task;
   DatabaseService databaseService = DatabaseService();
+
+  Database? database;
+
+  Future<void> dataBaseInitialize() async {
+    database = await databaseService.initialize();
+
+    print(
+        "++++++++++++++++++++++++++++++++++++++++ initialize database is ${database!.isOpen}");
+    notifyListeners();
+  }
 
   Future<String> getTask(
     String username,

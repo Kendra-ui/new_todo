@@ -46,6 +46,7 @@ class _SignUpState extends State<SignUp> {
     // Initialize the database
     databaseHelper.initialize();
     DatabaseService().fetchData();
+    DatabaseService().fetchTodoData();
   }
 
   @override
@@ -177,16 +178,16 @@ class _SignUpState extends State<SignUp> {
               ),
               isUserExist
                   ? const Text(
-                      'User already exist, please change the name or email',
+                      'User already exist, please change the name ',
                       style: TextStyle(color: Colors.red),
                     )
                   : const SizedBox(),
-              // isEmailExist
-              //     ? const Text(
-              //         'User already exist, please change the email',
-              //         style: TextStyle(color: Colors.red),
-              //       )
-              //     : const SizedBox(),
+              isEmailExist
+                  ? const Text(
+                      'User already exist, please change the email',
+                      style: TextStyle(color: Colors.red),
+                    )
+                  : const SizedBox(),
               isLogin
                   ? const Text(
                       "Username or password incorrect!",
@@ -209,21 +210,20 @@ class _SignUpState extends State<SignUp> {
                     onPressed: () async {
                       FocusManager.instance.primaryFocus?.unfocus();
                       if (_formKey.currentState!.validate()) {
-                        bool userExist = await _userProvider.checkUserExist(
-                            widget.email, _username.text);
-                        // bool emailExist =
-                        //     await _userProvider.checkEmailExist(widget.email);
+                        bool userExist =
+                            await _userProvider.checkUserExist(_username.text);
+                        bool emailExist =
+                            await _userProvider.checkEmailExist(widget.email);
                         if (userExist) {
                           setState(() {
                             isUserExist = true;
                             isEmailExist = false;
                           });
-                          // }
-                          // else if (emailExist) {
-                          //   setState(() {
-                          //     isEmailExist = true;
-                          //     isUserExist = false;
-                          //   });
+                        } else if (emailExist) {
+                          setState(() {
+                            isEmailExist = true;
+                            isUserExist = false;
+                          });
                         } else {
                           // All fields are filled, proceed with sign-up logic
                           _userProvider
