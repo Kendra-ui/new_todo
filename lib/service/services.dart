@@ -4,7 +4,7 @@ import 'package:new_todo/model/user.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
-class DatabaseServices {
+class Services {
   Database? _database;
 
 //checking if the db is initialized
@@ -19,11 +19,12 @@ class DatabaseServices {
   Future<Database> initialize() async {
     String path = await getDatabasesPath();
     print('Database file path: $path');
-    return await openDatabase(join(path, 'todo.db'),
-        version: 1,
-        onCreate: createDB,
-        onConfigure: _onConfigure,
-        );
+    return await openDatabase(
+      join(path, 'task.db'),
+      version: 1,
+      onCreate: createDB,
+      onConfigure: _onConfigure,
+    );
   }
 
   Future createDB(Database db, int version) async {
@@ -35,17 +36,15 @@ class DatabaseServices {
       "password" TEXT NOT NULL
     )""");
 
-     await db.execute("""
+    await db.execute("""
       CREATE TABLE todo (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         title TEXT NOT NULL,
         description TEXT NOT NULL,
-        username TEXT NOT NULL,
-        FOREIGN KEY(username)  REFERENCES user(username) 
+        userId INTEGER NOT NULL,
+        FOREIGN KEY(userId)  REFERENCES user(userId) 
         )
       """);
-
-    
   }
 
   // this is to permit the foreign key to work
@@ -53,7 +52,6 @@ class DatabaseServices {
     await db.execute('PRAGMA foreign_keys = ON');
   }
 
- 
 //insert user info after sign up
   Future<int> signup(Users user) async {
     final Database db = await initialize();
@@ -131,14 +129,14 @@ class DatabaseServices {
     return result.map((e) => Task.fromMap(e)).toList();
   }
 
-  Future<Task> deleteTask(Task task) async {
-    final Database db = await database;
-    await db.delete('todo',
-        where: '${task.title} = ? AND ${task.username} = ?',
-        whereArgs: [task.title, task.username]);
+  // Future<Task> deleteTask(Task task) async {
+  //   final Database db = await database;
+  //   await db.delete('todo',
+  //       where: '${task.title} = ? AND ${task.username} = ?',
+  //       whereArgs: [task.title, task.username]);
 
-    return task;
-  }
+  //   return task;
+  // }
 
   Future fetchTodoData() async {
     final db = await initialize();

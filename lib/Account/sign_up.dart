@@ -6,7 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:new_todo/Provider/todo_provider.dart';
 import 'package:new_todo/navigation/navigationbar.dart';
 import 'package:new_todo/provider/user_provider.dart';
-import 'package:new_todo/service/database.dart';
+import 'package:new_todo/service/services.dart';
 import 'package:provider/provider.dart';
 
 enum AuthMode { signUp, login }
@@ -34,18 +34,18 @@ class _SignUpState extends State<SignUp> {
   final firestore = FirebaseFirestore.instance;
   get data => null;
   final _formKey = GlobalKey<FormState>();
-  late DatabaseServices databaseHelper;
+  late Services databaseHelper;
   late UserProvider _userProvider;
   late TodoProvider _todoProvider;
 
   @override
   void initState() {
     super.initState();
-    databaseHelper = DatabaseServices();
+    databaseHelper = Services();
     // Initialize the database
     databaseHelper.initialize();
-    DatabaseServices().fetchData();
-    DatabaseServices().fetchTodoData();
+    Services().fetchData();
+    Services().fetchTodoData();
   }
 
   @override

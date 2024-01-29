@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:new_todo/Account/login.dart';
-import 'package:new_todo/Account/sign_up.dart';
 
 class Splash3 extends StatefulWidget {
   const Splash3({super.key});
