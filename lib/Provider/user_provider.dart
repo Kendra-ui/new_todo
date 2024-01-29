@@ -2,11 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:new_todo/model/user.dart';
-import 'package:new_todo/service/databaseservice.dart';
+import 'package:new_todo/service/database.dart';
 import 'package:sqflite/sqflite.dart';
 
 class UserProvider extends ChangeNotifier {
-  final DatabaseService _databaseService = DatabaseService();
+  final DatabaseServices _databaseService = DatabaseServices();
   late Users _currentUser;
 
   Users get currentUser => _currentUser;

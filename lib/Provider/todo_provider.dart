@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:new_todo/model/task.dart';
-import 'package:new_todo/service/databaseservice.dart';
+import 'package:new_todo/service/database.dart';
 import 'package:sqflite/sqflite.dart';
 
 class TodoProvider extends ChangeNotifier {
   List<Task> _task = [];
   List<Task> get task => _task;
-  DatabaseService databaseService = DatabaseService();
+  DatabaseServices databaseService = DatabaseServices();
 
   Database? database;
 
@@ -51,9 +51,15 @@ class TodoProvider extends ChangeNotifier {
     return result;
   }
 
-   Future<Task> addTask(String title, String description, String username) async {
-    final task = Task(title: title, description: description, username: username);
-    print('task added successfully');
-    return await databaseService.insertTodo(task);
+  Future<Task?> addTask(
+      String title, String description, String username) async {
+    try {
+      final task =
+          Task(title: title, description: description, username: username);
+      await databaseService.insertTodo(task);
+    } catch (e) {
+      print('$e');
+    }
+    return null;
   }
 }

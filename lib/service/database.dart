@@ -4,7 +4,7 @@ import 'package:new_todo/model/user.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
-class DatabaseService {
+class DatabaseServices {
   Database? _database;
 
 //checking if the db is initialized
@@ -18,11 +18,12 @@ class DatabaseService {
 
   Future<Database> initialize() async {
     String path = await getDatabasesPath();
-    return await openDatabase(join(path, 'app.db'),
-        version: 2,
+    print('Database file path: $path');
+    return await openDatabase(join(path, 'todo.db'),
+        version: 1,
         onCreate: createDB,
         onConfigure: _onConfigure,
-        onUpgrade: onUpgrade);
+        );
   }
 
   Future createDB(Database db, int version) async {
@@ -33,6 +34,18 @@ class DatabaseService {
       "username" TEXT NOT NULL,
       "password" TEXT NOT NULL
     )""");
+
+     await db.execute("""
+      CREATE TABLE todo (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        title TEXT NOT NULL,
+        description TEXT NOT NULL,
+        username TEXT NOT NULL,
+        FOREIGN KEY(username)  REFERENCES user(username) 
+        )
+      """);
+
+    
   }
 
   // this is to permit the foreign key to work
@@ -40,22 +53,7 @@ class DatabaseService {
     await db.execute('PRAGMA foreign_keys = ON');
   }
 
-  Future<void> onUpgrade(Database db, int oldVersion, int newVersion) async {
-    if (oldVersion < 2) {
-      // Perform database schema changes for version 2
-
-      await db.execute("""
-      CREATE TABLE todo (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        title TEXT NOT NULL,
-        description TEXT NOT NULL,
-        userId TEXT NOT NULL,
-        FOREIGN KEY(userId)  REFERENCES user(userId) 
-        )
-      """);
-    }
-  }
-
+ 
 //insert user info after sign up
   Future<int> signup(Users user) async {
     final Database db = await initialize();
