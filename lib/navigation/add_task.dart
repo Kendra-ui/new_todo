@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:new_todo/Account/sign_up.dart';
 import 'package:new_todo/Menu/settings.dart';
+import 'package:new_todo/Provider/todo_provider.dart';
 
 class AddTask extends StatefulWidget {
-  const AddTask({super.key});
+
+  final String username;
+
+  const AddTask({super.key, required this.username});
 
   @override
   State<AddTask> createState() => _AddTaskState();
@@ -12,6 +16,11 @@ class AddTask extends StatefulWidget {
 class _AddTaskState extends State<AddTask> {
   final TextEditingController _title = TextEditingController();
   final TextEditingController _description = TextEditingController();
+    final TextEditingController _username= TextEditingController();
+
+  late TodoProvider _todoProvider;
+  
+  final _formKey =  GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -106,60 +115,109 @@ class _AddTaskState extends State<AddTask> {
                                       width: MediaQuery.of(context).size.width,
                                       decoration: const BoxDecoration(
                                           color: Colors.white),
-                                      child: Column(
-                                        children: [
-                                          SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width /
-                                                1.1,
-                                            child: TextFormField(
-                                                controller: _title,
-                                                decoration:
-                                                    const InputDecoration(
-                                                  labelText:
-                                                      "eg: Meeting with client",
-                                                  labelStyle: TextStyle(
-                                                      fontSize: 14,
-                                                      color: Color(0xFFA9B0C5)),
-                                                  enabledBorder:
-                                                      OutlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide.none),
-                                                )),
-                                          ),
-                                          SizedBox(
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height /
-                                                180,
-                                          ),
-                                          SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width /
-                                                1.1,
-                                            child: TextFormField(
-                                                controller: _description,
-                                                decoration:
-                                                    const InputDecoration(
-                                                  labelText: "Description",
-                                                  labelStyle: TextStyle(
-                                                      fontSize: 14,
-                                                      color: Color(0xFFA9B0C5)),
-                                                  enabledBorder:
-                                                      OutlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide.none),
-                                                )),
-                                          ),
-                                          SizedBox(
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height /
-                                                50,
-                                          ),
-                                        ],
+                                      child: Form(
+                                        key: _formKey,
+                                        child: Column(
+                                          children: [
+                                            SizedBox(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  1.1,
+                                              child: TextFormField(
+                                                validator: (value) {
+                                                  if(value!.isEmpty){
+                                                    return "Fill the space";
+                                                  }
+                                                  return null;
+                                                },
+                                                  controller: _title,
+                                                  decoration:
+                                                      const InputDecoration(
+                                                    labelText:
+                                                        "eg: Meeting with client",
+                                                    labelStyle: TextStyle(
+                                                        fontSize: 14,
+                                                        color: Color(0xFFA9B0C5)),
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                            borderSide:
+                                                                BorderSide.none),
+                                                  )),
+                                            ),
+                                            SizedBox(
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height /
+                                                  180,
+                                            ),
+                                            SizedBox(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  1.1,
+                                              child: TextFormField(
+                                                validator: (value) {
+                                                  if (value!.isEmpty) {
+                                                    return 'fill the space';
+                                                  }
+                                                  return null;
+                                                },
+                                                  controller: _description,
+                                                  decoration:
+                                                      const InputDecoration(
+                                                    labelText: "Description",
+                                                    labelStyle: TextStyle(
+                                                        fontSize: 14,
+                                                        color: Color(0xFFA9B0C5)),
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                            borderSide:
+                                                                BorderSide.none),
+                                                  )),
+                                            ),
+                                            SizedBox(
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height /
+                                                  50,
+                                            ),
+                                            Container(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  1.3,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(3)),
+                                              child: ElevatedButton(
+                                                  style: ButtonStyle(
+                                                    backgroundColor:
+                                                        const MaterialStatePropertyAll(
+                                                            Color(0xFF24A19C)),
+                                                    shape:
+                                                        MaterialStatePropertyAll(
+                                                            RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10),
+                                                    )),
+                                                  ),
+                                                  onPressed: () {
+                                                    if (_formKey.currentState!.validate()) {
+                                                      print('Fill in spaces');
+                                                    } else{
+                                                      _todoProvider.addTask(_title.text.trim(), _description.text.trim(), _username.text);                                                    }
+                                                  },
+                                                  child: const Text(
+                                                    'Save ',
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                        color: Colors.white),
+                                                  )),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     );
                                   });

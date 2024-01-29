@@ -50,4 +50,10 @@ class TodoProvider extends ChangeNotifier {
     String result = await getTask(task.username);
     return result;
   }
+
+   Future<Task> addTask(String title, String description, String username) async {
+    final task = Task(title: title, description: description, username: username);
+    print('task added successfully');
+    return await databaseService.insertTodo(task);
+  }
 }
