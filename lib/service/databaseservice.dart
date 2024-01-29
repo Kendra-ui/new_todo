@@ -49,7 +49,7 @@ class DatabaseService {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         title TEXT NOT NULL,
         description TEXT NOT NULL,
-        userId INTEGER NOT NULL,
+        userId TEXT NOT NULL,
         FOREIGN KEY(userId)  REFERENCES user(userId) 
         )
       """);
