@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:new_todo/model/task.dart';
-import 'package:new_todo/service/services.dart';
+import 'package:new_todo/model/user.dart';
+import 'package:new_todo/service/dbServices.dart';
 import 'package:sqflite/sqflite.dart';
 
 class TodoProvider extends ChangeNotifier {
   List<Task> _task = [];
   List<Task> get task => _task;
-  Services databaseService = Services();
+  Dbservices databaseService = Dbservices();
 
   Database? database;
 
@@ -18,11 +19,9 @@ class TodoProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<String> getTask(
-    String username,
-  ) async {
+  Future<String> getTask(Task task, String username) async {
     try {
-      _task = await databaseService.getTask(username);
+      _task = await databaseService.getTask(task, username);
       print('good');
       notifyListeners();
     } catch (e) {
@@ -41,16 +40,20 @@ class TodoProvider extends ChangeNotifier {
   //   return result;
   // }
 
-
-
-  Future<Task?> addTask(
-      String title, String description, String username) async {
+  Future<Task?> addTask(String title, String description, String username) async {
     try {
-      final task =
-          Task(title: title, description: description,);
+      // Create a task with the userId from the user object
+      Task task = Task(
+        title: title,
+        description: description, 
+        username: username,
+      );
+
+      // Insert the task for the specified user
       await databaseService.insertTodo(task);
+      print('Task added for user');
     } catch (e) {
-      print('$e');
+      print('Error adding task: $e');
     }
     return null;
   }

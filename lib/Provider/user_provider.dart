@@ -2,11 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:new_todo/model/user.dart';
-import 'package:new_todo/service/services.dart';
+import 'package:new_todo/service/dbServices.dart';
 import 'package:sqflite/sqflite.dart';
 
 class UserProvider extends ChangeNotifier {
-  final Services _databaseService = Services();
+  final Dbservices _databaseService = Dbservices();
   late Users _currentUser;
 
   Users get currentUser => _currentUser;
@@ -32,8 +32,12 @@ class UserProvider extends ChangeNotifier {
   }
 
   Future<Users?> getUser(String username) async {
-    _currentUser = (await _databaseService.getUsers(username))!;
-    notifyListeners();
+    try {
+      _currentUser = (await _databaseService.getUsers(username))!;
+      notifyListeners();
+    } catch (e) {
+      print('$e');
+    }
 
     return null;
   }
@@ -50,7 +54,14 @@ class UserProvider extends ChangeNotifier {
 
   // Example of notifying listeners when user data is updated
   Future<void> updateUserData(String username) async {
+    String result = 'OK';
     _currentUser.username = username;
     notifyListeners();
+
+    try {
+      await _databaseService.updateUser(_currentUser);
+    } catch (e) {
+      result = e.toString();
+    }
   }
 }

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:new_todo/Account/sign_up.dart';
 import 'package:new_todo/Menu/settings.dart';
 import 'package:new_todo/Provider/todo_provider.dart';
+import 'package:new_todo/model/user.dart';
 import 'package:new_todo/navigation/inbox.dart';
+import 'package:new_todo/navigation/navigationbar.dart';
 import 'package:provider/provider.dart';
 
 class AddTask extends StatefulWidget {
@@ -213,16 +215,16 @@ class _AddTaskState extends State<AddTask> {
                                                       _todoProvider.addTask(
                                                           _title.text.trim(),
                                                           _description.text
-                                                              .trim(),
-                                                          username.text);
+                                                              .trim(), 
+                                                          username.text.trim()
+                                                          );
                                                       Navigator.of(context)
                                                           .pushReplacement(
                                                               MaterialPageRoute(
                                                         builder: (BuildContext
                                                                 context) =>
-                                                            Inbox(
-                                                                title: _title
-                                                                    .text),
+                                                           const  CustomNavigationBar(
+                                                                ),
                                                       ));
                                                     }
                                                   },

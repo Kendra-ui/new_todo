@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_todo/Provider/todo_provider.dart';
+import 'package:new_todo/navigation/navigationbar.dart';
 import 'package:provider/provider.dart';
 
 class Inbox extends StatefulWidget {
@@ -28,8 +29,16 @@ class _InboxState extends State<Inbox> {
               children: [
                 SizedBox(
                     width: MediaQuery.of(context).size.width / 10,
-                    child: const Icon(
-                      Icons.arrow_back_ios_new,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              const CustomNavigationBar(),
+                        ));
+                      },
+                      child: const Icon(
+                        Icons.arrow_back_ios_new,
+                      ),
                     )),
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 10,

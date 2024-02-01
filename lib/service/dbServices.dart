@@ -4,7 +4,7 @@ import 'package:new_todo/model/user.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
-class Services {
+class Dbservices {
   Database? _database;
 
 //checking if the db is initialized
@@ -20,7 +20,7 @@ class Services {
     String path = await getDatabasesPath();
     print('Database file path: $path');
     return await openDatabase(
-      join(path, 'task.db'),
+      join(path, 'tasks.db'),
       version: 1,
       onCreate: createDB,
       onConfigure: _onConfigure,
@@ -41,8 +41,8 @@ class Services {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         title TEXT NOT NULL,
         description TEXT NOT NULL,
-        userId INTEGER NOT NULL,
-        FOREIGN KEY(userId)  REFERENCES user(userId) 
+        username INTEGER NOT NULL,
+        FOREIGN KEY(username)  REFERENCES user(username) 
         )
       """);
   }
@@ -85,6 +85,20 @@ class Services {
     return res.isNotEmpty ? Users.fromMap(res.first) : null;
   }
 
+  //get all Users
+  Future<List<Users>> getAllUser(Users user) async {
+    final Database db = await initialize();
+
+    final result = await db.rawQuery('''
+      SELECT *
+      FROM user
+      order by ${user.username} ASC',
+      
+    ''');
+
+    return result.map((e) => Users.fromMap(e)).toList();
+  }
+
   Future<int> updateUser(Users user) async {
     final Database db = await initialize();
     return db.update('user', user.toMap(),
@@ -92,7 +106,7 @@ class Services {
   }
 
   //delete user
-  Future<int> deletUser(String username) async {
+  Future<int> deleteUser(String username) async {
     final db = await database;
     return db.delete('user', where: "username = ?", whereArgs: [username]);
   }
@@ -121,10 +135,12 @@ class Services {
   }
 
   //get todos
-  Future<List<Task>> getTask(String username) async {
+  Future<List<Task>> getTask(Task task, String username) async {
     final Database db = await database;
     final result =
-        await db.query('todo', where: 'username = ?', whereArgs: [username]);
+        await db.query('todo', 
+        orderBy: task.title,
+      where: '${task.username} = ?', whereArgs: [username]);
 
     return result.map((e) => Task.fromMap(e)).toList();
   }
