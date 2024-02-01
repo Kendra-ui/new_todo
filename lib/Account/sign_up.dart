@@ -39,7 +39,6 @@ class _SignUpState extends State<SignUp> {
   late Dbservices databaseHelper;
   late UserProvider _userProvider;
   late TodoProvider _todoProvider;
-  Task task = [] as Task;
 
   @override
   void initState() {
@@ -235,7 +234,10 @@ class _SignUpState extends State<SignUp> {
                             TodoProvider todoProvider =
                                 Provider.of<TodoProvider>(context,
                                     listen: false);
-                            todoProvider.getTask(task, _username.text.trim()).whenComplete(() async {
+
+                            todoProvider
+                                .getTask(_username.text.trim())
+                                .then((task) {
                               Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(
                                   builder: (BuildContext context) =>

@@ -20,7 +20,7 @@ class Dbservices {
     String path = await getDatabasesPath();
     print('Database file path: $path');
     return await openDatabase(
-      join(path, 'tasks.db'),
+      join(path, 'todotask.db'),
       version: 1,
       onCreate: createDB,
       onConfigure: _onConfigure,
@@ -41,7 +41,7 @@ class Dbservices {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         title TEXT NOT NULL,
         description TEXT NOT NULL,
-        username INTEGER NOT NULL,
+        username TEXT NOT NULL,
         FOREIGN KEY(username)  REFERENCES user(username) 
         )
       """);
@@ -135,12 +135,12 @@ class Dbservices {
   }
 
   //get todos
-  Future<List<Task>> getTask(Task task, String username) async {
+  Future<List<Task>> getTask( String username) async {
     final Database db = await database;
     final result =
         await db.query('todo', 
-        orderBy: task.title,
-      where: '${task.username} = ?', whereArgs: [username]);
+        orderBy: 'title',
+      where: '$username = ?', whereArgs: [username]);
 
     return result.map((e) => Task.fromMap(e)).toList();
   }

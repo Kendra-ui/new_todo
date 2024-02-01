@@ -1,7 +1,8 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:new_todo/model/task.dart';
-import 'package:new_todo/model/user.dart';
-import 'package:new_todo/service/dbServices.dart';
+import 'package:new_todo/service/db.dart';
 import 'package:sqflite/sqflite.dart';
 
 class TodoProvider extends ChangeNotifier {
@@ -19,9 +20,9 @@ class TodoProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<String> getTask(Task task, String username) async {
+  Future getTask( String username) async {
     try {
-      _task = await databaseService.getTask(task, username);
+      _task = await databaseService.getTask( username);
       print('good');
       notifyListeners();
     } catch (e) {
@@ -40,21 +41,15 @@ class TodoProvider extends ChangeNotifier {
   //   return result;
   // }
 
-  Future<Task?> addTask(String title, String description, String username) async {
+  Future addTask(Task task) async {
     try {
-      // Create a task with the userId from the user object
-      Task task = Task(
-        title: title,
-        description: description, 
-        username: username,
-      );
-
-      // Insert the task for the specified user
       await databaseService.insertTodo(task);
-      print('Task added for user');
     } catch (e) {
-      print('Error adding task: $e');
+      return e.toString();
     }
-    return null;
+    String result = await getTask(task.username);
+    return result;
   }
+
+
 }

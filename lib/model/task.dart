@@ -23,4 +23,10 @@ class Task {
       'username': username
     };
   }
+
+  @override
+  bool operator ==(covariant Task other){
+    return(username == other.username) &&
+    (title.toUpperCase().compareTo(other.title.toUpperCase()) == 0);
+  }
 }

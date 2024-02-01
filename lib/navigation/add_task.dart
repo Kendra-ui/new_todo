@@ -1,9 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:new_todo/Account/sign_up.dart';
 import 'package:new_todo/Menu/settings.dart';
 import 'package:new_todo/Provider/todo_provider.dart';
-import 'package:new_todo/model/user.dart';
-import 'package:new_todo/navigation/inbox.dart';
+import 'package:new_todo/model/task.dart';
 import 'package:new_todo/navigation/navigationbar.dart';
 import 'package:provider/provider.dart';
 
@@ -20,13 +21,11 @@ class _AddTaskState extends State<AddTask> {
   final TextEditingController _title = TextEditingController();
   final TextEditingController _description = TextEditingController();
   final TextEditingController username = TextEditingController();
-  late TodoProvider _todoProvider;
 
   final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    _todoProvider = context.read<TodoProvider>();
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -209,23 +208,52 @@ class _AddTaskState extends State<AddTask> {
                                                               10),
                                                     )),
                                                   ),
-                                                  onPressed: () {
+                                                  onPressed: () async {
                                                     if (_formKey.currentState!
                                                         .validate()) {
-                                                      _todoProvider.addTask(
-                                                          _title.text.trim(),
-                                                          _description.text
-                                                              .trim(), 
-                                                          username.text.trim()
+                                                      Task task = Task(
+                                                          title: _title.text
+                                                              .trim(),
+                                                          description:
+                                                              _description.text,
+                                                          username:
+                                                              username.text);
+                                                      if (context
+                                                          .read<TodoProvider>()
+                                                          .task
+                                                          .contains(task)) {
+                                                        const SnackBar(
+                                                          content: Text(
+                                                              'Duplicate value'),
+                                                        );
+                                                      } else {
+                                                        String result =
+                                                            await context
+                                                                .read<
+                                                                    TodoProvider>()
+                                                                .addTask(task);
+                                                        if (result == 'OK') {
+                                                          const SnackBar(
+                                                            content: Text(
+                                                                'New tak added'),
                                                           );
-                                                      Navigator.of(context)
-                                                          .pushReplacement(
-                                                              MaterialPageRoute(
-                                                        builder: (BuildContext
-                                                                context) =>
-                                                           const  CustomNavigationBar(
-                                                                ),
-                                                      ));
+                                                          _title.text = '';
+                                                          _description.text =
+                                                              '';
+                                                          Navigator.of(context)
+                                                              .pushReplacement(
+                                                                  MaterialPageRoute(
+                                                            builder: (BuildContext
+                                                                    context) =>
+                                                                const CustomNavigationBar(),
+                                                          ));
+                                                        } else {
+                                                          SnackBar(
+                                                            content:
+                                                                Text(result),
+                                                          );
+                                                        }
+                                                      }
                                                     }
                                                   },
                                                   child: const Text(

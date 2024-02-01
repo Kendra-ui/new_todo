@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:new_todo/model/task.dart';
 import 'package:new_todo/navigation/navigationbar.dart';
 
 class Todo extends StatefulWidget {
-  const Todo({super.key});
+  const Todo({super.key, required Task task});
 
   @override
   State<Todo> createState() => _TodoState();

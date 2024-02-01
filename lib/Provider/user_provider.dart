@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:new_todo/model/user.dart';
-import 'package:new_todo/service/dbServices.dart';
+import 'package:new_todo/service/db.dart';
 import 'package:sqflite/sqflite.dart';
 
 class UserProvider extends ChangeNotifier {
