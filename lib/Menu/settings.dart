@@ -5,6 +5,7 @@ import 'package:new_todo/Menu/appicon.dart';
 import 'package:new_todo/Menu/helpcenter.dart';
 import 'package:new_todo/Menu/productivity.dart';
 import 'package:new_todo/Menu/theme.dart';
+import 'package:new_todo/main.dart';
 import 'package:new_todo/model/user.dart';
 import 'package:new_todo/navigation/navigationbar.dart';
 import 'package:new_todo/provider/user_provider.dart';
@@ -20,6 +21,17 @@ class Settings extends StatefulWidget {
 class _SettingsState extends State<Settings> {
   bool light = true;
   late UserProvider userProvider;
+
+  void _toggleTheme(ThemeMode themeMode) {
+  if (themeMode == ThemeMode.light) {
+    // Apply light theme
+    MyApp.setThemeLight(context);
+  } else {
+    // Apply dark theme
+    MyApp.setThemeDark(context);
+  }
+}
+
 
   @override
   void initState() {
@@ -198,6 +210,11 @@ class _SettingsState extends State<Settings> {
                 onChanged: (bool value) {
                   setState(() {
                     light = value;
+                    if (light) {
+                      _toggleTheme(ThemeMode.light);
+                    } else {
+                      _toggleTheme(ThemeMode.dark);
+                    }
                   });
                 },
               ),
