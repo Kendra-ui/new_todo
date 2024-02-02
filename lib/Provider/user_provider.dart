@@ -34,6 +34,7 @@ class UserProvider extends ChangeNotifier {
   Future<Users?> getUser(String username) async {
     try {
       _currentUser = (await _databaseService.getUsers(username))!;
+      print('done');
       notifyListeners();
     } catch (e) {
       print('$e');

@@ -4,11 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:new_todo/Account/login.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:new_todo/Provider/todo_provider.dart';
-import 'package:new_todo/model/task.dart';
-import 'package:new_todo/model/user.dart';
 import 'package:new_todo/navigation/navigationbar.dart';
 import 'package:new_todo/provider/user_provider.dart';
-import 'package:new_todo/service/dbServices.dart';
+import 'package:new_todo/service/db.dart';
 import 'package:provider/provider.dart';
 
 enum AuthMode { signUp, login }
@@ -38,7 +36,6 @@ class _SignUpState extends State<SignUp> {
   final _formKey = GlobalKey<FormState>();
   late Dbservices databaseHelper;
   late UserProvider _userProvider;
-  late TodoProvider _todoProvider;
 
   @override
   void initState() {
@@ -53,7 +50,6 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     _userProvider = context.read<UserProvider>();
-    _todoProvider = context.read<TodoProvider>();
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -231,19 +227,25 @@ class _SignUpState extends State<SignUp> {
                               .signUp(widget.email, _username.text.trim(),
                                   _password.text.trim())
                               .then((_) {
-                            TodoProvider todoProvider =
-                                Provider.of<TodoProvider>(context,
-                                    listen: false);
+                            _userProvider
+                                .getUser(_username.text.trim())
+                                .then((value) {
+                              String username = context
+                                  .read<UserProvider>()
+                                  .currentUser
+                                  .username;
+                              TodoProvider todoProvider =
+                                  Provider.of<TodoProvider>(context,
+                                      listen: false);
 
-                            todoProvider
-                                .getTask(_username.text.trim())
-                                .then((task) {
-                              Navigator.of(context).pushReplacement(
-                                MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      const CustomNavigationBar(),
-                                ),
-                              );
+                              todoProvider.getTask(username).then((task) {
+                                Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        const CustomNavigationBar(),
+                                  ),
+                                );
+                              });
                             });
                           });
                         }

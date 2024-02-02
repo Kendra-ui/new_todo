@@ -19,10 +19,17 @@ class Settings extends StatefulWidget {
 
 class _SettingsState extends State<Settings> {
   bool light = true;
-  late UserProvider _userProvider;
+  late UserProvider userProvider;
+
+  @override
+  void initState() {
+    super.initState();
+    userProvider = Provider.of<UserProvider>(context, listen: false);
+  }
 
   @override
   Widget build(BuildContext context) {
+    userProvider = context.read<UserProvider>();
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -70,20 +77,25 @@ class _SettingsState extends State<Settings> {
                 SizedBox(
                   height: MediaQuery.of(context).size.height / 50,
                 ),
-                Selector<UserProvider, Users>(
-                  selector: (context, value) => value.currentUser,
-                  builder: (BuildContext context, Users value, Widget? child) {
-                    return Text(value.username,
-                        style: const TextStyle(fontWeight: FontWeight.bold));
+                Consumer<UserProvider>(
+                  builder: (context, userProvider, child) {
+                    Users currentUser = userProvider.currentUser;
+                    return Column(
+                      children: [
+                        Text(currentUser.username,
+                            style:
+                                const TextStyle(fontWeight: FontWeight.bold)),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height / 70,
+                        ),
+                        Text(
+                          currentUser.email,
+                          style: const TextStyle(color: Color(0xFF767E8C)),
+                        )
+                      ],
+                    );
                   },
                 ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height / 70,
-                ),
-                const Text(
-                  '@kuram1290',
-                  style: TextStyle(color: Color(0xFF767E8C)),
-                )
               ]),
             ),
             SizedBox(

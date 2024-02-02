@@ -135,12 +135,10 @@ class Dbservices {
   }
 
   //get todos
-  Future<List<Task>> getTask( String username) async {
+  Future<List<Task>> getTask(String username) async {
     final Database db = await database;
-    final result =
-        await db.query('todo', 
-        orderBy: 'title',
-      where: '$username = ?', whereArgs: [username]);
+    final result = await db.query('todo',
+        orderBy: 'title', where: 'username = ?', whereArgs: [username]);
 
     return result.map((e) => Task.fromMap(e)).toList();
   }
