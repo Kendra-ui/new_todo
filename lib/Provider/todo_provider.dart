@@ -20,9 +20,9 @@ class TodoProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future getTask( String username) async {
+  Future getTask(String username) async {
     try {
-      _task = await databaseService.getTask( username);
+      _task = await databaseService.getTask(username);
       print('good');
       notifyListeners();
     } catch (e) {
@@ -41,15 +41,13 @@ class TodoProvider extends ChangeNotifier {
   //   return result;
   // }
 
-  Future addTask(Task task, String username) async {
+  Future addTask(Task task) async {
     try {
       await databaseService.insertTodo(task);
     } catch (e) {
-      return e.toString();
+      print('$e');
     }
-    String result = await getTask(username);
+    String result = await getTask(task.username);
     return result;
   }
-
-
 }

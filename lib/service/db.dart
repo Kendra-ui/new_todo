@@ -20,7 +20,7 @@ class Dbservices {
     String path = await getDatabasesPath();
     print('Database file path: $path');
     return await openDatabase(
-      join(path, 'data.db'),
+      join(path, 'todotask.db'),
       version: 1,
       onCreate: createDB,
       onConfigure: _onConfigure,
@@ -41,9 +41,8 @@ class Dbservices {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         title TEXT NOT NULL,
         description TEXT NOT NULL,
-        userId INTEGER NOT NULL,
         username TEXT NOT NULL,
-        FOREIGN KEY(userId)  REFERENCES user(userId) 
+        FOREIGN KEY(username)  REFERENCES user(username) 
         )
       """);
   }

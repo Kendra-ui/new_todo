@@ -215,7 +215,9 @@ class _AddTaskState extends State<AddTask> {
                                                         title:
                                                             _title.text.trim(),
                                                         description:
-                                                            _description.text,
+                                                            _description.text.trim(),
+                                                        username: username.text
+                                                            .trim(),
                                                       );
                                                       if (context
                                                           .read<TodoProvider>()
@@ -230,15 +232,11 @@ class _AddTaskState extends State<AddTask> {
                                                             await context
                                                                 .read<
                                                                     TodoProvider>()
-                                                                .addTask(
-                                                                    task,
-                                                                    username
-                                                                        .text
-                                                                        .trim());
+                                                                .addTask(task);
                                                         if (result == 'OK') {
                                                           const SnackBar(
                                                             content: Text(
-                                                                'New tak added'),
+                                                                'New task added'),
                                                           );
                                                           _title.text = '';
                                                           _description.text =
