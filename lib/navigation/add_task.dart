@@ -212,12 +212,11 @@ class _AddTaskState extends State<AddTask> {
                                                     if (_formKey.currentState!
                                                         .validate()) {
                                                       Task task = Task(
-                                                          title: _title.text
-                                                              .trim(),
-                                                          description:
-                                                              _description.text,
-                                                          username:
-                                                              username.text);
+                                                        title:
+                                                            _title.text.trim(),
+                                                        description:
+                                                            _description.text,
+                                                      );
                                                       if (context
                                                           .read<TodoProvider>()
                                                           .task
@@ -231,7 +230,11 @@ class _AddTaskState extends State<AddTask> {
                                                             await context
                                                                 .read<
                                                                     TodoProvider>()
-                                                                .addTask(task);
+                                                                .addTask(
+                                                                    task,
+                                                                    username
+                                                                        .text
+                                                                        .trim());
                                                         if (result == 'OK') {
                                                           const SnackBar(
                                                             content: Text(

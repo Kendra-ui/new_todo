@@ -25,10 +25,6 @@ class _SettingsState extends State<Settings> {
   void _toggleTheme(ThemeMode themeMode) {
   if (themeMode == ThemeMode.light) {
     // Apply light theme
-    MyApp.setThemeLight(context);
-  } else {
-    // Apply dark theme
-    MyApp.setThemeDark(context);
   }
 }
 

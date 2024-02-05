@@ -20,7 +20,7 @@ class Dbservices {
     String path = await getDatabasesPath();
     print('Database file path: $path');
     return await openDatabase(
-      join(path, 'todotask.db'),
+      join(path, 'taskdata.db'),
       version: 1,
       onCreate: createDB,
       onConfigure: _onConfigure,

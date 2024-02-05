@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:new_todo/model/task.dart';
-import 'package:new_todo/service/db.dart';
+import 'package:new_todo/service/servicedata.dart';
 import 'package:sqflite/sqflite.dart';
 
 class TodoProvider extends ChangeNotifier {
@@ -41,13 +41,13 @@ class TodoProvider extends ChangeNotifier {
   //   return result;
   // }
 
-  Future addTask(Task task) async {
+  Future addTask(Task task, String username) async {
     try {
       await databaseService.insertTodo(task);
     } catch (e) {
       return e.toString();
     }
-    String result = await getTask(task.username);
+    String result = await getTask(username);
     return result;
   }
 

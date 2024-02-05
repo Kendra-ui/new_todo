@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:new_todo/Mode/apptheme.dart';
@@ -17,21 +19,7 @@ void main() async {
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
-  static Future<void> setThemeLight(BuildContext context) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('isDarkMode', false);
-    // Trigger a rebuild of the UI with the updated theme
-    Provider.of<ThemeNotifier>(context, listen: false)
-        .setThemeMode(ThemeMode.light);
-  }
 
-  static void setThemeDark(BuildContext context) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('isDarkMode', true);
-    // Trigger a rebuild of the UI with the updated theme
-    Provider.of<ThemeNotifier>(context, listen: false)
-        .setThemeMode(ThemeMode.dark);
-  }
 
   @override
   State<MyApp> createState() => _MyAppState();
