@@ -7,9 +7,10 @@ import 'package:sqflite/sqflite.dart';
 
 class UserProvider extends ChangeNotifier {
   final Dbservices _databaseService = Dbservices();
-  late Users _currentUser;
 
-  Users get currentUser => _currentUser;
+  Users? _currentUser;
+  Users? get currentUser => _currentUser;
+
   Database? database;
 
   Future<void> dataBaseInitialize() async {
@@ -20,10 +21,11 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<int> signUp(String email, String username, String password) async {
+  Future<void> signUp(String email, String username, String password) async {
     final user = Users(email: email, username: username, password: password);
     print('user added successfully');
-    return await _databaseService.signup(user);
+     await _databaseService.signup(user);
+     await getUser(username);
   }
 
   Future<bool> signIn(String username, String password) async {
@@ -31,16 +33,14 @@ class UserProvider extends ChangeNotifier {
     return await _databaseService.signin(user);
   }
 
-  Future<Users?> getUser(String username) async {
+  Future<void> getUser(String username) async {
     try {
-      _currentUser = (await _databaseService.getUsers(username))!;
+      _currentUser = await _databaseService.getUsers(username);
       print('done');
       notifyListeners();
     } catch (e) {
       print('$e');
     }
-
-    return null;
   }
 
   Future<bool> checkUserExist(String username) async {
@@ -55,14 +55,13 @@ class UserProvider extends ChangeNotifier {
 
   // Example of notifying listeners when user data is updated
   Future<void> updateUserData(String username) async {
-    String result = 'OK';
-    _currentUser.username = username;
-    notifyListeners();
-
+    if (_currentUser == null) {
+      return;
+    }
     try {
-      await _databaseService.updateUser(_currentUser);
+      await _databaseService.updateUser(_currentUser!);
+      await getUser(username);
     } catch (e) {
-      result = e.toString();
     }
   }
 }

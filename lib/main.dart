@@ -2,12 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:new_todo/Mode/apptheme.dart';
 import 'package:new_todo/Provider/todo_provider.dart';
 import 'package:new_todo/homepage.dart';
 import 'package:new_todo/provider/user_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,8 +29,8 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
-          ChangeNotifierProvider(create: (context) => UserProvider()),
-          ChangeNotifierProvider(create: (context) => TodoProvider())
+          ChangeNotifierProvider(create: (_) => UserProvider()),
+          ChangeNotifierProvider(create: (_) => TodoProvider())
         ],
         child: MaterialApp(
             title: 'Flutter Demo',

@@ -4,6 +4,8 @@ import 'package:new_todo/navigation/add_task.dart';
 import 'package:new_todo/navigation/filter.dart';
 import 'package:new_todo/navigation/inbox.dart';
 import 'package:new_todo/navigation/project.dart';
+import 'package:chat_gpt_sdk/chat_gpt_sdk.dart';
+import 'package:http/http.dart';
 
 // ignore: camel_case_types, must_be_immutable
 class CustomNavigationBar extends StatefulWidget {
@@ -15,6 +17,21 @@ class CustomNavigationBar extends StatefulWidget {
 
 class _CustomNavigationBarState extends State<CustomNavigationBar> {
   int _currentIndex = 0;
+
+  late OpenAI openAI;
+
+  // @override
+  // void initState() {
+  //   openAI = OpenAI.instance.build(
+  //     token: SESSION_TOKEN_KEY,
+  //     baseOption: HttpSetup(
+  //       receiveTimeout: Duration(seconds: 10),
+  //       connectTimeout: Duration(seconds: 10)
+  //     ),
+  //       isLog: true
+  //   );
+  //   super.initState();
+  // }
   final List<Widget> screen = [
     const AddTask(
       username: '',

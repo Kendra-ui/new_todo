@@ -49,7 +49,7 @@ class _SignUpState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
-    _userProvider = context.read<UserProvider>();
+    _userProvider = context.watch<UserProvider>();
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -223,31 +223,19 @@ class _SignUpState extends State<SignUp> {
                           });
                         } else {
                           // All fields are filled, proceed with sign-up logic
-                          _userProvider
-                              .signUp(widget.email, _username.text.trim(),
-                                  _password.text.trim())
-                              .then((_) {
-                            _userProvider
-                                .getUser(_username.text.trim())
-                                .then((value) {
-                              String username = context
-                                  .read<UserProvider>()
-                                  .currentUser
-                                  .username;
-                              TodoProvider todoProvider =
-                                  Provider.of<TodoProvider>(context,
-                                      listen: false);
-
-                              todoProvider.getTask(username).then((task) {
-                                Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        const CustomNavigationBar(),
-                                  ),
-                                );
-                              });
-                            });
-                          });
+                          
+                         await _userProvider.signUp(widget.email,
+                              _username.text.trim(), _password.text.trim());
+                        if (_userProvider.currentUser == null) {
+                          //display an error message to the user in snack bar
+                          return;
+                        }
+                          Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  const CustomNavigationBar(),
+                            ),
+                          );
                         }
                       }
                     },

@@ -68,7 +68,7 @@ class Dbservices {
   Future<bool> signin(Users user) async {
     final Database db = await initialize();
 
-    var result = await db.rawQuery(
+    final result = await db.rawQuery(
         "select * from user where username = '${user.username},' AND password = '${user.password}'");
     if (result.isNotEmpty) {
       return true;
@@ -80,7 +80,7 @@ class Dbservices {
 //Get user after login
   Future<Users?> getUsers(String username) async {
     final Database db = await initialize();
-    var res =
+    final res =
         await db.query("user", where: "username = ?", whereArgs: [username]);
     return res.isNotEmpty ? Users.fromMap(res.first) : null;
   }

@@ -5,7 +5,6 @@ import 'package:new_todo/Menu/appicon.dart';
 import 'package:new_todo/Menu/helpcenter.dart';
 import 'package:new_todo/Menu/productivity.dart';
 import 'package:new_todo/Menu/theme.dart';
-import 'package:new_todo/main.dart';
 import 'package:new_todo/model/user.dart';
 import 'package:new_todo/navigation/navigationbar.dart';
 import 'package:new_todo/provider/user_provider.dart';
@@ -87,7 +86,7 @@ class _SettingsState extends State<Settings> {
                 ),
                 Consumer<UserProvider>(
                   builder: (context, userProvider, child) {
-                    Users currentUser = userProvider.currentUser;
+                    Users currentUser = userProvider.currentUser!;
                     return Column(
                       children: [
                         Text(currentUser.username,

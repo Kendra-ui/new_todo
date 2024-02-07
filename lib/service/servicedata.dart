@@ -128,9 +128,16 @@ class Dbservices {
   }
 
   //inserting todo in database
-  Future<Task> insertTodo(Task task) async {
+  Future<Task> insertTodo(Task task, int userId) async {
     final Database db = await database;
-    await db.insert('todo', task.toMap());
+    await db.insert('todo', {
+      'title': task.title,
+      'description' : task.description,
+      'username' : task.username,
+      'userId': userId
+    });
+    
+    task.toMap();
 
     return task;
   }
