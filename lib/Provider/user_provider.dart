@@ -28,8 +28,8 @@ class UserProvider extends ChangeNotifier {
      await getUser(username);
   }
 
-  Future<bool> signIn(String username, String password) async {
-    final user = Users(username: username, password: password, email: '');
+  Future<bool> signIn(String username) async {
+    final user = Users(username: username, password: '', email: '');
     return await _databaseService.signin(user);
   }
 

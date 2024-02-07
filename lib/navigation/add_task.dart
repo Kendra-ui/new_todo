@@ -101,11 +101,11 @@ class _AddTaskState extends State<AddTask> {
                               borderRadius: BorderRadius.circular(5)),
                           child: ElevatedButton(
                             onPressed: () {
-                              Navigator.of(context)
-                                  .pushReplacement(MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    const SaveTodo(),
-                              ));
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const SaveTodo(),
+                                  ));
                             },
                             style: ButtonStyle(
                               backgroundColor: const MaterialStatePropertyAll(

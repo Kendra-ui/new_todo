@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:new_todo/Account/login.dart';
@@ -9,23 +9,20 @@ import 'package:new_todo/provider/user_provider.dart';
 import 'package:new_todo/service/servicedata.dart';
 import 'package:provider/provider.dart';
 
-enum AuthMode { signUp, login }
-
-class SignUp extends StatefulWidget {
-  final String email;
-
-  const SignUp({super.key, required this.email});
+class SignIn extends StatefulWidget {
+  const SignIn({super.key});
 
   @override
-  State<SignUp> createState() => _SignUpState();
+  State<SignIn> createState() => _SignInState();
 }
 
-class _SignUpState extends State<SignUp> {
+class _SignInState extends State<SignIn> {
   final TextEditingController _username = TextEditingController();
-  final TextEditingController _password = TextEditingController();
-  final TextEditingController email = TextEditingController();
 
   bool isVisible = false;
+  bool isUserExist = false;
+  bool isEmailExist = false;
+  bool isLogin = false;
 
   //initialize the firestore object
   final firestore = FirebaseFirestore.instance;
@@ -33,6 +30,7 @@ class _SignUpState extends State<SignUp> {
   final _formKey = GlobalKey<FormState>();
   late Dbservices databaseHelper;
   late UserProvider _userProvider;
+  late TodoProvider _todoProvider;
 
   @override
   void initState() {
@@ -47,6 +45,7 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     _userProvider = context.watch<UserProvider>();
+    _todoProvider = context.watch<TodoProvider>();
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -116,62 +115,23 @@ class _SignUpState extends State<SignUp> {
                                   borderSide: BorderSide.none),
                             )),
                       ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height / 50,
-                      ),
-                      const Text(
-                        'Password',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height / 50,
-                      ),
-                      Container(
-                        height: MediaQuery.of(context).size.height / 13,
-                        width: MediaQuery.of(context).size.width / 1.4,
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                                width: 0.5,
-                                color:
-                                    const Color.fromARGB(255, 213, 220, 241)),
-                            borderRadius: BorderRadius.circular(5)),
-                        child: TextFormField(
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return 'Please enter text';
-                              } else if (value.length <= 6) {
-                                return 'Password must be of 8 digit';
-                              }
-                              return null;
-                            },
-                            controller: _password,
-                            obscureText: isVisible,
-                            decoration: InputDecoration(
-                                labelText: "Enter your password",
-                                labelStyle: const TextStyle(
-                                    fontSize: 14, color: Color(0xFFA9B0C5)),
-                                filled: true,
-                                fillColor: const Color(0xFFF6F7F9),
-                                enabledBorder: const OutlineInputBorder(
-                                    borderSide: BorderSide.none),
-                                suffixIcon: IconButton(
-                                  icon: Icon(isVisible
-                                      ? Icons.visibility
-                                      : Icons.visibility_off),
-                                  onPressed: () {
-                                    setState(() {
-                                      isVisible = !isVisible;
-                                    });
-                                  },
-                                ))),
-                      ),
                     ]),
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height / 30,
               ),
-             
-      
+              isUserExist
+                  ? const Text(
+                      'User already exist, please change the name ',
+                      style: TextStyle(color: Colors.red),
+                    )
+                  : const SizedBox(),
+              isLogin
+                  ? const Text(
+                      "Username incorrect!",
+                      style: TextStyle(color: Colors.red),
+                    )
+                  : const SizedBox(),
               SizedBox(
                 height: MediaQuery.of(context).size.height / 3.5,
               ),
@@ -188,23 +148,31 @@ class _SignUpState extends State<SignUp> {
                     onPressed: () async {
                       FocusManager.instance.primaryFocus?.unfocus();
                       if (_formKey.currentState!.validate()) {
-      
-                        
+                        bool userExist =
+                            await _userProvider.checkUserExist(_username.text);
+
+                        if (userExist) {
+                          setState(() {
+                            isUserExist = true;
+                            isEmailExist = false;
+                          });
+                        } else {
                           // All fields are filled, proceed with sign-up logic
-                          
-                         await _userProvider.signUp(widget.email,
-                              _username.text.trim(), _password.text.trim());
-                        if (_userProvider.currentUser == null) {
-                          //display an error message to the user in snack bar
-                          return;
-                        }
+
+                          await _userProvider.signIn(_username.text.trim());
+                          await _userProvider.getUser(_username.text.trim());
+                          await _todoProvider.getTask(_username.text.trim());
+                          if (_userProvider.currentUser == null) {
+                            //display an error message to the user in snack bar
+                            return;
+                          }
                           Navigator.of(context).pushReplacement(
                             MaterialPageRoute(
                               builder: (BuildContext context) =>
                                   const CustomNavigationBar(),
                             ),
                           );
-                        
+                        }
                       }
                     },
                     child: const Text(

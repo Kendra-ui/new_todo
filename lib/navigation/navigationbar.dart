@@ -5,7 +5,7 @@ import 'package:new_todo/navigation/filter.dart';
 import 'package:new_todo/navigation/inbox.dart';
 import 'package:new_todo/navigation/project.dart';
 import 'package:chat_gpt_sdk/chat_gpt_sdk.dart';
-import 'package:http/http.dart';
+// import 'package:http/http.dart';
 
 // ignore: camel_case_types, must_be_immutable
 class CustomNavigationBar extends StatefulWidget {

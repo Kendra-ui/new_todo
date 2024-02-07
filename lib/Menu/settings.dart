@@ -36,7 +36,6 @@ class _SettingsState extends State<Settings> {
 
   @override
   Widget build(BuildContext context) {
-    userProvider = context.read<UserProvider>();
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
