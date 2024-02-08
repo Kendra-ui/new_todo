@@ -17,14 +17,13 @@ class _SaveTodoState extends State<SaveTodo> {
   final TextEditingController _title = TextEditingController();
   final TextEditingController _description = TextEditingController();
 
-  late UserProvider _userprovider =
-      Provider.of<UserProvider>(context, listen: false);
+  late UserProvider _userprovider;
 
-  @override
-  void initState() {
-    super.initState();
-    _userprovider = Provider.of<UserProvider>(context, listen: false);
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _userprovider = Provider.of<UserProvider>(context, listen: false);
+  // }
 
   final _formKey = GlobalKey<FormState>();
 
@@ -108,7 +107,8 @@ class _SaveTodoState extends State<SaveTodo> {
                       ),
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          if (_userprovider.currentUser == null) {
+                          if (context.read<UserProvider>().currentUser ==
+                              null) {
                             // Handle case where current user is null
                             return;
                           }
