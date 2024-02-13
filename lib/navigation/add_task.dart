@@ -3,7 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:new_todo/Account/sign_up.dart';
 import 'package:new_todo/Menu/settings.dart';
+import 'package:new_todo/Provider/todo_provider.dart';
+import 'package:new_todo/Provider/user_provider.dart';
 import 'package:new_todo/Widget/savetodo.dart';
+import 'package:provider/provider.dart';
 
 class AddTask extends StatefulWidget {
   final String username;
@@ -15,6 +18,10 @@ class AddTask extends StatefulWidget {
 }
 
 class _AddTaskState extends State<AddTask> {
+
+  late UserProvider userProvider;
+  late TodoProvider todoProvider;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -102,10 +109,23 @@ class _AddTaskState extends State<AddTask> {
                           child: ElevatedButton(
                             onPressed: () {
                               Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const SaveTodo(),
-                                  ));
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => MultiProvider(
+                                    providers: [
+                                      ChangeNotifierProvider<
+                                          UserProvider>.value(
+                                        value: UserProvider(),
+                                      ),
+                                      ChangeNotifierProvider<
+                                          TodoProvider>.value(
+                                        value: TodoProvider(),
+                                      ),
+                                    ],
+                                    child: const SaveTodo(),
+                                  ),
+                                ),
+                              );
                             },
                             style: ButtonStyle(
                               backgroundColor: const MaterialStatePropertyAll(
