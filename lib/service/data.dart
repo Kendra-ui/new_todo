@@ -78,12 +78,16 @@ class Dbservice {
   }
 
 //Get user after login
-  Future<Users?> getUsers(String username) async {
-    final Database db = await initialize();
-    var res =
-        await db.query("user", where: "username = ?", whereArgs: [username]);
-    return res.isNotEmpty ? Users.fromMap(res.first) : null;
+Future<int?> getUsers(String username) async {
+  final Database db = await initialize();
+  var res = await db.query("user", where: "username = ?", whereArgs: [username]);
+  if (res.isNotEmpty) {
+    return res.first["userId"] as int;
+  } else {
+    return null; // Return null if username is not found
   }
+}
+
 
   //get all Users
   Future<List<Users>> getAllUser(Users user) async {
@@ -127,12 +131,12 @@ class Dbservice {
   }
 
   //inserting todo in database
-  Future<Task> insertTodo(Task task, ) async {
+  Future<Task> insertTodo(Task task, int userId) async {
     final Database db = await database;
     await db.insert('todo', {
       'title': task.title,
       'description' : task.description,
-      
+      'userId' : userId
     });
     
     task.toMap();

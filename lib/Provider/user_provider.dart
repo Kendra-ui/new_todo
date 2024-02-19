@@ -40,9 +40,9 @@ class UserProvider extends ChangeNotifier {
     return await _databaseService.signin(user);
   }
 
-  Future<void> getUser(String username) async {
+  Future getUser(String username) async {
     try {
-      _currentUser = (await _databaseService.getUsers(username))!;
+      _currentUser = (await _databaseService.getUsers(username)) as Users;
       print('done');
       notifyListeners();
     } catch (e) {

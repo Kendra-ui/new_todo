@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:new_todo/Account/sign_up.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:new_todo/service/servicedata.dart';
+import 'package:new_todo/service/data.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -17,7 +17,7 @@ class _LoginState extends State<Login> {
   final firestore = FirebaseFirestore.instance;
   get data => null;
 
-  late Dbservices databaseHelper;
+  late Dbservice databaseHelper;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class _LoginState extends State<Login> {
                 height: MediaQuery.of(context).size.height / 7,
               ),
               const Text(
-                'Welcome Back!',
+                'Welcome!',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
               ),
               SizedBox(
@@ -93,7 +93,6 @@ class _LoginState extends State<Login> {
               SizedBox(
                 height: MediaQuery.of(context).size.height / 30,
               ),
-             
               SizedBox(
                 height: MediaQuery.of(context).size.height / 2,
               ),
@@ -109,13 +108,10 @@ class _LoginState extends State<Login> {
                             borderRadius: BorderRadius.circular(10)))),
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        
-                          Navigator.of(context)
-                              .pushReplacement(MaterialPageRoute(
-                                  builder: (BuildContext context) => SignUp(
-                                        email: email.text,
-                                      )));
-                        
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (BuildContext context) => SignUp(
+                                  email: email.text,
+                                )));
                       }
                     },
                     child: const Text(

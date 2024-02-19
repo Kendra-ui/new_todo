@@ -41,9 +41,9 @@ class TodoProvider extends ChangeNotifier {
   //   return result;
   // }
 
-  Future addTask(Task task,) async {
+  Future addTask(Task task, int userId) async {
     try {
-      await databaseService.insertTodo(task,);
+      await databaseService.insertTodo(task, userId);
     } catch (e) {
       print('$e');
     }

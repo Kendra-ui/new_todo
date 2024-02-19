@@ -6,7 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 //import 'package:new_todo/Provider/todo_provider.dart';
 import 'package:new_todo/navigation/navigationbar.dart';
 import 'package:new_todo/provider/user_provider.dart';
-import 'package:new_todo/service/servicedata.dart';
+import 'package:new_todo/service/data.dart';
 import 'package:provider/provider.dart';
 
 enum AuthMode { signUp, login }
@@ -14,8 +14,10 @@ enum AuthMode { signUp, login }
 class SignUp extends StatefulWidget {
   final String email;
 
-
-  const SignUp({super.key, required this.email,});
+  const SignUp({
+    super.key,
+    required this.email,
+  });
 
   @override
   State<SignUp> createState() => _SignUpState();
@@ -32,17 +34,17 @@ class _SignUpState extends State<SignUp> {
   final firestore = FirebaseFirestore.instance;
   get data => null;
   final _formKey = GlobalKey<FormState>();
-  late Dbservices databaseHelper;
+  late Dbservice databaseHelper;
   late UserProvider _userProvider;
 
   @override
   void initState() {
     super.initState();
-    databaseHelper = Dbservices();
+    databaseHelper = Dbservice();
     // Initialize the database
     databaseHelper.initialize();
-    Dbservices().fetchData();
-    Dbservices().fetchTodoData();
+    Dbservice().fetchData();
+    Dbservice().fetchTodoData();
   }
 
   @override
@@ -171,8 +173,6 @@ class _SignUpState extends State<SignUp> {
               SizedBox(
                 height: MediaQuery.of(context).size.height / 30,
               ),
-             
-      
               SizedBox(
                 height: MediaQuery.of(context).size.height / 3.5,
               ),
@@ -189,23 +189,22 @@ class _SignUpState extends State<SignUp> {
                     onPressed: () async {
                       FocusManager.instance.primaryFocus?.unfocus();
                       if (_formKey.currentState!.validate()) {
-      
-                        
-                          // All fields are filled, proceed with sign-up logic
-                          
-                         await _userProvider.signUp(widget.email,
-                              _username.text.trim(), _password.text.trim());
+                        // All fields are filled, proceed with sign-up logic
+
+                        await _userProvider.signUp(widget.email,
+                            _username.text.trim(), _password.text.trim());
                         if (_userProvider.currentUser == null) {
                           //display an error message to the user in snack bar
                           return;
                         }
-                          Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                   CustomNavigationBar(username: _username.text,),
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                CustomNavigationBar(
+                              username: _username.text,
                             ),
-                          );
-                        
+                          ),
+                        );
                       }
                     },
                     child: const Text(

@@ -179,9 +179,10 @@ class _SaveTodoState extends State<SaveTodo> {
                               const SnackBar(content: Text('Duplicate value')),
                             );
                           } else {
+                            int userId = await context.read<UserProvider>().getUser(widget.username);
                             String result = await context
                                 .read<TodoProvider>()
-                                .addTask(task);
+                                .addTask(task, userId);
 
                             if (result == 'OK') {
                               ScaffoldMessenger.of(context).showSnackBar(
