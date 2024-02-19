@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:new_todo/Menu/settings.dart';
 
 class HelpCenter extends StatefulWidget {
-  const HelpCenter({super.key});
+  final String username;
+  const HelpCenter({super.key, required this.username});
 
   @override
   State<HelpCenter> createState() => _HelpCenterState();
@@ -26,7 +27,7 @@ class _HelpCenterState extends State<HelpCenter> {
                   width: MediaQuery.of(context).size.width/10,
                   child: GestureDetector(
                     onTap: (){
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=> const Settings()));
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=>  Settings(username: widget.username,)));
 
                     },
                     child: const Icon(Icons.arrow_back_ios_new,))),

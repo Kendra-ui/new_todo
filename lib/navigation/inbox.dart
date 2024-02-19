@@ -6,7 +6,8 @@ import 'package:provider/provider.dart';
 
 class Inbox extends StatefulWidget {
   final String title;
-  const Inbox({super.key, required this.title});
+  final String username;
+  const Inbox({super.key, required this.title, required this.username});
 
   @override
   State<Inbox> createState() => _InboxState();
@@ -34,7 +35,7 @@ class _InboxState extends State<Inbox> {
                       onTap: () {
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
                           builder: (BuildContext context) =>
-                              const CustomNavigationBar(),
+                               CustomNavigationBar(username: widget.username,),
                         ));
                       },
                       child: const Icon(
@@ -134,7 +135,7 @@ class _InboxState extends State<Inbox> {
                           builder: (context, value, child) => ListView.builder(
                               itemCount: value.task.length,
                               itemBuilder: (context, index) =>
-                                  Todo(task: value.task[index])),
+                                  Todo(task: value.task[index], username: widget.username,)),
                         ),
                       )
                     ],

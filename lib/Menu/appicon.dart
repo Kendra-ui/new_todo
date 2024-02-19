@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:new_todo/Menu/settings.dart';
 
 class AppIcon extends StatefulWidget {
-  const AppIcon({super.key});
+  final String username;
+  const AppIcon({super.key, required this.username});
 
   @override
   State<AppIcon> createState() => _AppIconState();
@@ -24,7 +25,7 @@ class _AppIconState extends State<AppIcon> {
                   width: MediaQuery.of(context).size.width/10,
                   child:GestureDetector(
                     onTap: (){
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=> const Settings()));
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=>  Settings(username: widget.username,)));
 
                     },
                     child: const Icon(Icons.arrow_back_ios_new,))),

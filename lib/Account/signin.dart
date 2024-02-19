@@ -6,7 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:new_todo/Provider/todo_provider.dart';
 import 'package:new_todo/navigation/navigationbar.dart';
 import 'package:new_todo/provider/user_provider.dart';
-import 'package:new_todo/service/servicedata.dart';
+import 'package:new_todo/service/data.dart';
 import 'package:provider/provider.dart';
 
 class SignIn extends StatefulWidget {
@@ -28,18 +28,18 @@ class _SignInState extends State<SignIn> {
   final firestore = FirebaseFirestore.instance;
   get data => null;
   final _formKey = GlobalKey<FormState>();
-  late Dbservices databaseHelper;
+  late Dbservice databaseHelper;
   late UserProvider _userProvider;
   late TodoProvider _todoProvider;
 
   @override
   void initState() {
     super.initState();
-    databaseHelper = Dbservices();
+    databaseHelper = Dbservice();
     // Initialize the database
     databaseHelper.initialize();
-    Dbservices().fetchData();
-    Dbservices().fetchTodoData();
+    Dbservice().fetchData();
+    Dbservice().fetchTodoData();
   }
 
   @override
@@ -61,14 +61,14 @@ class _SignInState extends State<SignIn> {
                         builder: (BuildContext context) => const Login()));
                   },
                   child: const Text(
-                    'Create account',
+                    'Welcome Back!',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 23),
                   )),
               SizedBox(
                 height: MediaQuery.of(context).size.height / 70,
               ),
               const Text(
-                'Create an account and feel the benefits',
+                'Your work faster and structured with Todyapp',
                 style: TextStyle(color: Colors.black, fontSize: 14),
               ),
               SizedBox(
@@ -118,14 +118,8 @@ class _SignInState extends State<SignIn> {
                     ]),
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height / 30,
+                height: MediaQuery.of(context).size.height / 5,
               ),
-              isUserExist
-                  ? const Text(
-                      'User already exist, please change the name ',
-                      style: TextStyle(color: Colors.red),
-                    )
-                  : const SizedBox(),
               isLogin
                   ? const Text(
                       "Username incorrect!",
@@ -154,14 +148,14 @@ class _SignInState extends State<SignIn> {
                         if (userExist) {
                           setState(() {
                             isUserExist = true;
-                            isEmailExist = false;
+                            isLogin = false;
                           });
                         } else {
                           // All fields are filled, proceed with sign-up logic
 
                           await _userProvider.signIn(_username.text.trim());
                           await _userProvider.getUser(_username.text.trim());
-                          await _todoProvider.getTask(_username.text.trim());
+                          await _todoProvider.getTask();
                           if (_userProvider.currentUser == null) {
                             //display an error message to the user in snack bar
                             return;
@@ -169,14 +163,16 @@ class _SignInState extends State<SignIn> {
                           Navigator.of(context).pushReplacement(
                             MaterialPageRoute(
                               builder: (BuildContext context) =>
-                                  const CustomNavigationBar(),
+                                  CustomNavigationBar(
+                                username: _username.text,
+                              ),
                             ),
                           );
                         }
                       }
                     },
                     child: const Text(
-                      'Sign Up',
+                      'Sign In',
                       textAlign: TextAlign.center,
                       style: TextStyle(color: Colors.white),
                     )),

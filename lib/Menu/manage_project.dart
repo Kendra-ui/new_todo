@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:new_todo/navigation/navigationbar.dart';
 
 class ManageProject extends StatefulWidget {
-  const ManageProject({super.key});
+  final String username;
+  const ManageProject({super.key, required this.username});
 
   @override
   State<ManageProject> createState() => _ManageProjectState();
@@ -29,7 +30,7 @@ class _ManageProjectState extends State<ManageProject> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width/6,
                   child: GestureDetector(onTap: (){
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const CustomNavigationBar()));
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>  CustomNavigationBar(username: widget.username,)));
 
                   },
                   child: const Icon(Icons.arrow_back_ios_new,))),

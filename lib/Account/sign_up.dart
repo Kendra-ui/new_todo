@@ -14,7 +14,8 @@ enum AuthMode { signUp, login }
 class SignUp extends StatefulWidget {
   final String email;
 
-  const SignUp({super.key, required this.email});
+
+  const SignUp({super.key, required this.email,});
 
   @override
   State<SignUp> createState() => _SignUpState();
@@ -201,7 +202,7 @@ class _SignUpState extends State<SignUp> {
                           Navigator.of(context).pushReplacement(
                             MaterialPageRoute(
                               builder: (BuildContext context) =>
-                                  const CustomNavigationBar(),
+                                   CustomNavigationBar(username: _username.text,),
                             ),
                           );
                         

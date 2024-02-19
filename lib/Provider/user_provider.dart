@@ -1,17 +1,24 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, unnecessary_null_comparison
 
 import 'package:flutter/material.dart';
 import 'package:new_todo/model/user.dart';
-import 'package:new_todo/service/servicedata.dart';
+import 'package:new_todo/service/data.dart';
 import 'package:sqflite/sqflite.dart';
 
 class UserProvider extends ChangeNotifier {
-  final Dbservices _databaseService = Dbservices();
+  final Dbservice _databaseService = Dbservice();
 
-  Users? _currentUser;
-  Users? get currentUser => _currentUser;
+  late Users _currentUser;
+  Users get currentUser => _currentUser;
 
   Database? database;
+
+  UserProvider() {
+    _currentUser = Users(
+        email: '',
+        username: '',
+        password: ''); // Initializing _currentUser in the constructor
+  }
 
   Future<void> dataBaseInitialize() async {
     database = await _databaseService.initialize();
@@ -24,8 +31,8 @@ class UserProvider extends ChangeNotifier {
   Future<void> signUp(String email, String username, String password) async {
     final user = Users(email: email, username: username, password: password);
     print('user added successfully');
-     await _databaseService.signup(user);
-     await getUser(username);
+    await _databaseService.signup(user);
+    await getUser(username);
   }
 
   Future<bool> signIn(String username) async {
@@ -35,7 +42,7 @@ class UserProvider extends ChangeNotifier {
 
   Future<void> getUser(String username) async {
     try {
-      _currentUser = await _databaseService.getUsers(username);
+      _currentUser = (await _databaseService.getUsers(username))!;
       print('done');
       notifyListeners();
     } catch (e) {
@@ -59,9 +66,10 @@ class UserProvider extends ChangeNotifier {
       return;
     }
     try {
-      await _databaseService.updateUser(_currentUser!);
+      await _databaseService.updateUser(_currentUser);
       await getUser(username);
     } catch (e) {
+      print('$e');
     }
   }
 }

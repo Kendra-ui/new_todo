@@ -2,13 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:new_todo/model/task.dart';
-import 'package:new_todo/service/servicedata.dart';
+import 'package:new_todo/service/data.dart';
 import 'package:sqflite/sqflite.dart';
 
 class TodoProvider extends ChangeNotifier {
   List<Task> _task = [];
   List<Task> get task => _task;
-  Dbservices databaseService = Dbservices();
+  Dbservice databaseService = Dbservice();
 
   Database? database;
 
@@ -20,9 +20,9 @@ class TodoProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future getTask(String username) async {
+  Future getTask() async {
     try {
-      _task = await databaseService.getTask(username);
+      _task = await databaseService.getTask();
       print('good');
       notifyListeners();
     } catch (e) {
@@ -41,13 +41,13 @@ class TodoProvider extends ChangeNotifier {
   //   return result;
   // }
 
-  Future addTask(Task task, int userId) async {
+  Future addTask(Task task,) async {
     try {
-      await databaseService.insertTodo(task, userId);
+      await databaseService.insertTodo(task,);
     } catch (e) {
       print('$e');
     }
-    String result = await getTask(task.username);
+    String result = await getTask();
     return result;
   }
 }

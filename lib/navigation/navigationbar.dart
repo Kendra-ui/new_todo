@@ -9,7 +9,8 @@ import 'package:chat_gpt_sdk/chat_gpt_sdk.dart';
 
 // ignore: camel_case_types, must_be_immutable
 class CustomNavigationBar extends StatefulWidget {
-  const CustomNavigationBar({super.key});
+  final String username;
+  const CustomNavigationBar({super.key, required this.username});
 
   @override
   State<CustomNavigationBar> createState() => _CustomNavigationBarState();
@@ -20,28 +21,19 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
 
   late OpenAI openAI;
 
-  // @override
-  // void initState() {
-  //   openAI = OpenAI.instance.build(
-  //     token: SESSION_TOKEN_KEY,
-  //     baseOption: HttpSetup(
-  //       receiveTimeout: Duration(seconds: 10),
-  //       connectTimeout: Duration(seconds: 10)
-  //     ),
-  //       isLog: true
-  //   );
-  //   super.initState();
-  // }
   final List<Widget> screen = [
-    const AddTask(
-      username: '',
+    AddTask(
+      username: 'widget.username',
     ),
-    const Inbox(
+    Inbox(
       title: '',
+      username: 'widget.username',
     ),
     const Calendar(),
     const Filter(),
-    const Project(),
+    Project(
+      username: 'widget.username',
+    ),
   ];
 
   void onTappedBar(int index) {

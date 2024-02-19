@@ -18,7 +18,6 @@ class AddTask extends StatefulWidget {
 }
 
 class _AddTaskState extends State<AddTask> {
-
   late UserProvider userProvider;
   late TodoProvider todoProvider;
 
@@ -62,7 +61,9 @@ class _AddTaskState extends State<AddTask> {
                 GestureDetector(
                     onTap: () {
                       Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => const Settings()));
+                          builder: (context) => Settings(
+                                username: widget.username,
+                              )));
                     },
                     child: const Icon(
                       Icons.settings,
@@ -122,7 +123,9 @@ class _AddTaskState extends State<AddTask> {
                                         value: TodoProvider(),
                                       ),
                                     ],
-                                    child: const SaveTodo(),
+                                    child: SaveTodo(
+                                      username: widget.username,
+                                    ),
                                   ),
                                 ),
                               );

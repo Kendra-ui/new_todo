@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:new_todo/navigation/navigationbar.dart';
 
 class Instruction extends StatefulWidget {
-  const Instruction({super.key});
+  final String username;
+  const Instruction({super.key, required this.username});
 
   @override
   State<Instruction> createState() => _InstructionState();
@@ -27,7 +28,7 @@ class _InstructionState extends State<Instruction> {
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) =>
-                                  const CustomNavigationBar()));
+                                   CustomNavigationBar(username: widget.username,)));
                         },
                         child: const Icon(
                           Icons.arrow_back_ios_new,

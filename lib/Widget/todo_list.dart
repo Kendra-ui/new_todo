@@ -3,7 +3,8 @@ import 'package:new_todo/model/task.dart';
 import 'package:new_todo/navigation/navigationbar.dart';
 
 class Todo extends StatefulWidget {
-  const Todo({super.key, required Task task});
+  final String username;
+  const Todo({super.key, required Task task, required this.username});
 
   @override
   State<Todo> createState() => _TodoState();
@@ -153,7 +154,7 @@ class _TodoState extends State<Todo> {
             onPressed: () {
               Navigator.of(context).pushReplacement(MaterialPageRoute(
                   builder: (BuildContext context) =>
-                      const CustomNavigationBar()));
+                       CustomNavigationBar(username: widget.username,)));
             },
             child: const Text(
               'Open Todyapp',

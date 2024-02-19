@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:new_todo/Menu/settings.dart';
 
 class Password extends StatefulWidget {
-  const Password({super.key});
+  final String username;
+  const Password({super.key, required this.username});
 
   @override
   State<Password> createState() => _PasswordState();
@@ -30,7 +31,7 @@ class _PasswordState extends State<Password> {
                 ),
                     GestureDetector(
                     onTap: (){
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=> const Settings()));
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=>  Settings(username: widget.username)));
 
                     },
                     child: const Icon(Icons.arrow_back_ios_new,)),

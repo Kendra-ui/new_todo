@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:new_todo/Account/login.dart';
 import 'package:new_todo/Account/password.dart';
+import 'package:new_todo/Account/signin.dart';
 import 'package:new_todo/Menu/appicon.dart';
 import 'package:new_todo/Menu/helpcenter.dart';
 import 'package:new_todo/Menu/productivity.dart';
@@ -11,7 +11,8 @@ import 'package:new_todo/provider/user_provider.dart';
 import 'package:provider/provider.dart';
 
 class Settings extends StatefulWidget {
-  const Settings({super.key});
+  final String username;
+  const Settings({super.key, required this.username});
 
   @override
   State<Settings> createState() => _SettingsState();
@@ -20,13 +21,6 @@ class Settings extends StatefulWidget {
 class _SettingsState extends State<Settings> {
   bool light = true;
   late UserProvider userProvider;
-
-  void _toggleTheme(ThemeMode themeMode) {
-  if (themeMode == ThemeMode.light) {
-    // Apply light theme
-  }
-}
-
 
   @override
   void initState() {
@@ -53,7 +47,7 @@ class _SettingsState extends State<Settings> {
                           Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      const CustomNavigationBar()));
+                                       CustomNavigationBar(username: widget.username,)));
                         },
                         child: const Icon(
                           Icons.arrow_back_ios_new,
@@ -85,21 +79,26 @@ class _SettingsState extends State<Settings> {
                 ),
                 Consumer<UserProvider>(
                   builder: (context, userProvider, child) {
-                    Users currentUser = userProvider.currentUser!;
-                    return Column(
-                      children: [
-                        Text(currentUser.username,
-                            style:
-                                const TextStyle(fontWeight: FontWeight.bold)),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height / 70,
-                        ),
-                        Text(
-                          currentUser.email,
-                          style: const TextStyle(color: Color(0xFF767E8C)),
-                        )
-                      ],
-                    );
+                    Users? currentUser = userProvider.currentUser;
+                    if (currentUser != null) {
+                      return Column(
+                        children: [
+                          Text(currentUser.username,
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold)),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height / 70,
+                          ),
+                          Text(
+                            currentUser.email,
+                            style: const TextStyle(color: Color(0xFF767E8C)),
+                          )
+                        ],
+                      );
+                    } else {
+                      // Handle the case where currentUser is null
+                      return Text('No User');
+                    }
                   },
                 ),
               ]),
@@ -119,7 +118,7 @@ class _SettingsState extends State<Settings> {
               trailing: GestureDetector(
                   onTap: () {
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (BuildContext context) => const Password()));
+                        builder: (BuildContext context) =>  Password(username: widget.username,)));
                   },
                   child: const Icon(
                     Icons.arrow_forward_ios,
@@ -139,7 +138,7 @@ class _SettingsState extends State<Settings> {
               trailing: GestureDetector(
                   onTap: () {
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (BuildContext context) => const Themes()));
+                        builder: (BuildContext context) =>  Themes(username: widget.username,)));
                   },
                   child: const Icon(
                     Icons.arrow_forward_ios,
@@ -159,7 +158,7 @@ class _SettingsState extends State<Settings> {
               trailing: GestureDetector(
                   onTap: () {
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (BuildContext context) => const AppIcon()));
+                        builder: (BuildContext context) =>  AppIcon(username: widget.username,)));
                   },
                   child: const Icon(
                     Icons.arrow_forward_ios,
@@ -180,7 +179,7 @@ class _SettingsState extends State<Settings> {
                   onTap: () {
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
                         builder: (BuildContext context) =>
-                            const Productivity()));
+                             Productivity(username: widget.username,)));
                   },
                   child: const Icon(
                     Icons.arrow_forward_ios,
@@ -204,11 +203,6 @@ class _SettingsState extends State<Settings> {
                 onChanged: (bool value) {
                   setState(() {
                     light = value;
-                    if (light) {
-                      _toggleTheme(ThemeMode.light);
-                    } else {
-                      _toggleTheme(ThemeMode.dark);
-                    }
                   });
                 },
               ),
@@ -246,7 +240,7 @@ class _SettingsState extends State<Settings> {
               trailing: GestureDetector(
                   onTap: () {
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (BuildContext context) => const HelpCenter()));
+                        builder: (BuildContext context) =>  HelpCenter(username: widget.username,)));
                   },
                   child: const Icon(
                     Icons.arrow_forward_ios,
@@ -266,7 +260,7 @@ class _SettingsState extends State<Settings> {
               trailing: GestureDetector(
                   onTap: () {
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (BuildContext context) => const Login()));
+                        builder: (BuildContext context) => const SignIn()));
                   },
                   child: const Icon(
                     Icons.arrow_forward_ios,

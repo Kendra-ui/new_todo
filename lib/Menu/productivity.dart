@@ -6,7 +6,8 @@ import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
 class Productivity extends StatefulWidget {
-  const Productivity({super.key});
+  final String username;
+  const Productivity({super.key, required this.username});
 
   @override
   State<Productivity> createState() => _ProductivityState();
@@ -43,7 +44,7 @@ class _ProductivityState extends State<Productivity> {
                           Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
                                   builder: (BuildContext context) =>
-                                      const Settings()));
+                                       Settings(username: widget.username,)));
                         },
                         child: const Icon(
                           Icons.arrow_back_ios_new,

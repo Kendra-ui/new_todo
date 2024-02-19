@@ -5,7 +5,8 @@ import 'package:new_todo/Menu/instructions.dart';
 import 'package:new_todo/Menu/manage_project.dart';
 
 class Project extends StatefulWidget {
-  const Project({super.key});
+  final String username;
+  const Project({super.key, required this.username});
 
   @override
   State<Project> createState() => _ProjectState();
@@ -61,7 +62,7 @@ class _ProjectState extends State<Project> {
                     Image.asset('assets/images/message-question.png'),
                     GestureDetector(
                       onTap: (){
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const Instruction()));
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>  Instruction(username: widget.username,)));
                       },
                       child: const Text('  Instructions For Use', style: TextStyle(color: Colors.grey),)),
 
@@ -73,7 +74,7 @@ class _ProjectState extends State<Project> {
                     children: [
                     Image.asset('assets/images/Document.png'),
                     GestureDetector( onTap: (){
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const Boards()));
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=>  Boards(username: widget.username,)));
 
                     },
                     child: const Text('  Try Boards', style: TextStyle(color: Colors.grey),)),
@@ -89,7 +90,7 @@ class _ProjectState extends State<Project> {
                     children: [
                     const Icon(Icons.settings_outlined, color: Colors.grey,),
                     GestureDetector(onTap:(){
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const ManageProject()));
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=>  ManageProject(username: widget.username,)));
 
                     },
                     child: const Text('  Manage Projects ', style: TextStyle(color: Colors.grey),)),
