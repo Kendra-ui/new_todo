@@ -20,12 +20,6 @@ class _SaveTodoState extends State<SaveTodo> {
   final TextEditingController _title = TextEditingController();
   final TextEditingController _description = TextEditingController();
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _userprovider = Provider.of<UserProvider>(context, listen: false);
-  // }
-
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -167,9 +161,9 @@ class _SaveTodoState extends State<SaveTodo> {
                               .currentUser
                               .username;
                           Task task = Task(
-                              title: _title.text.trim(),
-                              description: _description.text.trim(),
-                              );
+                            title: _title.text.trim(),
+                            description: _description.text.trim(),
+                          );
 
                           if (context
                               .read<TodoProvider>()
@@ -179,7 +173,9 @@ class _SaveTodoState extends State<SaveTodo> {
                               const SnackBar(content: Text('Duplicate value')),
                             );
                           } else {
-                            int userId = await context.read<UserProvider>().getUser(widget.username);
+                            int userId = await context
+                                .read<UserProvider>()
+                                .getUser(username);
                             String result = await context
                                 .read<TodoProvider>()
                                 .addTask(task, userId);
