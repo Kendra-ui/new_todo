@@ -150,15 +150,23 @@ class _SignInState extends State<SignIn> {
                             isUserExist = true;
                             isLogin = false;
                           });
-                        } else {
-                          // All fields are filled, proceed with sign-up logic
+
+                          // All fields are filled, proceed with sign-in logic
 
                           await _userProvider.signIn(_username.text.trim());
+
                           await _userProvider.getUser(_username.text.trim());
-                          await _todoProvider.getTask();
-                          if (_userProvider.currentUser == null) {
-                            //display an error message to the user in snack bar
-                            return;
+                          String username = context
+                              .read<UserProvider>()
+                              .currentUser!
+                              .username;
+                          await _todoProvider.getTask(username);
+
+                          if (username == 'Ok') {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text('Successfully signed in')),
+                            );
                           }
                           Navigator.of(context).pushReplacement(
                             MaterialPageRoute(
@@ -168,6 +176,11 @@ class _SignInState extends State<SignIn> {
                               ),
                             ),
                           );
+                        } else {
+                          setState(() {
+                            isUserExist = false;
+                            isLogin = true;
+                          });
                         }
                       }
                     },

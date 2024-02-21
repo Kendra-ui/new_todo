@@ -20,7 +20,7 @@ class Dbservice {
     String path = await getDatabasesPath();
     print('Database file path: $path');
     return await openDatabase(
-      join(path, 'datas.db'),
+      join(path, 'ines.db'),
       version: 1,
       onCreate: createDB,
       onConfigure: _onConfigure,
@@ -41,8 +41,7 @@ class Dbservice {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         title TEXT NOT NULL,
         description TEXT NOT NULL,
-        userId INTEGER NOT NULL,
-        FOREIGN KEY(userId)  REFERENCES user(userId) 
+        username TEXT NOT NULL,
         )
       """);
   }
@@ -83,6 +82,7 @@ class Dbservice {
     final Database db = await initialize();
     var res =
         await db.query("user", where: "username = ?", whereArgs: [username]);
+    print('xxxx $res');
     if (res.isNotEmpty) {
       return Users.fromMap(res.first);
     } else {
@@ -132,12 +132,12 @@ class Dbservice {
   }
 
   //inserting todo in database
-  Future<Task> insertTodo(Task task, int userId) async {
+  Future<Task> insertTodo(Task task, String username) async {
     final Database db = await database;
     await db.insert('todo', {
       'title': task.title,
       'description': task.description,
-      'userId': userId
+      'username': username
     });
 
     task.toMap();
@@ -146,9 +146,10 @@ class Dbservice {
   }
 
   //get todos
-  Future<List<Task>> getTask() async {
+  Future<List<Task>> getTask(String username) async {
     final Database db = await database;
-    final result = await db.query('todo', orderBy: 'title');
+    final result = await db.query('todo',
+        orderBy: 'title', where: "username = ?", whereArgs: [username]);
 
     return result.map((e) => Task.fromMap(e)).toList();
   }

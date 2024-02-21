@@ -193,6 +193,7 @@ class _SignUpState extends State<SignUp> {
 
                         await _userProvider.signUp(widget.email,
                             _username.text.trim(), _password.text.trim());
+                        await _userProvider.getUser(_username.text.trim());
                         if (_userProvider.currentUser == null) {
                           //display an error message to the user in snack bar
                           return;

@@ -13,13 +13,6 @@ class UserProvider extends ChangeNotifier {
 
   Database? database;
 
-  UserProvider() {
-    _currentUser = Users(
-        email: '',
-        username: '',
-        password: ''); // Initializing _currentUser in the constructor
-  }
-
   Future<void> dataBaseInitialize() async {
     database = await _databaseService.initialize();
 

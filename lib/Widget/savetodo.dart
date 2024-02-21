@@ -156,14 +156,15 @@ class _SaveTodoState extends State<SaveTodo> {
                           //     );
                           //   }
                           //}
-                          String username = await context
-                              .read<UserProvider>()
-                              .currentUser
-                              .username;
+                          // String username = await context
+                          //     .read<UserProvider>()
+                          //     .currentUser
+                          //     .username;
+                          // print(username);
                           Task task = Task(
-                            title: _title.text.trim(),
-                            description: _description.text.trim(),
-                          );
+                              title: _title.text.trim(),
+                              description: _description.text.trim(),
+                              username: 'kendra');
 
                           if (context
                               .read<TodoProvider>()
@@ -173,18 +174,14 @@ class _SaveTodoState extends State<SaveTodo> {
                               const SnackBar(content: Text('Duplicate value')),
                             );
                           } else {
-                            int userId = await context
-                                .read<UserProvider>()
-                                .getUser(username);
                             String result = await context
                                 .read<TodoProvider>()
-                                .addTask(task, userId);
+                                .addTask(task, 'kendra');
 
                             if (result == 'OK') {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                    content:
-                                        Text('New task added for $username')),
+                                    content: Text('New task added for kendra')),
                               );
                               // Clear the text fields after adding the task
                               _title.clear();
