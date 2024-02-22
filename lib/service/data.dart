@@ -41,7 +41,7 @@ class Dbservice {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         title TEXT NOT NULL,
         description TEXT NOT NULL,
-        username TEXT NOT NULL,
+        username TEXT NOT NULL
         )
       """);
   }

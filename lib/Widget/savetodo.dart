@@ -164,7 +164,7 @@ class _SaveTodoState extends State<SaveTodo> {
                           Task task = Task(
                               title: _title.text.trim(),
                               description: _description.text.trim(),
-                              username: 'kendra');
+                              username: 'username');
 
                           if (context
                               .read<TodoProvider>()
@@ -176,12 +176,13 @@ class _SaveTodoState extends State<SaveTodo> {
                           } else {
                             String result = await context
                                 .read<TodoProvider>()
-                                .addTask(task, 'kendra');
+                                .addTask(task, 'username');
 
                             if (result == 'OK') {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                    content: Text('New task added for kendra')),
+                                    content:
+                                        Text('New task added for username')),
                               );
                               // Clear the text fields after adding the task
                               _title.clear();
