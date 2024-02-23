@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:new_todo/Account/login.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:new_todo/Provider/todo_provider.dart';
+import 'package:new_todo/model/user.dart';
 import 'package:new_todo/navigation/navigationbar.dart';
 import 'package:new_todo/provider/user_provider.dart';
 import 'package:new_todo/service/data.dart';
@@ -21,7 +22,6 @@ class _SignInState extends State<SignIn> {
 
   bool isVisible = false;
   bool isUserExist = false;
-  bool isEmailExist = false;
   bool isLogin = false;
 
   //initialize the firestore object
@@ -146,36 +146,32 @@ class _SignInState extends State<SignIn> {
                             await _userProvider.checkUserExist(_username.text);
 
                         if (userExist) {
-                          setState(() {
-                            isUserExist = true;
-                            isLogin = false;
-                          });
-
-                          // All fields are filled, proceed with sign-in logic
-
                           await _userProvider.signIn(_username.text.trim());
-
                           await _userProvider.getUser(_username.text.trim());
-                          String username = context
-                              .read<UserProvider>()
-                              .currentUser!
-                              .username;
-                          await _todoProvider.getTask(username);
 
-                          if (username == 'Ok') {
+                          Users? currentUser =
+                              context.read<UserProvider>().currentUser;
+
+                          if (currentUser != null) {
+                            String username = currentUser.username;
+                            await _todoProvider.getTask(username);
+
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                   content: Text('Successfully signed in')),
                             );
-                          }
-                          Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  CustomNavigationBar(
-                                username: _username.text,
+
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    CustomNavigationBar(
+                                  username: username,
+                                ),
                               ),
-                            ),
-                          );
+                            );
+                          } else {
+                            // Handle case where currentUser is null
+                          }
                         } else {
                           setState(() {
                             isUserExist = false;

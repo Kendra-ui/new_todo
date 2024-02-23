@@ -8,8 +8,8 @@ import 'package:sqflite/sqflite.dart';
 class UserProvider extends ChangeNotifier {
   final Dbservice _databaseService = Dbservice();
 
-  late Users _currentUser;
-  Users get currentUser => _currentUser;
+  Users? _currentUser;
+  Users? get currentUser => _currentUser;
 
   Database? database;
 
@@ -59,7 +59,7 @@ class UserProvider extends ChangeNotifier {
       return;
     }
     try {
-      await _databaseService.updateUser(_currentUser);
+      await _databaseService.updateUser(_currentUser!);
       await getUser(username);
     } catch (e) {
       print('$e');

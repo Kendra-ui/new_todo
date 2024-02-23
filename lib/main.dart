@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:new_todo/Account/login.dart';
 import 'package:new_todo/Account/signin.dart';
 import 'package:new_todo/Provider/todo_provider.dart';
 import 'package:new_todo/provider/user_provider.dart';
@@ -34,6 +33,6 @@ class MyApp extends StatelessWidget {
         theme: ThemeData.light(),
         darkTheme: ThemeData.dark(),
         themeMode: ThemeMode.system,
-        home: const Login());
+        home: const SignIn());
   }
 }

@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:new_todo/Provider/todo_provider.dart';
-import 'package:new_todo/Provider/user_provider.dart';
 import 'package:new_todo/model/task.dart';
 import 'package:new_todo/navigation/navigationbar.dart';
 import 'package:provider/provider.dart';
@@ -102,69 +101,11 @@ class _SaveTodoState extends State<SaveTodo> {
                       ),
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          // Check if the current user is null
-                          // if (context.read<UserProvider>().currentUser ==
-                          //     null) {
-                          //   return;
-                          // }
-                          // // Create a Task object with the current user's username
-                          // Task task = Task(
-                          //   title: _title.text.trim(),
-                          //   description: _description.text.trim(),
-                          //   username: context
-                          //       .read<UserProvider>()
-                          //       .currentUser!
-                          //       .username,
-                          // );
-
-                          // // Check if the task already exists in the database (assuming Task.equals() method is correctly implemented)
-                          // if (context
-                          //     .read<TodoProvider>()
-                          //     .task
-                          //     .contains(task)) {
-                          //   ScaffoldMessenger.of(context).showSnackBar(
-                          //     const SnackBar(content: Text('Duplicate value')),
-                          //   );
-                          // } else {
-                          //   // Add the task to the database using the TodoProvider
-                          //   String result = await context
-                          //       .read<TodoProvider>()
-                          //       .addTask(
-                          //           task,
-                          //           context
-                          //               .read<UserProvider>()
-                          //               .currentUser!
-                          //               .username as int);
-                          //   if (result == 'OK') {
-                          //     // Show a success message if the task is added successfully
-                          //     ScaffoldMessenger.of(context).showSnackBar(
-                          //       const SnackBar(content: Text('New task added')),
-                          //     );
-                          //     // Clear the text fields after adding the task
-                          //     _title.clear();
-                          //     _description.clear();
-                          //     Navigator.of(context).pushReplacement(
-                          //       MaterialPageRoute(
-                          //         builder: (BuildContext context) =>
-                          //             const CustomNavigationBar(),
-                          //       ),
-                          //     );
-                          //   } else {
-                          //     // Show an error message if adding the task fails
-                          //     ScaffoldMessenger.of(context).showSnackBar(
-                          //       SnackBar(content: Text(result)),
-                          //     );
-                          //   }
-                          //}
-                          // String username = await context
-                          //     .read<UserProvider>()
-                          //     .currentUser
-                          //     .username;
-                          // print(username);
                           Task task = Task(
                               title: _title.text.trim(),
                               description: _description.text.trim(),
                               username: 'username');
+                          //DateTime dateTime = DateTime.now();
 
                           if (context
                               .read<TodoProvider>()
@@ -180,7 +121,7 @@ class _SaveTodoState extends State<SaveTodo> {
 
                             if (result == 'OK') {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
+                                const SnackBar(
                                     content:
                                         Text('New task added for username')),
                               );

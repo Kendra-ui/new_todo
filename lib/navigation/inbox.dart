@@ -35,7 +35,9 @@ class _InboxState extends State<Inbox> {
                       onTap: () {
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
                           builder: (BuildContext context) =>
-                               CustomNavigationBar(username: widget.username,),
+                              CustomNavigationBar(
+                            username: widget.username,
+                          ),
                         ));
                       },
                       child: const Icon(
@@ -134,8 +136,10 @@ class _InboxState extends State<Inbox> {
                         child: Consumer<TodoProvider>(
                           builder: (context, value, child) => ListView.builder(
                               itemCount: value.task.length,
-                              itemBuilder: (context, index) =>
-                                  Todo(task: value.task[index], username: widget.username,)),
+                              itemBuilder: (context, index) => Todo(
+                                    task: value.task[index],
+                                    username: widget.username,
+                                  )),
                         ),
                       )
                     ],

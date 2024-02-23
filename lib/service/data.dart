@@ -119,8 +119,8 @@ class Dbservice {
   //check if user exist,if duplication catch the exeption
   Future<bool> checkUserssExist(String username) async {
     final Database db = await initialize();
-    final List<Map<String, dynamic>> res = await db.query("user",
-        where: "username = ? AND email = ?", whereArgs: [username]);
+    final List<Map<String, dynamic>> res =
+        await db.query("user", where: "username = ?", whereArgs: [username]);
     return res.isNotEmpty;
   }
 
