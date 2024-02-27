@@ -97,7 +97,7 @@ class _SettingsState extends State<Settings> {
                       );
                     } else {
                       // Handle the case where currentUser is null
-                      return Text('No User');
+                      return const Text('No User');
                     }
                   },
                 ),

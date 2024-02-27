@@ -11,6 +11,11 @@ class UserProvider extends ChangeNotifier {
   Users? _currentUser;
   Users? get currentUser => _currentUser;
 
+  void setCurrentUser(Users user) {
+    _currentUser = user;
+    notifyListeners(); // Notify listeners of the change
+  }
+
   Database? database;
 
   Future<void> dataBaseInitialize() async {

@@ -22,16 +22,16 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
   late OpenAI openAI;
 
   final List<Widget> screen = [
-    AddTask(
+    const AddTask(
       username: 'widget.username',
     ),
-    Inbox(
+    const Inbox(
       title: '',
       username: 'widget.username',
     ),
     const Calendar(),
     const Filter(),
-    Project(
+    const Project(
       username: 'widget.username',
     ),
   ];

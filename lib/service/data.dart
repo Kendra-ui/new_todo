@@ -1,3 +1,5 @@
+// ignore_for_file: depend_on_referenced_packages, avoid_print
+
 import 'dart:developer';
 import 'package:new_todo/model/task.dart';
 import 'package:new_todo/model/user.dart';

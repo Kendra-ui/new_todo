@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -6,7 +8,6 @@ import 'package:new_todo/onboarding/splash2.dart';
 import 'package:new_todo/onboarding/splash3.dart';
 import 'package:new_todo/splash_screen.dart';
 
-//TODO: refactor the page to match the UI
 class OnboardingWrapper extends StatefulWidget {
   const OnboardingWrapper({super.key});
 
@@ -41,7 +42,7 @@ class _OnboardingWrapperState extends State<OnboardingWrapper> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: _currentPage == 0 ? Color(0xFF24A19C) : null,
+      backgroundColor: _currentPage == 0 ? const Color(0xFF24A19C) : null,
       body: Column(
         children: [
           SizedBox(

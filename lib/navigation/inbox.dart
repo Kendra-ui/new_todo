@@ -109,7 +109,7 @@ class _InboxState extends State<Inbox> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 20.0, left: 20),
+                  padding: const EdgeInsets.only(top: 30.0, left: 20),
                   child: Row(
                     children: [
                       Container(
@@ -153,9 +153,6 @@ class _InboxState extends State<Inbox> {
                   thickness: 0.5,
                   endIndent: 10,
                   indent: 10,
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height / 100,
                 ),
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 1.5,

@@ -1,7 +1,8 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, avoid_print
 
 import 'package:flutter/material.dart';
 import 'package:new_todo/Provider/todo_provider.dart';
+import 'package:new_todo/Provider/user_provider.dart';
 import 'package:new_todo/model/task.dart';
 import 'package:new_todo/navigation/navigationbar.dart';
 import 'package:provider/provider.dart';
@@ -92,7 +93,7 @@ class _SaveTodoState extends State<SaveTodo> {
                     child: ElevatedButton(
                       style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all(Color(0xFF24A19C)),
+                            MaterialStateProperty.all(const Color(0xFF24A19C)),
                         shape: MaterialStateProperty.all(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
@@ -101,10 +102,22 @@ class _SaveTodoState extends State<SaveTodo> {
                       ),
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
+                          // String username = context
+                          //     .read<UserProvider>()
+                          //     .currentUser!
+                          //     .username;
+
+                          String username = context
+                                  .read<UserProvider>()
+                                  .currentUser
+                                  ?.username ??
+                              '';
+                          print('hello $username');
+
                           Task task = Task(
                               title: _title.text.trim(),
                               description: _description.text.trim(),
-                              username: 'username');
+                              username: username);
                           //DateTime dateTime = DateTime.now();
 
                           if (context
@@ -117,13 +130,13 @@ class _SaveTodoState extends State<SaveTodo> {
                           } else {
                             String result = await context
                                 .read<TodoProvider>()
-                                .addTask(task, 'username');
+                                .addTask(task, username);
 
                             if (result == 'OK') {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
+                                SnackBar(
                                     content:
-                                        Text('New task added for username')),
+                                        Text('New task added for $username')),
                               );
                               // Clear the text fields after adding the task
                               _title.clear();
