@@ -109,7 +109,7 @@ class _InboxState extends State<Inbox> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 30.0, left: 20),
+                  padding: const EdgeInsets.only(top: 10.0, left: 20),
                   child: Row(
                     children: [
                       Container(
@@ -131,22 +131,22 @@ class _InboxState extends State<Inbox> {
                                       color: const Color(0xFF24A19C))),
                             ),
                           )),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Consumer<TodoProvider>(
-                          builder: (context, value, child) => ListView.builder(
-                              itemCount: value.task.length,
-                              itemBuilder: (context, index) => Todo(
-                                    task: value.task[index],
-                                    username: widget.username,
-                                  )),
-                        ),
-                      )
+                      // Padding(
+                      //   padding: const EdgeInsets.only(left: 8.0),
+                      //   child: Consumer<TodoProvider>(
+                      //     builder: (context, value, child) => ListView.builder(
+                      //         itemCount: value.task.length,
+                      //         itemBuilder: (context, index) => Todo(
+                      //               task: value.task[index],
+                      //               username: widget.username,
+                      //             )),
+                      //   ),
+                      // )
                     ],
                   ),
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height / 50,
+                  height: MediaQuery.of(context).size.height / 20,
                 ),
                 const Divider(
                   color: Colors.grey,

@@ -181,7 +181,7 @@ class _SignUpState extends State<SignUp> {
                 decoration:
                     BoxDecoration(borderRadius: BorderRadius.circular(3)),
                 child: ElevatedButton(
-                    style: ButtonStyle(
+                    style: ButtonStyle( 
                         backgroundColor:
                             const MaterialStatePropertyAll(Color(0xFF24A19C)),
                         shape: MaterialStatePropertyAll(RoundedRectangleBorder(
