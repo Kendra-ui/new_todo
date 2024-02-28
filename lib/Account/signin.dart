@@ -152,6 +152,7 @@ class _SignInState extends State<SignIn> {
                           Users? currentUser =
                               context.read<UserProvider>().currentUser;
 
+                          // ignore: unnecessary_null_comparison
                           if (currentUser != null) {
                             String username = currentUser.username;
                             await _todoProvider.getTask(username);

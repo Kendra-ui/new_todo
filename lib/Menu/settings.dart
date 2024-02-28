@@ -80,6 +80,7 @@ class _SettingsState extends State<Settings> {
                 Consumer<UserProvider>(
                   builder: (context, userProvider, child) {
                     Users? currentUser = userProvider.currentUser;
+                    // ignore: unnecessary_null_comparison
                     if (currentUser != null) {
                       return Column(
                         children: [

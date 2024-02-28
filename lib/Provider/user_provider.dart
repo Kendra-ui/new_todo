@@ -8,13 +8,8 @@ import 'package:sqflite/sqflite.dart';
 class UserProvider extends ChangeNotifier {
   final Dbservice _databaseService = Dbservice();
 
-  Users? _currentUser;
-  Users? get currentUser => _currentUser;
-
-  void setCurrentUser(Users user) {
-    _currentUser = user;
-    notifyListeners(); // Notify listeners of the change
-  }
+  late Users _currentUser;
+  Users get currentUser => _currentUser;
 
   Database? database;
 
@@ -38,7 +33,8 @@ class UserProvider extends ChangeNotifier {
     return await _databaseService.signin(user);
   }
 
-  Future getUser(String username) async {
+  Future<String> getUser(String username) async {
+    String result = 'ok';
     try {
       _currentUser = await _databaseService.getUsers(username);
       print('done');
@@ -46,6 +42,7 @@ class UserProvider extends ChangeNotifier {
     } catch (e) {
       print('$e');
     }
+    return result;
   }
 
   Future<bool> checkUserExist(String username) async {
@@ -64,7 +61,7 @@ class UserProvider extends ChangeNotifier {
       return;
     }
     try {
-      await _databaseService.updateUser(_currentUser!);
+      await _databaseService.updateUser(_currentUser);
       await getUser(username);
     } catch (e) {
       print('$e');

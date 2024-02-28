@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:new_todo/Provider/todo_provider.dart';
 import 'package:new_todo/Provider/user_provider.dart';
 import 'package:new_todo/model/task.dart';
+import 'package:new_todo/navigation/inbox.dart';
 import 'package:new_todo/navigation/navigationbar.dart';
 import 'package:provider/provider.dart';
 
@@ -102,22 +103,14 @@ class _SaveTodoState extends State<SaveTodo> {
                       ),
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          // String username = context
-                          //     .read<UserProvider>()
-                          //     .currentUser!
-                          //     .username;
-
-                          String username = context
-                                  .read<UserProvider>()
-                                  .currentUser
-                                  ?.username ??
-                              '';
-                          print('hello $username');
+                          // String username =
+                          //     context.read<UserProvider>().currentUser.username;
+                          // print('hello $username');
 
                           Task task = Task(
                               title: _title.text.trim(),
                               description: _description.text.trim(),
-                              username: username);
+                              username: 'username');
                           //DateTime dateTime = DateTime.now();
 
                           if (context
@@ -130,24 +123,22 @@ class _SaveTodoState extends State<SaveTodo> {
                           } else {
                             String result = await context
                                 .read<TodoProvider>()
-                                .addTask(task, username);
+                                .addTask(task, 'username');
 
                             if (result == 'OK') {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                     content:
-                                        Text('New task added for $username')),
+                                        Text('New task added for username')),
                               );
                               // Clear the text fields after adding the task
                               _title.clear();
                               _description.clear();
                               Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      CustomNavigationBar(
-                                    username: widget.username,
-                                  ),
-                                ),
+                                    builder: (BuildContext context) => Inbox(
+                                        title: _title.text,
+                                        username: widget.username)),
                               );
                             } else {
                               //     // Show an error message if adding the task fails

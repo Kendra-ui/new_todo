@@ -75,7 +75,7 @@ class _ProductivityState extends State<Productivity> {
                   height: MediaQuery.of(context).size.height / 50,
                 ),
                 Consumer<UserProvider>(builder: (context, userProvider, child) {
-                  Users currentUser = userProvider.currentUser!;
+                  Users currentUser = userProvider.currentUser;
                   return Column(
                     children: [
                       Text(currentUser.username,
